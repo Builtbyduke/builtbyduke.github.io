@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -61,7 +61,7 @@
     <article class="prose">
     <p>Styles and lays out <a href="lang-html.html">HTML</a>. Modern CSS (Grid, Flexbox, custom properties) handles most layouts without a preprocessor or framework.</p>
 <h2 id="selectors-specificity">Selectors &amp; specificity</h2>
-<pre><code class="language-css">/* type, class, id — specificity increases left to right */
+<pre><code class="language-css">/* type, class, id, specificity increases left to right */
 p { color: #222; }
 .card { padding: 16px; }
 #header { position: sticky; }
@@ -74,7 +74,7 @@ nav a:hover { text-decoration: underline; }
 <p>Specificity order (low → high): type selectors → classes/attributes/pseudo-classes → IDs → inline styles → <code>!important</code>. Prefer classes over IDs for styling, and avoid <code>!important</code> except as an escape hatch against third-party CSS.</p>
 <h2 id="box-model">Box model</h2>
 <pre><code class="language-css">.box {
-  box-sizing: border-box; /* padding/border included in width — set this globally */
+  box-sizing: border-box; /* padding/border included in width, set this globally */
   width: 300px;
   padding: 16px;
   border: 1px solid #ccc;
@@ -110,7 +110,7 @@ nav a:hover { text-decoration: underline; }
   border-radius: var(--radius);
 }
 </code></pre>
-<p>Unlike Sass variables, these are live in the DOM — you can override them per-component or with JS (<code>el.style.setProperty("--brand", "#ff0000")</code>), and they respect the cascade/inheritance.</p>
+<p>Unlike Sass variables, these are live in the DOM, you can override them per-component or with JS (<code>el.style.setProperty("--brand", "#ff0000")</code>), and they respect the cascade/inheritance.</p>
 <h2 id="responsive-design">Responsive design</h2>
 <pre><code class="language-css">.container { padding: 16px; }
 
@@ -145,7 +145,7 @@ nav a:hover { text-decoration: underline; }
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
 <li><code>z-index</code> only works on positioned elements (<code>position</code> other than <code>static</code>).</li>
-<li>Margins between two block elements can <strong>collapse</strong> (the larger one wins instead of both adding) — a common source of "why is there extra space" bugs.</li>
+<li>Margins between two block elements can <strong>collapse</strong> (the larger one wins instead of both adding), a common source of "why is there extra space" bugs.</li>
 <li><code>height: 100%</code> on a child does nothing unless the parent has an explicit height set somewhere up the chain.</li>
 </ul>
 <p>See also: <a href="lang-react.html">React</a> for how component-scoped styling typically layers on top of these fundamentals.</p>

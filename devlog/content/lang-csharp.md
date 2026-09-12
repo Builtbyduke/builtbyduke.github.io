@@ -1,6 +1,6 @@
 # C#
 
-A statically typed, object-oriented language from Microsoft, running on .NET — used for web backends, desktop apps, and game development (Unity).
+A statically typed, object-oriented language from Microsoft, running on .NET, used for web backends, desktop apps, and game development (Unity).
 
 ## Setup
 
@@ -36,12 +36,12 @@ public class Animal
     public string Speak() => $"{Name} makes a sound.";
 }
 
-// records — immutable data with value equality built in
+// records, immutable data with value equality built in
 public record Point(int X, int Y);
 
 var p1 = new Point(1, 2);
 var p2 = new Point(1, 2);
-Console.WriteLine(p1 == p2); // true — value equality, unlike a class
+Console.WriteLine(p1 == p2); // true, value equality, unlike a class
 ```
 
 ## Nullable reference types
@@ -53,7 +53,7 @@ string? maybeNull = GetName(); // explicitly nullable
 string definitelyNotNull = maybeNull ?? "default";
 ```
 
-With `#nullable enable` (standard in modern projects), the compiler warns if you dereference a possibly-null reference without checking — catches a large class of null-reference bugs at compile time.
+With `#nullable enable` (standard in modern projects), the compiler warns if you dereference a possibly-null reference without checking, catches a large class of null-reference bugs at compile time.
 
 ## LINQ (query-style collection processing)
 
@@ -105,6 +105,6 @@ app.Run();
 
 ## Common gotchas
 
-- `struct` (value type, copied) vs `class` (reference type) — passing a large struct around by value can be a surprising performance cost if you expected reference semantics.
-- `string` comparison with `==` works correctly (operator overloaded for value comparison), unlike Java — but reference comparisons for other types still need `.Equals()` or `record` types for value semantics.
-- Forgetting `await` on a `Task` doesn't error — it just fires the async operation without waiting, a common source of race conditions ("fire and forget" bugs).
+- `struct` (value type, copied) vs `class` (reference type), passing a large struct around by value can be a surprising performance cost if you expected reference semantics.
+- `string` comparison with `==` works correctly (operator overloaded for value comparison), unlike Java, but reference comparisons for other types still need `.Equals()` or `record` types for value semantics.
+- Forgetting `await` on a `Task` doesn't error, it just fires the async operation without waiting, a common source of race conditions ("fire and forget" bugs).

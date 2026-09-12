@@ -1,6 +1,6 @@
 # Java
 
-A statically typed, object-oriented language that compiles to bytecode run on the JVM — the same language and runtime behind [Minecraft Java plugins](java-plugin-setup.html) and [JDA Discord bots](discord-jda-setup.html).
+A statically typed, object-oriented language that compiles to bytecode run on the JVM, the same language and runtime behind [Minecraft Java plugins](java-plugin-setup.html) and [JDA Discord bots](discord-jda-setup.html).
 
 ## Setup
 
@@ -9,7 +9,7 @@ java -version
 javac -version
 ```
 
-Real projects use a build tool rather than calling `javac` by hand — [Maven](java-plugin-setup.html) or Gradle.
+Real projects use a build tool rather than calling `javac` by hand, [Maven](java-plugin-setup.html) or Gradle.
 
 ## Core syntax
 
@@ -38,7 +38,7 @@ public class Animal {
     public String speak() { return name + " makes a sound."; }
 }
 
-// records (Java 16+) — immutable data carriers, no boilerplate getters/equals/hashCode
+// records (Java 16+), immutable data carriers, no boilerplate getters/equals/hashCode
 public record Point(int x, int y) {}
 
 // interfaces
@@ -90,7 +90,7 @@ try {
 }
 ```
 
-Checked exceptions (`throws IOException` in a method signature) must be declared or caught — a distinctly Java design choice most other languages here don't share.
+Checked exceptions (`throws IOException` in a method signature) must be declared or caught, a distinctly Java design choice most other languages here don't share.
 
 ## Popular frameworks
 
@@ -99,11 +99,11 @@ Checked exceptions (`throws IOException` in a method signature) must be declared
 | Web/backend | Spring Boot |
 | Build tool | Maven, Gradle |
 | Testing | JUnit 5, Mockito |
-| Minecraft servers | Paper/Spigot API — see [plugin setup](java-plugin-setup.html) |
-| Discord bots | JDA — see [JDA setup](discord-jda-setup.html) |
+| Minecraft servers | Paper/Spigot API, see [plugin setup](java-plugin-setup.html) |
+| Discord bots | JDA, see [JDA setup](discord-jda-setup.html) |
 
 ## Common gotchas
 
-- `==` compares object references, not content — use `.equals()` for strings/objects (`"a".equals(str)` avoids a NullPointerException if `str` is null).
-- Autoboxing: `Integer` caches small values (-128 to 127), so `==` on boxed integers *appears* to work for small numbers and silently breaks outside that range — another reason to default to `.equals()`.
-- A missing `@Override` typo (wrong method signature) silently creates a new overload instead of overriding — always annotate overrides so the compiler catches the mismatch.
+- `==` compares object references, not content, use `.equals()` for strings/objects (`"a".equals(str)` avoids a NullPointerException if `str` is null).
+- Autoboxing: `Integer` caches small values (-128 to 127), so `==` on boxed integers *appears* to work for small numbers and silently breaks outside that range, another reason to default to `.equals()`.
+- A missing `@Override` typo (wrong method signature) silently creates a new overload instead of overriding, always annotate overrides so the compiler catches the mismatch.

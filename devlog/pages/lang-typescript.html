@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -125,13 +125,13 @@ type ReadonlyUser = Readonly&lt;User&gt;;
   }
 }
 </code></pre>
-<p><code>strict: true</code> is the single highest-value setting — it turns on <code>strictNullChecks</code>, <code>noImplicitAny</code>, and friends together.</p>
+<p><code>strict: true</code> is the single highest-value setting, it turns on <code>strictNullChecks</code>, <code>noImplicitAny</code>, and friends together.</p>
 <h2 id="popular-use">Popular use</h2>
-<p>Almost everywhere plain <a href="lang-javascript.html">JavaScript</a> is used today — <a href="lang-react.html">React</a>/Next.js apps, <a href="lang-node.html">Node</a> backends (Express, NestJS), and CLI tooling — increasingly defaults to TypeScript rather than JS.</p>
+<p>Almost everywhere plain <a href="lang-javascript.html">JavaScript</a> is used today, <a href="lang-react.html">React</a>/Next.js apps, <a href="lang-node.html">Node</a> backends (Express, NestJS), and CLI tooling, increasingly defaults to TypeScript rather than JS.</p>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li>Types are erased at compile time — they don't exist at runtime, so you can't <code>typeof</code> a custom type or interface.</li>
-<li><code>any</code> disables checking entirely for that value — prefer <code>unknown</code> when you genuinely don't know the type, and narrow it before use.</li>
+<li>Types are erased at compile time, they don't exist at runtime, so you can't <code>typeof</code> a custom type or interface.</li>
+<li><code>any</code> disables checking entirely for that value, prefer <code>unknown</code> when you genuinely don't know the type, and narrow it before use.</li>
 <li>A <code>.ts</code> file importing a <code>.js</code>-only library sometimes needs <code>@types/&lt;package&gt;</code> (<code>npm i -D @types/lodash</code>, for example) for type info.</li>
 </ul>
     </article>

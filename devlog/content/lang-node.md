@@ -1,6 +1,6 @@
 # Node.js
 
-A JavaScript runtime (built on Chrome's V8 engine) for running JS outside the browser — servers, CLIs, build tools.
+A JavaScript runtime (built on Chrome's V8 engine) for running JS outside the browser, servers, CLIs, build tools.
 
 ## Setup
 
@@ -39,7 +39,7 @@ npm install -D nodemon   # dev-only dependency
 }
 ```
 
-`"type": "module"` switches the project to ES module syntax (`import`/`export`); omit it to stay on CommonJS (`require`/`module.exports`) — don't mix the two styles in one file.
+`"type": "module"` switches the project to ES module syntax (`import`/`export`); omit it to stay on CommonJS (`require`/`module.exports`), don't mix the two styles in one file.
 
 ## A minimal HTTP server (no framework)
 
@@ -95,6 +95,6 @@ Load `.env` files with the `dotenv` package (`npm i dotenv`, then `import "doten
 
 ## Common gotchas
 
-- Uncaught errors in async callbacks (not `await`ed, no `.catch()`) crash the process silently in some setups — always handle rejected promises.
-- CPU-heavy synchronous work blocks the entire event loop (Node is single-threaded for JS execution) — offload it to `worker_threads` or a separate service.
-- `npm install` without a lockfile committed leads to different dependency versions across machines — always commit `package-lock.json`.
+- Uncaught errors in async callbacks (not `await`ed, no `.catch()`) crash the process silently in some setups, always handle rejected promises.
+- CPU-heavy synchronous work blocks the entire event loop (Node is single-threaded for JS execution), offload it to `worker_threads` or a separate service.
+- `npm install` without a lockfile committed leads to different dependency versions across machines, always commit `package-lock.json`.

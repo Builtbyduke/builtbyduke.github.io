@@ -11,7 +11,7 @@ source .venv/bin/activate     # (.venv\Scripts\activate on Windows)
 pip install requests
 ```
 
-Always work inside a virtual environment — installing packages globally leads to version conflicts across projects.
+Always work inside a virtual environment, installing packages globally leads to version conflicts across projects.
 
 ## Core syntax
 
@@ -37,7 +37,7 @@ class Animal:
         return f"{self.name} makes a sound."
 ```
 
-Indentation is syntax — a block is defined by consistent indentation (4 spaces is the near-universal convention), not braces.
+Indentation is syntax, a block is defined by consistent indentation (4 spaces is the near-universal convention), not braces.
 
 ## Context managers (`with`)
 
@@ -67,7 +67,7 @@ def find_user(user_id: int) -> Optional[dict]:
     return database.get(user_id)
 ```
 
-Type hints aren't enforced at runtime — tools like `mypy` or `pyright` check them statically, catching mismatches before you run anything.
+Type hints aren't enforced at runtime, tools like `mypy` or `pyright` check them statically, catching mismatches before you run anything.
 
 ## Popular libraries/frameworks
 
@@ -97,6 +97,6 @@ uvicorn main:app --reload
 
 ## Common gotchas
 
-- Mutable default arguments (`def f(items=[])`) are created **once** and shared across calls — use `None` and initialize inside the function instead.
+- Mutable default arguments (`def f(items=[])`) are created **once** and shared across calls, use `None` and initialize inside the function instead.
 - Late binding in closures: a loop variable captured in a lambda/function inside the loop reflects its *final* value, not the value at each iteration, unless explicitly bound as a default argument.
-- Python 2 vs 3: Python 2 is end-of-life — any tutorial written for it (print statements without parens, etc.) is outdated.
+- Python 2 vs 3: Python 2 is end-of-life, any tutorial written for it (print statements without parens, etc.) is outdated.

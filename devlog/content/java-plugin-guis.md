@@ -1,6 +1,6 @@
 # Inventory GUI Menus
 
-The classic "custom GUI" in a Bukkit/Paper plugin is a chest inventory you open, fill with `ItemStack`s as buttons, and intercept clicks on. There's no special "GUI API" in vanilla Bukkit — it's the inventory system, repurposed.
+The classic "custom GUI" in a Bukkit/Paper plugin is a chest inventory you open, fill with `ItemStack`s as buttons, and intercept clicks on. There's no special "GUI API" in vanilla Bukkit, it's the inventory system, repurposed.
 
 ## Creating and opening a menu
 
@@ -102,14 +102,14 @@ public class MenuManager implements Listener {
 }
 ```
 
-Each concrete menu (e.g. `KitMenu`) implements `Menu` and builds its own `ItemStack`s — no more title-string matching, and menus can hold their own state (pagination index, selected filters, etc.) as instance fields.
+Each concrete menu (e.g. `KitMenu`) implements `Menu` and builds its own `ItemStack`s, no more title-string matching, and menus can hold their own state (pagination index, selected filters, etc.) as instance fields.
 
 ## Popular libraries that do this for you
 
 Writing this by hand is a great learning exercise, but for real projects most devs pull in a small menu library rather than reinventing pagination/animation:
 
-- **[Triumph GUI](https://github.com/TriumphTeam/triumph-gui)** — fluent Kotlin/Java API, very popular for new projects.
-- **[IF (Inventory Framework)](https://github.com/DevNatan/inventory-framework)** — component-based, supports nested/paginated views.
+- **[Triumph GUI](https://github.com/TriumphTeam/triumph-gui)**, fluent Kotlin/Java API, very popular for new projects.
+- **[IF (Inventory Framework)](https://github.com/DevNatan/inventory-framework)**, component-based, supports nested/paginated views.
 
 Add via Maven (shaded, since these aren't on the server already):
 

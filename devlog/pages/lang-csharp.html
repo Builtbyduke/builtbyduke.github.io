@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-csharp</span></div>
     <article class="prose">
-    <p>A statically typed, object-oriented language from Microsoft, running on .NET — used for web backends, desktop apps, and game development (Unity).</p>
+    <p>A statically typed, object-oriented language from Microsoft, running on .NET, used for web backends, desktop apps, and game development (Unity).</p>
 <h2 id="setup">Setup</h2>
 <pre><code class="language-bash">dotnet --version
 dotnet new console -o my-app
@@ -86,12 +86,12 @@ Console.WriteLine($&quot;{user.Name} is {user.Age}&quot;);
     public string Speak() =&gt; $&quot;{Name} makes a sound.&quot;;
 }
 
-// records — immutable data with value equality built in
+// records, immutable data with value equality built in
 public record Point(int X, int Y);
 
 var p1 = new Point(1, 2);
 var p2 = new Point(1, 2);
-Console.WriteLine(p1 == p2); // true — value equality, unlike a class
+Console.WriteLine(p1 == p2); // true, value equality, unlike a class
 </code></pre>
 <h2 id="nullable-reference-types">Nullable reference types</h2>
 <pre><code class="language-csharp">#nullable enable
@@ -99,7 +99,7 @@ Console.WriteLine(p1 == p2); // true — value equality, unlike a class
 string? maybeNull = GetName(); // explicitly nullable
 string definitelyNotNull = maybeNull ?? &quot;default&quot;;
 </code></pre>
-<p>With <code>#nullable enable</code> (standard in modern projects), the compiler warns if you dereference a possibly-null reference without checking — catches a large class of null-reference bugs at compile time.</p>
+<p>With <code>#nullable enable</code> (standard in modern projects), the compiler warns if you dereference a possibly-null reference without checking, catches a large class of null-reference bugs at compile time.</p>
 <h2 id="linq-query-style-collection-processing">LINQ (query-style collection processing)</h2>
 <pre><code class="language-csharp">var adults = people
     .Where(p =&gt; p.Age &gt;= 18)
@@ -162,9 +162,9 @@ app.Run();
 </code></pre>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li><code>struct</code> (value type, copied) vs <code>class</code> (reference type) — passing a large struct around by value can be a surprising performance cost if you expected reference semantics.</li>
-<li><code>string</code> comparison with <code>==</code> works correctly (operator overloaded for value comparison), unlike Java — but reference comparisons for other types still need <code>.Equals()</code> or <code>record</code> types for value semantics.</li>
-<li>Forgetting <code>await</code> on a <code>Task</code> doesn't error — it just fires the async operation without waiting, a common source of race conditions ("fire and forget" bugs).</li>
+<li><code>struct</code> (value type, copied) vs <code>class</code> (reference type), passing a large struct around by value can be a surprising performance cost if you expected reference semantics.</li>
+<li><code>string</code> comparison with <code>==</code> works correctly (operator overloaded for value comparison), unlike Java, but reference comparisons for other types still need <code>.Equals()</code> or <code>record</code> types for value semantics.</li>
+<li>Forgetting <code>await</code> on a <code>Task</code> doesn't error, it just fires the async operation without waiting, a common source of race conditions ("fire and forget" bugs).</li>
 </ul>
     </article>
     <footer class="page-footer">

@@ -1,6 +1,6 @@
 # C++
 
-[C](lang-c.html) extended with classes, templates, and modern memory-safety tools (smart pointers, RAII) — used heavily in game engines, systems software, and performance-critical applications.
+[C](lang-c.html) extended with classes, templates, and modern memory-safety tools (smart pointers, RAII), used heavily in game engines, systems software, and performance-critical applications.
 
 ## Setup
 
@@ -68,7 +68,7 @@ void useResource() {
 } // "Released" prints here
 ```
 
-`std::unique_ptr` and `std::shared_ptr` are the modern default over raw `new`/`delete` — the destructor runs deterministically when the smart pointer goes out of scope, eliminating most manual memory bugs.
+`std::unique_ptr` and `std::shared_ptr` are the modern default over raw `new`/`delete`, the destructor runs deterministically when the smart pointer goes out of scope, eliminating most manual memory bugs.
 
 ## Templates (generic programming)
 
@@ -110,6 +110,6 @@ for (const auto& [name, age] : ages) {
 
 ## Common gotchas
 
-- A raw pointer returned from a function that owns the data it points to (rather than a smart pointer or reference) is a classic dangling-pointer bug — prefer returning by value or a smart pointer.
-- Passing large objects by value (instead of by `const&`) triggers unnecessary copies — pass by reference for anything beyond a primitive.
-- Undefined behavior (out-of-bounds access, use-after-free) can "work" in testing and fail unpredictably elsewhere — this class of bug is exactly why smart pointers and container bounds-checked accessors (`.at()` instead of `[]`) exist.
+- A raw pointer returned from a function that owns the data it points to (rather than a smart pointer or reference) is a classic dangling-pointer bug, prefer returning by value or a smart pointer.
+- Passing large objects by value (instead of by `const&`) triggers unnecessary copies, pass by reference for anything beyond a primitive.
+- Undefined behavior (out-of-bounds access, use-after-free) can "work" in testing and fail unpredictably elsewhere, this class of bug is exactly why smart pointers and container bounds-checked accessors (`.at()` instead of `[]`) exist.

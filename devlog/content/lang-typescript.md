@@ -85,14 +85,14 @@ type ReadonlyUser = Readonly<User>;
 }
 ```
 
-`strict: true` is the single highest-value setting — it turns on `strictNullChecks`, `noImplicitAny`, and friends together.
+`strict: true` is the single highest-value setting, it turns on `strictNullChecks`, `noImplicitAny`, and friends together.
 
 ## Popular use
 
-Almost everywhere plain [JavaScript](lang-javascript.html) is used today — [React](lang-react.html)/Next.js apps, [Node](lang-node.html) backends (Express, NestJS), and CLI tooling — increasingly defaults to TypeScript rather than JS.
+Almost everywhere plain [JavaScript](lang-javascript.html) is used today, [React](lang-react.html)/Next.js apps, [Node](lang-node.html) backends (Express, NestJS), and CLI tooling, increasingly defaults to TypeScript rather than JS.
 
 ## Common gotchas
 
-- Types are erased at compile time — they don't exist at runtime, so you can't `typeof` a custom type or interface.
-- `any` disables checking entirely for that value — prefer `unknown` when you genuinely don't know the type, and narrow it before use.
+- Types are erased at compile time, they don't exist at runtime, so you can't `typeof` a custom type or interface.
+- `any` disables checking entirely for that value, prefer `unknown` when you genuinely don't know the type, and narrow it before use.
 - A `.ts` file importing a `.js`-only library sometimes needs `@types/<package>` (`npm i -D @types/lodash`, for example) for type info.

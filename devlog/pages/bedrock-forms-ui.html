@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,10 +59,10 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/bedrock-forms-ui</span></div>
     <article class="prose">
-    <p>Bedrock scripting doesn't give you free-form custom screens like a resource-pack UI does — instead, <code>@minecraft/server-ui</code> gives you three <strong>form types</strong> that cover almost every menu you'll actually need. (If you've seen "FMBE" thrown around, it's not an official Mojang term — people usually mean this trio: <strong>Action Form</strong>, <strong>Modal Form</strong>, and <strong>Message Form</strong>, sometimes bundled with an event listener, which is what this page walks through.)</p>
+    <p>Bedrock scripting doesn't give you free-form custom screens like a resource-pack UI does, instead, <code>@minecraft/server-ui</code> gives you three <strong>form types</strong> that cover almost every menu you'll actually need. (If you've seen "FMBE" thrown around, it's not an official Mojang term, people usually mean this trio: <strong>Action Form</strong>, <strong>Modal Form</strong>, and <strong>Message Form</strong>, sometimes bundled with an event listener, which is what this page walks through.)</p>
 <pre><code class="language-bash">npm i @minecraft/server-ui
 </code></pre>
-<h2 id="actionformdata-button-menu">ActionFormData — button menu</h2>
+<h2 id="actionformdata-button-menu">ActionFormData, button menu</h2>
 <p>The one you'll use most: a title, a body, and a list of buttons (optionally with icons).</p>
 <pre><code class="language-js">import { ActionFormData } from &quot;@minecraft/server-ui&quot;;
 
@@ -84,7 +84,7 @@ function showKitMenu(player) {
   });
 }
 </code></pre>
-<h2 id="modalformdata-inputs-sliders-toggles-dropdowns-text">ModalFormData — inputs (sliders, toggles, dropdowns, text)</h2>
+<h2 id="modalformdata-inputs-sliders-toggles-dropdowns-text">ModalFormData, inputs (sliders, toggles, dropdowns, text)</h2>
 <p>Use this for settings screens or anything that needs actual data back, not just a click.</p>
 <pre><code class="language-js">import { ModalFormData } from &quot;@minecraft/server-ui&quot;;
 
@@ -101,8 +101,8 @@ form.show(player).then((response) =&gt; {
   saveSettings({ cooldown, friendlyFire, difficultyIndex, welcomeMsg });
 });
 </code></pre>
-<p>The results always come back as a <strong>positional array</strong> matching the order fields were added — that trips people up more than anything else in this API.</p>
-<h2 id="messageformdata-confirm-two-button-dialog">MessageFormData — confirm / two-button dialog</h2>
+<p>The results always come back as a <strong>positional array</strong> matching the order fields were added, that trips people up more than anything else in this API.</p>
+<h2 id="messageformdata-confirm-two-button-dialog">MessageFormData, confirm / two-button dialog</h2>
 <pre><code class="language-js">import { MessageFormData } from &quot;@minecraft/server-ui&quot;;
 
 new MessageFormData()
@@ -116,7 +116,7 @@ new MessageFormData()
   });
 </code></pre>
 <h2 id="handling-canceled-correctly">Handling <code>canceled</code> correctly</h2>
-<p>A form counts as canceled if the player presses Escape, if their inventory closes for another reason (server hiccup, chunk unload), or on some platforms if two forms are shown too close together. <strong>Always</strong> check <code>response.canceled</code> before reading <code>.selection</code> / <code>.formValues</code> — reading them on a canceled response throws.</p>
+<p>A form counts as canceled if the player presses Escape, if their inventory closes for another reason (server hiccup, chunk unload), or on some platforms if two forms are shown too close together. <strong>Always</strong> check <code>response.canceled</code> before reading <code>.selection</code> / <code>.formValues</code>, reading them on a canceled response throws.</p>
 <pre><code class="language-js">form.show(player).then((response) =&gt; {
   if (response.canceled) {
     console.warn(`Form closed: ${response.cancelationReason}`);
@@ -126,7 +126,7 @@ new MessageFormData()
 });
 </code></pre>
 <h2 id="building-a-simple-menu-system-multi-screen">Building a simple menu system (multi-screen)</h2>
-<p>Chain forms by calling the next <code>show()</code> from inside the previous <code>.then()</code> — this is how you build multi-step wizards (pick a kit → confirm → receive):</p>
+<p>Chain forms by calling the next <code>show()</code> from inside the previous <code>.then()</code>, this is how you build multi-step wizards (pick a kit → confirm → receive):</p>
 <pre><code class="language-js">function openMainMenu(player) {
   new ActionFormData()
     .title(&quot;Main Menu&quot;)
@@ -141,7 +141,7 @@ new MessageFormData()
 }
 </code></pre>
 <h2 id="beyond-forms-actual-on-screen-hud">Beyond forms: actual on-screen HUD</h2>
-<p>For persistent HUD elements (not click-through menus), use <code>player.onScreenDisplay.setActionBar(text)</code> for a one-line action-bar message, or a resource-pack-driven custom UI (<code>ui/hud_screen.json</code>) if you need a real always-visible overlay — that lives in the resource pack, not the script API, and is a much bigger topic on its own.</p>
+<p>For persistent HUD elements (not click-through menus), use <code>player.onScreenDisplay.setActionBar(text)</code> for a one-line action-bar message, or a resource-pack-driven custom UI (<code>ui/hud_screen.json</code>) if you need a real always-visible overlay, that lives in the resource pack, not the script API, and is a much bigger topic on its own.</p>
 <p>Next: <a href="bedrock-custom-components.html">Custom Items &amp; Blocks</a>.</p>
     </article>
     <footer class="page-footer">

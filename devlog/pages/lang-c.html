@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-c</span></div>
     <article class="prose">
-    <p>A low-level, manually-memory-managed language that underlies most operating systems and runtimes — minimal abstraction between your code and the machine.</p>
+    <p>A low-level, manually-memory-managed language that underlies most operating systems and runtimes, minimal abstraction between your code and the machine.</p>
 <h2 id="setup">Setup</h2>
 <pre><code class="language-bash">gcc --version    # or clang --version
 </code></pre>
@@ -67,7 +67,7 @@
 <pre><code class="language-bash">gcc main.c -o main -Wall -Wextra
 ./main
 </code></pre>
-<p><code>-Wall -Wextra</code> enables warnings that catch a large share of real bugs (uninitialized variables, signed/unsigned mismatches) — always compile with them on.</p>
+<p><code>-Wall -Wextra</code> enables warnings that catch a large share of real bugs (uninitialized variables, signed/unsigned mismatches), always compile with them on.</p>
 <h2 id="core-syntax">Core syntax</h2>
 <pre><code class="language-c">#include &lt;stdio.h&gt;
 
@@ -102,12 +102,12 @@ int main(void) {
     int *arr = make_array(5);
     if (arr) {
         printf(&quot;%d\n&quot;, arr[2]);
-        free(arr); // you own it — you free it, exactly once
+        free(arr); // you own it, you free it, exactly once
     }
     return 0;
 }
 </code></pre>
-<p>There's no garbage collector — every <code>malloc</code> needs exactly one matching <code>free</code>. Freeing twice, forgetting to free, or using memory after freeing it are the classic C bug categories; tools like <strong>Valgrind</strong> or <code>-fsanitize=address</code> catch these during development.</p>
+<p>There's no garbage collector, every <code>malloc</code> needs exactly one matching <code>free</code>. Freeing twice, forgetting to free, or using memory after freeing it are the classic C bug categories; tools like <strong>Valgrind</strong> or <code>-fsanitize=address</code> catch these during development.</p>
 <h2 id="structs">Structs</h2>
 <pre><code class="language-c">typedef struct {
     char name[32];
@@ -127,9 +127,9 @@ int add(int a, int b);
 <p>The include guard (<code>#ifndef</code>/<code>#define</code>/<code>#endif</code>) prevents a header being processed twice if it's included from multiple files, which would otherwise cause "redefinition" errors.</p>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li>Array bounds are <strong>not</strong> checked — reading/writing past an array's end is undefined behavior, not a caught exception, and can corrupt unrelated memory silently.</li>
-<li>Strings are just <code>char</code> arrays terminated by a <code>\0</code> byte — forgetting to size a buffer for that extra byte is a classic off-by-one bug.</li>
-<li>Comparing floats with <code>==</code> is unreliable due to representation error — compare against a small epsilon instead (<code>fabs(a - b) &lt; 1e-9</code>).</li>
+<li>Array bounds are <strong>not</strong> checked, reading/writing past an array's end is undefined behavior, not a caught exception, and can corrupt unrelated memory silently.</li>
+<li>Strings are just <code>char</code> arrays terminated by a <code>\0</code> byte, forgetting to size a buffer for that extra byte is a classic off-by-one bug.</li>
+<li>Comparing floats with <code>==</code> is unreliable due to representation error, compare against a small epsilon instead (<code>fabs(a - b) &lt; 1e-9</code>).</li>
 </ul>
 <p>See also: <a href="lang-cpp.html">C++</a>, which extends C with classes, templates, and RAII-based memory management.</p>
     </article>

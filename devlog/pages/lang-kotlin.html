@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-kotlin</span></div>
     <article class="prose">
-    <p>A statically typed language that runs on the JVM (fully interoperable with <a href="lang-java.html">Java</a>) — the default choice for modern Android development and increasingly popular for backend services too.</p>
+    <p>A statically typed language that runs on the JVM (fully interoperable with <a href="lang-java.html">Java</a>), the default choice for modern Android development and increasingly popular for backend services too.</p>
 <h2 id="setup">Setup</h2>
 <pre><code class="language-bash">kotlinc -version
 </code></pre>
@@ -80,19 +80,19 @@ fun main() {
     val doubled = nums.map { it * 2 }
 }
 </code></pre>
-<p><code>val</code> (immutable reference) vs <code>var</code> (mutable) — same immutable-by-default philosophy as Swift and Rust.</p>
+<p><code>val</code> (immutable reference) vs <code>var</code> (mutable), same immutable-by-default philosophy as Swift and Rust.</p>
 <h2 id="null-safety">Null safety</h2>
 <pre><code class="language-kotlin">var maybeName: String? = null // must explicitly opt into nullability
 
 val length = maybeName?.length ?: 0   // safe call + Elvis operator for a default
 </code></pre>
-<p>Like Swift's optionals, the type system distinguishes <code>String</code> (never null) from <code>String?</code> (may be null) — the compiler refuses to let a nullable value be used where a non-null one is required without a check first.</p>
+<p>Like Swift's optionals, the type system distinguishes <code>String</code> (never null) from <code>String?</code> (may be null), the compiler refuses to let a nullable value be used where a non-null one is required without a check first.</p>
 <h2 id="classes-and-data-classes">Classes and data classes</h2>
 <pre><code class="language-kotlin">class Animal(val name: String) {
     fun speak() = &quot;$name makes a sound.&quot;
 }
 
-// data class — auto-generates equals/hashCode/toString/copy
+// data class, auto-generates equals/hashCode/toString/copy
 data class Point(val x: Int, val y: Int)
 
 val p1 = Point(1, 2)
@@ -118,7 +118,7 @@ fun main() = runBlocking {
     println(user)
 }
 </code></pre>
-<p><code>suspend</code> functions are Kotlin's alternative to callback-heavy or thread-heavy async code — they read like synchronous code but don't block the underlying thread.</p>
+<p><code>suspend</code> functions are Kotlin's alternative to callback-heavy or thread-heavy async code, they read like synchronous code but don't block the underlying thread.</p>
 <h2 id="popular-use">Popular use</h2>
 <table>
 <thead>
@@ -148,9 +148,9 @@ fun main() = runBlocking {
 </table>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li><code>==</code> in Kotlin checks <em>structural</em> equality by default (calls <code>.equals()</code>), unlike Java where <code>==</code> on objects checks reference identity — use <code>===</code> in Kotlin specifically for reference comparison.</li>
-<li>Extension functions (adding methods to existing classes, e.g. <code>fun String.shout() = uppercase() + "!"</code>) are resolved statically at compile time based on the declared type, not the runtime type — this can surprise people expecting virtual-style dispatch.</li>
-<li>Platform types from Java interop (no nullability info from Java's type system) can slip past Kotlin's null checks — annotate Java APIs with <code>@Nullable</code>/<code>@NonNull</code> where you control them.</li>
+<li><code>==</code> in Kotlin checks <em>structural</em> equality by default (calls <code>.equals()</code>), unlike Java where <code>==</code> on objects checks reference identity, use <code>===</code> in Kotlin specifically for reference comparison.</li>
+<li>Extension functions (adding methods to existing classes, e.g. <code>fun String.shout() = uppercase() + "!"</code>) are resolved statically at compile time based on the declared type, not the runtime type, this can surprise people expecting virtual-style dispatch.</li>
+<li>Platform types from Java interop (no nullability info from Java's type system) can slip past Kotlin's null checks, annotate Java APIs with <code>@Nullable</code>/<code>@NonNull</code> where you control them.</li>
 </ul>
     </article>
     <footer class="page-footer">

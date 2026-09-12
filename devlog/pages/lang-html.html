@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-html</span></div>
     <article class="prose">
-    <p>The markup language that defines structure and content for every web page — pairs with <a href="lang-css.html">CSS</a> for appearance and <a href="lang-javascript.html">JavaScript</a> for behavior.</p>
+    <p>The markup language that defines structure and content for every web page, pairs with <a href="lang-css.html">CSS</a> for appearance and <a href="lang-javascript.html">JavaScript</a> for behavior.</p>
 <h2 id="minimal-document">Minimal document</h2>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -75,9 +75,9 @@
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p><code>defer</code> on <code>&lt;script&gt;</code> matters: it delays execution until the DOM is parsed without blocking parsing while the file downloads — the right default for almost every script tag.</p>
+<p><code>defer</code> on <code>&lt;script&gt;</code> matters: it delays execution until the DOM is parsed without blocking parsing while the file downloads, the right default for almost every script tag.</p>
 <h2 id="semantic-structure">Semantic structure</h2>
-<p>Prefer elements that describe <em>meaning</em>, not just appearance — it's better for accessibility and SEO than an ocean of <code>&lt;div&gt;</code>s:</p>
+<p>Prefer elements that describe <em>meaning</em>, not just appearance, it's better for accessibility and SEO than an ocean of <code>&lt;div&gt;</code>s:</p>
 <pre><code class="language-html">&lt;header&gt;...&lt;/header&gt;
 &lt;nav&gt;...&lt;/nav&gt;
 &lt;main&gt;
@@ -107,7 +107,7 @@
 <h2 id="accessibility-basics">Accessibility basics</h2>
 <ul>
 <li>Every <code>&lt;img&gt;</code> needs <code>alt</code> text (empty <code>alt=""</code> if it's purely decorative).</li>
-<li>Use real <code>&lt;button&gt;</code>/<code>&lt;a&gt;</code> elements for interactive controls instead of a <code>&lt;div onclick&gt;</code> — you get keyboard focus and screen-reader semantics for free.</li>
+<li>Use real <code>&lt;button&gt;</code>/<code>&lt;a&gt;</code> elements for interactive controls instead of a <code>&lt;div onclick&gt;</code>, you get keyboard focus and screen-reader semantics for free.</li>
 <li>One <code>&lt;h1&gt;</code> per page, and don't skip heading levels just for font size (use CSS for that instead).</li>
 </ul>
 <h2 id="template-and-custom-elements"><code>&lt;template&gt;</code> and custom elements</h2>
@@ -122,9 +122,9 @@ document.querySelector(&quot;ul&quot;).appendChild(clone);
 </code></pre>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li>Block vs inline elements affects what CSS properties (like <code>width</code>/<code>height</code>) actually apply — a <code>&lt;span&gt;</code> ignores them until you change its <code>display</code>.</li>
+<li>Block vs inline elements affects what CSS properties (like <code>width</code>/<code>height</code>) actually apply, a <code>&lt;span&gt;</code> ignores them until you change its <code>display</code>.</li>
 <li><code>&lt;script&gt;</code> at the very bottom of <code>&lt;body&gt;</code> was the old fix for blocking; <code>defer</code> in <code>&lt;head&gt;</code> is the modern equivalent and keeps script tags out of markup you might template dynamically.</li>
-<li>Self-closing tags (<code>&lt;img /&gt;</code>) are optional in HTML5 (unlike strict XHTML) — <code>&lt;img&gt;</code> alone is valid.</li>
+<li>Self-closing tags (<code>&lt;img /&gt;</code>) are optional in HTML5 (unlike strict XHTML), <code>&lt;img&gt;</code> alone is valid.</li>
 </ul>
     </article>
     <footer class="page-footer">

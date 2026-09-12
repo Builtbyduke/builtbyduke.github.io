@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,15 +59,15 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/discord-jda-setup</span></div>
     <article class="prose">
-    <p><strong><a href="https://github.com/discord-jda/JDA">JDA</a></strong> (Java Discord API) is the standard wrapper for building Discord bots in Java — same Maven-based workflow as a Minecraft plugin, just a different API surface.</p>
+    <p><strong><a href="https://github.com/discord-jda/JDA">JDA</a></strong> (Java Discord API) is the standard wrapper for building Discord bots in Java, same Maven-based workflow as a Minecraft plugin, just a different API surface.</p>
 <h2 id="create-the-bot-application">Create the bot application</h2>
 <ol>
 <li>Go to the <a href="https://discord.com/developers/applications">Discord Developer Portal</a> → <strong>New Application</strong>.</li>
-<li><strong>Bot</strong> tab → <strong>Reset Token</strong> (copy it somewhere safe — you can't view it again, only regenerate).</li>
+<li><strong>Bot</strong> tab → <strong>Reset Token</strong> (copy it somewhere safe, you can't view it again, only regenerate).</li>
 <li>Under <strong>Privileged Gateway Intents</strong>, enable <code>MESSAGE CONTENT INTENT</code> if your bot reads message text (not needed for slash commands alone).</li>
 <li><strong>OAuth2 → URL Generator</strong>: check <code>bot</code> and <code>applications.commands</code>, pick permissions, use the generated URL to invite it to a test server.</li>
 </ol>
-<p>Never commit your token to a public repo — load it from an environment variable or a git-ignored config file.</p>
+<p>Never commit your token to a public repo, load it from an environment variable or a git-ignored config file.</p>
 <h2 id="maven-setup">Maven setup</h2>
 <pre><code class="language-xml">&lt;dependency&gt;
   &lt;groupId&gt;net.dv8tion&lt;/groupId&gt;
@@ -75,7 +75,7 @@
   &lt;version&gt;5.0.2&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
-<p>Use the shade plugin exactly as in the <a href="java-plugin-setup.html">Minecraft plugin setup</a> — JDA isn't preinstalled anywhere, so unlike a Bukkit plugin, it needs to be bundled into your jar (don't mark it <code>provided</code>).</p>
+<p>Use the shade plugin exactly as in the <a href="java-plugin-setup.html">Minecraft plugin setup</a>, JDA isn't preinstalled anywhere, so unlike a Bukkit plugin, it needs to be bundled into your jar (don't mark it <code>provided</code>).</p>
 <h2 id="minimal-bot">Minimal bot</h2>
 <pre><code class="language-java">import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.JDA;
@@ -109,7 +109,7 @@ public class MessageListener extends ListenerAdapter {
     }
 }
 </code></pre>
-<p><code>.queue()</code> matters — JDA's REST calls are async; calling <code>.complete()</code> blocks the gateway thread and will eventually cause rate-limit and latency problems at any real scale.</p>
+<p><code>.queue()</code> matters, JDA's REST calls are async; calling <code>.complete()</code> blocks the gateway thread and will eventually cause rate-limit and latency problems at any real scale.</p>
 <h2 id="running-it-247">Running it 24/7</h2>
 <p>A local JVM dies when your machine sleeps or reboots. For anything beyond testing:</p>
 <ul>

@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html" class="active">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/bedrock-getting-started</span></div>
     <article class="prose">
-    <p>Minecraft Bedrock add-ons are split into <strong>packs</strong>: a <em>behavior pack</em> (logic, entities, scripts) and usually a matching <em>resource pack</em> (textures, models, sounds). Scripting lives inside a behavior pack and is powered by the <code>@minecraft/server</code> module — Mojang's own JavaScript/TypeScript API, run inside the game.</p>
+    <p>Minecraft Bedrock add-ons are split into <strong>packs</strong>: a <em>behavior pack</em> (logic, entities, scripts) and usually a matching <em>resource pack</em> (textures, models, sounds). Scripting lives inside a behavior pack and is powered by the <code>@minecraft/server</code> module, Mojang's own JavaScript/TypeScript API, run inside the game.</p>
 <h2 id="folder-layout">Folder layout</h2>
 <p>Behavior packs live under your game's <code>development_behavior_packs</code> folder so they hot-reload with <code>/reload</code>.</p>
 <pre><code>development_behavior_packs/
@@ -71,7 +71,7 @@
 </code></pre>
 <p>Find the folder:
 - <strong>Windows</strong>: <code>%localappdata%\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\development_behavior_packs</code>
-- <strong>Preview/Education editions</strong> use a similarly named package folder — search for <code>com.mojang</code>.</p>
+- <strong>Preview/Education editions</strong> use a similarly named package folder, search for <code>com.mojang</code>.</p>
 <h2 id="manifestjson">manifest.json</h2>
 <p>Every pack needs a manifest declaring its modules. A scripting-enabled behavior pack needs a <code>data</code> module <strong>and</strong> a <code>script</code> module, plus a dependency on the <code>@minecraft/server</code> API:</p>
 <pre><code class="language-json">{
@@ -103,7 +103,7 @@
   ]
 }
 </code></pre>
-<p>Generate fresh UUIDs (e.g. with <code>uuidgen</code> or an online v4 generator) — never reuse the sample ones above, or Minecraft will treat two different packs as the same pack.</p>
+<p>Generate fresh UUIDs (e.g. with <code>uuidgen</code> or an online v4 generator), never reuse the sample ones above, or Minecraft will treat two different packs as the same pack.</p>
 <h2 id="your-first-script">Your first script</h2>
 <pre><code class="language-js">import { world, system } from &quot;@minecraft/server&quot;;
 
@@ -118,7 +118,7 @@ system.runInterval(() =&gt; {
   world.sendMessage(&quot;Tick check-in every 5 seconds&quot;);
 }, 100); // 100 ticks = 5s (20 ticks/sec)
 </code></pre>
-<p>Enable the pack on a world (<strong>must</strong> turn on <em>Beta APIs</em> under Experiments), then run <code>/reload</code> in-game while you edit — no restart needed.</p>
+<p>Enable the pack on a world (<strong>must</strong> turn on <em>Beta APIs</em> under Experiments), then run <code>/reload</code> in-game while you edit, no restart needed.</p>
 <h2 id="typescript-instead-of-raw-js">TypeScript instead of raw JS</h2>
 <p>Most real projects use TypeScript + <code>esbuild</code>/<code>webpack</code> to bundle down to a single <code>.js</code> your pack loads, so you get autocomplete against Mojang's type defs.</p>
 <pre><code class="language-bash">npm init -y

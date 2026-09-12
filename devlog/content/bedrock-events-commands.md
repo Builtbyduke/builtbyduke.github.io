@@ -25,7 +25,7 @@ world.beforeEvents.chatSend.subscribe((e) => {
 });
 ```
 
-`beforeEvents` run synchronously and can cancel/mutate; `afterEvents` are read-only notifications after the fact. Most gameplay logic belongs in `afterEvents` — `beforeEvents` are reserved for the handful of events that support cancellation.
+`beforeEvents` run synchronously and can cancel/mutate; `afterEvents` are read-only notifications after the fact. Most gameplay logic belongs in `afterEvents`, `beforeEvents` are reserved for the handful of events that support cancellation.
 
 ## Slash commands via `/scriptevent`
 
@@ -76,7 +76,7 @@ system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
 });
 ```
 
-This must run inside the `startup` event — command registration is only allowed before the world finishes loading.
+This must run inside the `startup` event, command registration is only allowed before the world finishes loading.
 
 ## Running vanilla commands from script
 

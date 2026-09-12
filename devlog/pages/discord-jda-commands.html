@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,9 +59,9 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/discord-jda-commands</span></div>
     <article class="prose">
-    <p>These three — slash commands, buttons/menus, and embeds — make up the majority of what a modern Discord bot's UI actually is.</p>
+    <p>These three, slash commands, buttons/menus, and embeds, make up the majority of what a modern Discord bot's UI actually is.</p>
 <h2 id="registering-a-slash-command">Registering a slash command</h2>
-<p>Register commands once (globally, or instantly per-guild for testing — global commands can take up to an hour to propagate):</p>
+<p>Register commands once (globally, or instantly per-guild for testing, global commands can take up to an hour to propagate):</p>
 <pre><code class="language-java">jda.updateCommands().addCommands(
     Commands.slash(&quot;ping&quot;, &quot;Replies with pong&quot;),
     Commands.slash(&quot;kick&quot;, &quot;Kick a member&quot;)
@@ -123,7 +123,7 @@ event.reply(&quot;Confirm the action?&quot;)
     )
     .queue();
 </code></pre>
-<p>Handling clicks — the <strong>custom ID</strong> you set is how you route the click back to logic (a common pattern: <code>action:payload</code>, split on <code>:</code>):</p>
+<p>Handling clicks, the <strong>custom ID</strong> you set is how you route the click back to logic (a common pattern: <code>action:payload</code>, split on <code>:</code>):</p>
 <pre><code class="language-java">@Override
 public void onButtonInteraction(ButtonInteractionEvent event) {
     String[] parts = event.getComponentId().split(&quot;:&quot;);
@@ -133,7 +133,7 @@ public void onButtonInteraction(ButtonInteractionEvent event) {
     }
 }
 </code></pre>
-<p><code>.setComponents()</code> with no arguments removes the buttons after they're used — otherwise users can click "Confirm" repeatedly.</p>
+<p><code>.setComponents()</code> with no arguments removes the buttons after they're used, otherwise users can click "Confirm" repeatedly.</p>
 <h2 id="select-menus-dropdowns">Select menus (dropdowns)</h2>
 <pre><code class="language-java">import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
 
@@ -167,7 +167,7 @@ Modal modal = Modal.create(&quot;report-modal&quot;, &quot;Submit a Report&quot;
 
 event.replyModal(modal).queue();
 </code></pre>
-<p>Together, these four interaction types (slash commands, buttons, select menus, modals) are essentially the entire "UI toolkit" JDA exposes — almost every real bot feature is some combination of them.</p>
+<p>Together, these four interaction types (slash commands, buttons, select menus, modals) are essentially the entire "UI toolkit" JDA exposes, almost every real bot feature is some combination of them.</p>
     </article>
     <footer class="page-footer">
       <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>

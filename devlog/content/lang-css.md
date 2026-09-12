@@ -5,7 +5,7 @@ Styles and lays out [HTML](lang-html.html). Modern CSS (Grid, Flexbox, custom pr
 ## Selectors & specificity
 
 ```css
-/* type, class, id — specificity increases left to right */
+/* type, class, id, specificity increases left to right */
 p { color: #222; }
 .card { padding: 16px; }
 #header { position: sticky; }
@@ -22,7 +22,7 @@ Specificity order (low → high): type selectors → classes/attributes/pseudo-c
 
 ```css
 .box {
-  box-sizing: border-box; /* padding/border included in width — set this globally */
+  box-sizing: border-box; /* padding/border included in width, set this globally */
   width: 300px;
   padding: 16px;
   border: 1px solid #ccc;
@@ -70,7 +70,7 @@ Specificity order (low → high): type selectors → classes/attributes/pseudo-c
 }
 ```
 
-Unlike Sass variables, these are live in the DOM — you can override them per-component or with JS (`el.style.setProperty("--brand", "#ff0000")`), and they respect the cascade/inheritance.
+Unlike Sass variables, these are live in the DOM, you can override them per-component or with JS (`el.style.setProperty("--brand", "#ff0000")`), and they respect the cascade/inheritance.
 
 ## Responsive design
 
@@ -95,7 +95,7 @@ Mobile-first (`min-width` queries, base styles for small screens) is the more co
 ## Common gotchas
 
 - `z-index` only works on positioned elements (`position` other than `static`).
-- Margins between two block elements can **collapse** (the larger one wins instead of both adding) — a common source of "why is there extra space" bugs.
+- Margins between two block elements can **collapse** (the larger one wins instead of both adding), a common source of "why is there extra space" bugs.
 - `height: 100%` on a child does nothing unless the parent has an explicit height set somewhere up the chain.
 
 See also: [React](lang-react.html) for how component-scoped styling typically layers on top of these fundamentals.

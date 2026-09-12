@@ -1,6 +1,6 @@
 # SQL
 
-The language for querying and manipulating relational databases (PostgreSQL, MySQL, SQLite, SQL Server) — syntax varies slightly between engines, but the core is near-universal.
+The language for querying and manipulating relational databases (PostgreSQL, MySQL, SQLite, SQL Server), syntax varies slightly between engines, but the core is near-universal.
 
 ## Creating tables
 
@@ -19,7 +19,7 @@ CREATE TABLE orders (
 );
 ```
 
-`SERIAL` is Postgres-specific auto-increment syntax; MySQL uses `AUTO_INCREMENT`, SQLite uses `INTEGER PRIMARY KEY AUTOINCREMENT` — this kind of small dialect difference is common across engines.
+`SERIAL` is Postgres-specific auto-increment syntax; MySQL uses `AUTO_INCREMENT`, SQLite uses `INTEGER PRIMARY KEY AUTOINCREMENT`, this kind of small dialect difference is common across engines.
 
 ## CRUD basics
 
@@ -64,7 +64,7 @@ HAVING SUM(total) > 500
 ORDER BY total_spent DESC;
 ```
 
-`WHERE` filters rows before grouping; `HAVING` filters groups after aggregation — a common point of confusion since both look like a filter clause.
+`WHERE` filters rows before grouping; `HAVING` filters groups after aggregation, a common point of confusion since both look like a filter clause.
 
 ## Subqueries & CTEs
 
@@ -80,7 +80,7 @@ FROM users
 JOIN big_spenders ON big_spenders.user_id = users.id;
 ```
 
-A CTE (`WITH ... AS (...)`) names a subquery so it can be referenced like a temporary table — usually more readable than deeply nested subqueries.
+A CTE (`WITH ... AS (...)`) names a subquery so it can be referenced like a temporary table, usually more readable than deeply nested subqueries.
 
 ## Indexes
 
@@ -88,10 +88,10 @@ A CTE (`WITH ... AS (...)`) names a subquery so it can be referenced like a temp
 CREATE INDEX idx_orders_user_id ON orders(user_id);
 ```
 
-Indexes speed up lookups/joins on that column at the cost of slightly slower writes and extra storage — add them on columns you filter/join on frequently, not on every column.
+Indexes speed up lookups/joins on that column at the cost of slightly slower writes and extra storage, add them on columns you filter/join on frequently, not on every column.
 
 ## Common gotchas
 
-- `NULL` doesn't equal anything, including itself — use `IS NULL` / `IS NOT NULL`, never `= NULL`.
-- `SELECT *` in application code breaks silently when someone adds a column — name columns explicitly in production queries.
-- String concatenation of user input into a query is the classic SQL-injection vector — always use parameterized queries/prepared statements from your application language instead of building SQL strings by hand.
+- `NULL` doesn't equal anything, including itself, use `IS NULL` / `IS NOT NULL`, never `= NULL`.
+- `SELECT *` in application code breaks silently when someone adds a column, name columns explicitly in production queries.
+- String concatenation of user input into a query is the classic SQL-injection vector, always use parameterized queries/prepared statements from your application language instead of building SQL strings by hand.

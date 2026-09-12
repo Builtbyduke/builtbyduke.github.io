@@ -1,15 +1,15 @@
 # JDA Project Setup (Java Discord Bots)
 
-**[JDA](https://github.com/discord-jda/JDA)** (Java Discord API) is the standard wrapper for building Discord bots in Java — same Maven-based workflow as a Minecraft plugin, just a different API surface.
+**[JDA](https://github.com/discord-jda/JDA)** (Java Discord API) is the standard wrapper for building Discord bots in Java, same Maven-based workflow as a Minecraft plugin, just a different API surface.
 
 ## Create the bot application
 
 1. Go to the [Discord Developer Portal](https://discord.com/developers/applications) → **New Application**.
-2. **Bot** tab → **Reset Token** (copy it somewhere safe — you can't view it again, only regenerate).
+2. **Bot** tab → **Reset Token** (copy it somewhere safe, you can't view it again, only regenerate).
 3. Under **Privileged Gateway Intents**, enable `MESSAGE CONTENT INTENT` if your bot reads message text (not needed for slash commands alone).
 4. **OAuth2 → URL Generator**: check `bot` and `applications.commands`, pick permissions, use the generated URL to invite it to a test server.
 
-Never commit your token to a public repo — load it from an environment variable or a git-ignored config file.
+Never commit your token to a public repo, load it from an environment variable or a git-ignored config file.
 
 ## Maven setup
 
@@ -21,7 +21,7 @@ Never commit your token to a public repo — load it from an environment variabl
 </dependency>
 ```
 
-Use the shade plugin exactly as in the [Minecraft plugin setup](java-plugin-setup.html) — JDA isn't preinstalled anywhere, so unlike a Bukkit plugin, it needs to be bundled into your jar (don't mark it `provided`).
+Use the shade plugin exactly as in the [Minecraft plugin setup](java-plugin-setup.html), JDA isn't preinstalled anywhere, so unlike a Bukkit plugin, it needs to be bundled into your jar (don't mark it `provided`).
 
 ## Minimal bot
 
@@ -62,7 +62,7 @@ public class MessageListener extends ListenerAdapter {
 }
 ```
 
-`.queue()` matters — JDA's REST calls are async; calling `.complete()` blocks the gateway thread and will eventually cause rate-limit and latency problems at any real scale.
+`.queue()` matters, JDA's REST calls are async; calling `.complete()` blocks the gateway thread and will eventually cause rate-limit and latency problems at any real scale.
 
 ## Running it 24/7
 

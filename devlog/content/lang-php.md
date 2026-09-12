@@ -1,6 +1,6 @@
 # PHP
 
-A server-side scripting language built specifically for the web — still powers a huge share of it (WordPress alone accounts for a large fraction of all websites).
+A server-side scripting language built specifically for the web, still powers a huge share of it (WordPress alone accounts for a large fraction of all websites).
 
 ## Setup
 
@@ -59,7 +59,7 @@ $letter = match (true) {
 };
 ```
 
-`match` (PHP 8+) uses strict comparison and has no fallthrough, unlike `switch` — prefer it for value-mapping logic.
+`match` (PHP 8+) uses strict comparison and has no fallthrough, unlike `switch`, prefer it for value-mapping logic.
 
 ## Working with a database (PDO)
 
@@ -70,7 +70,7 @@ $stmt->execute([$id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 ```
 
-Always use prepared statements (`?` placeholders) — string-concatenating user input into SQL is the classic PHP injection vector.
+Always use prepared statements (`?` placeholders), string-concatenating user input into SQL is the classic PHP injection vector.
 
 ## Popular frameworks
 
@@ -93,6 +93,6 @@ Laravel's Eloquent ORM (`User::findOrFail($id)`) replaces most raw PDO code abov
 
 ## Common gotchas
 
-- `==` performs type juggling (`"abc" == 0` was `true` before PHP 8, and some looser comparisons still surprise people) — prefer `===`.
-- Array functions are inconsistent about parameter order (`in_array($needle, $haystack)` vs `array_map($callback, $array)`) — there's no shortcut but experience; keep the docs open.
-- Superglobals (`$_GET`, `$_POST`, `$_SESSION`) are global mutable state — modern frameworks wrap them in request objects for a reason; avoid touching them directly outside small scripts.
+- `==` performs type juggling (`"abc" == 0` was `true` before PHP 8, and some looser comparisons still surprise people), prefer `===`.
+- Array functions are inconsistent about parameter order (`in_array($needle, $haystack)` vs `array_map($callback, $array)`), there's no shortcut but experience; keep the docs open.
+- Superglobals (`$_GET`, `$_POST`, `$_SESSION`) are global mutable state, modern frameworks wrap them in request objects for a reason; avoid touching them directly outside small scripts.

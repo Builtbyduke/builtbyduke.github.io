@@ -1,11 +1,11 @@
 # Maven Project Setup (Spigot / Paper Plugins)
 
-Java Minecraft server plugins target the Bukkit API, implemented by **Spigot** and its modern fork **Paper** (almost every new project should target Paper — it's a drop-in superset with better performance and a richer API).
+Java Minecraft server plugins target the Bukkit API, implemented by **Spigot** and its modern fork **Paper** (almost every new project should target Paper, it's a drop-in superset with better performance and a richer API).
 
 ## Prerequisites
 
 - JDK 21 (Paper 1.20.5+ requires it; check your target Minecraft version's required Java version before picking one).
-- Maven (`mvn -v` to confirm it's installed) or Gradle — this guide uses Maven since it's still the more common default in tutorials.
+- Maven (`mvn -v` to confirm it's installed) or Gradle, this guide uses Maven since it's still the more common default in tutorials.
 
 ## Project layout
 

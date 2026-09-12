@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,12 +59,12 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-java</span></div>
     <article class="prose">
-    <p>A statically typed, object-oriented language that compiles to bytecode run on the JVM — the same language and runtime behind <a href="java-plugin-setup.html">Minecraft Java plugins</a> and <a href="discord-jda-setup.html">JDA Discord bots</a>.</p>
+    <p>A statically typed, object-oriented language that compiles to bytecode run on the JVM, the same language and runtime behind <a href="java-plugin-setup.html">Minecraft Java plugins</a> and <a href="discord-jda-setup.html">JDA Discord bots</a>.</p>
 <h2 id="setup">Setup</h2>
 <pre><code class="language-bash">java -version
 javac -version
 </code></pre>
-<p>Real projects use a build tool rather than calling <code>javac</code> by hand — <a href="java-plugin-setup.html">Maven</a> or Gradle.</p>
+<p>Real projects use a build tool rather than calling <code>javac</code> by hand, <a href="java-plugin-setup.html">Maven</a> or Gradle.</p>
 <h2 id="core-syntax">Core syntax</h2>
 <pre><code class="language-java">public class Main {
     public static void main(String[] args) {
@@ -87,7 +87,7 @@ javac -version
     public String speak() { return name + &quot; makes a sound.&quot;; }
 }
 
-// records (Java 16+) — immutable data carriers, no boilerplate getters/equals/hashCode
+// records (Java 16+), immutable data carriers, no boilerplate getters/equals/hashCode
 public record Point(int x, int y) {}
 
 // interfaces
@@ -129,7 +129,7 @@ String description = switch (value) {
     cleanup();
 }
 </code></pre>
-<p>Checked exceptions (<code>throws IOException</code> in a method signature) must be declared or caught — a distinctly Java design choice most other languages here don't share.</p>
+<p>Checked exceptions (<code>throws IOException</code> in a method signature) must be declared or caught, a distinctly Java design choice most other languages here don't share.</p>
 <h2 id="popular-frameworks">Popular frameworks</h2>
 <table>
 <thead>
@@ -153,19 +153,19 @@ String description = switch (value) {
 </tr>
 <tr>
 <td>Minecraft servers</td>
-<td>Paper/Spigot API — see <a href="java-plugin-setup.html">plugin setup</a></td>
+<td>Paper/Spigot API, see <a href="java-plugin-setup.html">plugin setup</a></td>
 </tr>
 <tr>
 <td>Discord bots</td>
-<td>JDA — see <a href="discord-jda-setup.html">JDA setup</a></td>
+<td>JDA, see <a href="discord-jda-setup.html">JDA setup</a></td>
 </tr>
 </tbody>
 </table>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li><code>==</code> compares object references, not content — use <code>.equals()</code> for strings/objects (<code>"a".equals(str)</code> avoids a NullPointerException if <code>str</code> is null).</li>
-<li>Autoboxing: <code>Integer</code> caches small values (-128 to 127), so <code>==</code> on boxed integers <em>appears</em> to work for small numbers and silently breaks outside that range — another reason to default to <code>.equals()</code>.</li>
-<li>A missing <code>@Override</code> typo (wrong method signature) silently creates a new overload instead of overriding — always annotate overrides so the compiler catches the mismatch.</li>
+<li><code>==</code> compares object references, not content, use <code>.equals()</code> for strings/objects (<code>"a".equals(str)</code> avoids a NullPointerException if <code>str</code> is null).</li>
+<li>Autoboxing: <code>Integer</code> caches small values (-128 to 127), so <code>==</code> on boxed integers <em>appears</em> to work for small numbers and silently breaks outside that range, another reason to default to <code>.equals()</code>.</li>
+<li>A missing <code>@Override</code> typo (wrong method signature) silently creates a new overload instead of overriding, always annotate overrides so the compiler catches the mismatch.</li>
 </ul>
     </article>
     <footer class="page-footer">

@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -72,8 +72,8 @@ npm run dev
   return &lt;h1&gt;Hello, {name}!&lt;/h1&gt;;
 }
 </code></pre>
-<p>JSX compiles to <code>React.createElement(...)</code> calls — it looks like HTML but is real JavaScript, so <code>{}</code> drops back into JS expressions anywhere.</p>
-<h2 id="state-usestate">State — <code>useState</code></h2>
+<p>JSX compiles to <code>React.createElement(...)</code> calls, it looks like HTML but is real JavaScript, so <code>{}</code> drops back into JS expressions anywhere.</p>
+<h2 id="state-usestate">State, <code>useState</code></h2>
 <pre><code class="language-tsx">import { useState } from &quot;react&quot;;
 
 function Counter() {
@@ -86,7 +86,7 @@ function Counter() {
 }
 </code></pre>
 <p><code>setCount</code> triggers a re-render; state updates are not applied instantly/synchronously, so don't rely on <code>count</code> being updated immediately after calling <code>setCount</code>.</p>
-<h2 id="effects-useeffect">Effects — <code>useEffect</code></h2>
+<h2 id="effects-useeffect">Effects, <code>useEffect</code></h2>
 <pre><code class="language-tsx">import { useEffect, useState } from &quot;react&quot;;
 
 function UserProfile({ id }: { id: string }) {
@@ -104,7 +104,7 @@ function UserProfile({ id }: { id: string }) {
   return &lt;p&gt;{user.name}&lt;/p&gt;;
 }
 </code></pre>
-<p>The dependency array is the most common source of bugs — omitting a value used inside the effect leads to stale closures; the <code>eslint-plugin-react-hooks</code> rule catches most of these automatically.</p>
+<p>The dependency array is the most common source of bugs, omitting a value used inside the effect leads to stale closures; the <code>eslint-plugin-react-hooks</code> rule catches most of these automatically.</p>
 <h2 id="lists-keys">Lists &amp; keys</h2>
 <pre><code class="language-tsx">function TodoList({ items }: { items: { id: string; text: string }[] }) {
   return (
@@ -115,7 +115,7 @@ function UserProfile({ id }: { id: string }) {
 }
 </code></pre>
 <p><code>key</code> must be stable and unique per item (an ID, not the array index) so React can correctly track which DOM node maps to which data across re-renders.</p>
-<h2 id="sharing-state-context-for-a-handful-of-values">Sharing state — Context (for a handful of values)</h2>
+<h2 id="sharing-state-context-for-a-handful-of-values">Sharing state, Context (for a handful of values)</h2>
 <pre><code class="language-tsx">const ThemeContext = React.createContext(&quot;light&quot;);
 
 function App() {
@@ -165,8 +165,8 @@ function Toolbar() {
 </table>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li>Mutating state directly (<code>user.name = "x"</code>) doesn't trigger a re-render — always create a new object/array (<code>setUser({ ...user, name: "x" })</code>).</li>
-<li>Every component re-renders when its state changes, and by default its children re-render too — <code>React.memo</code>, <code>useMemo</code>, <code>useCallback</code> exist for the cases where that becomes measurably slow, not as a default habit.</li>
+<li>Mutating state directly (<code>user.name = "x"</code>) doesn't trigger a re-render, always create a new object/array (<code>setUser({ ...user, name: "x" })</code>).</li>
+<li>Every component re-renders when its state changes, and by default its children re-render too, <code>React.memo</code>, <code>useMemo</code>, <code>useCallback</code> exist for the cases where that becomes measurably slow, not as a default habit.</li>
 </ul>
     </article>
     <footer class="page-footer">

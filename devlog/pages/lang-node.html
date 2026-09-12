@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-node</span></div>
     <article class="prose">
-    <p>A JavaScript runtime (built on Chrome's V8 engine) for running JS outside the browser — servers, CLIs, build tools.</p>
+    <p>A JavaScript runtime (built on Chrome's V8 engine) for running JS outside the browser, servers, CLIs, build tools.</p>
 <h2 id="setup">Setup</h2>
 <p>Install via <a href="https://github.com/nvm-sh/nvm">nvm</a> (Node Version Manager) rather than a system package, so you can switch versions per project:</p>
 <pre><code class="language-bash">nvm install --lts
@@ -85,7 +85,7 @@ npm install -D nodemon   # dev-only dependency
   &quot;dependencies&quot;: { &quot;express&quot;: &quot;^4.19.0&quot; }
 }
 </code></pre>
-<p><code>"type": "module"</code> switches the project to ES module syntax (<code>import</code>/<code>export</code>); omit it to stay on CommonJS (<code>require</code>/<code>module.exports</code>) — don't mix the two styles in one file.</p>
+<p><code>"type": "module"</code> switches the project to ES module syntax (<code>import</code>/<code>export</code>); omit it to stay on CommonJS (<code>require</code>/<code>module.exports</code>), don't mix the two styles in one file.</p>
 <h2 id="a-minimal-http-server-no-framework">A minimal HTTP server (no framework)</h2>
 <pre><code class="language-js">import { createServer } from &quot;node:http&quot;;
 
@@ -148,9 +148,9 @@ const port = process.env.PORT ?? 3000;
 </table>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li>Uncaught errors in async callbacks (not <code>await</code>ed, no <code>.catch()</code>) crash the process silently in some setups — always handle rejected promises.</li>
-<li>CPU-heavy synchronous work blocks the entire event loop (Node is single-threaded for JS execution) — offload it to <code>worker_threads</code> or a separate service.</li>
-<li><code>npm install</code> without a lockfile committed leads to different dependency versions across machines — always commit <code>package-lock.json</code>.</li>
+<li>Uncaught errors in async callbacks (not <code>await</code>ed, no <code>.catch()</code>) crash the process silently in some setups, always handle rejected promises.</li>
+<li>CPU-heavy synchronous work blocks the entire event loop (Node is single-threaded for JS execution), offload it to <code>worker_threads</code> or a separate service.</li>
+<li><code>npm install</code> without a lockfile committed leads to different dependency versions across machines, always commit <code>package-lock.json</code>.</li>
 </ul>
     </article>
     <footer class="page-footer">

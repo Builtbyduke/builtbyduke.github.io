@@ -5,7 +5,7 @@
 a build-notes site for Minecraft add-ons/plugins, Discord bots, and the languages behind them.
 </div>
 
-This is a personal reference wiki, not a course — short, practical write-ups you can skim while you're actually building something, with real commands and copy-pasteable code instead of theory.
+This is a personal reference wiki, not a course, short, practical write-ups you can skim while you're actually building something, with real commands and copy-pasteable code instead of theory.
 
 ## What's inside
 
@@ -51,12 +51,12 @@ This is a personal reference wiki, not a course — short, practical write-ups y
 
 ## Sections
 
-- **Minecraft: Bedrock Scripting** — the `@minecraft/server` and `@minecraft/server-ui` APIs: events, custom commands, forms/GUIs, custom item & block components, and saving data with dynamic properties.
-- **Minecraft: Java Plugins** — Maven project setup, building and uploading `.jar` files to a real server, decompiling `.jar` files back to source, custom inventory GUIs, and the "everyone builds this eventually" systems: economy, permissions, commands.
-- **Discord Bots (Java)** — setting up JDA with Maven, and the slash-command / button / embed systems almost every bot needs.
-- **Language References** — a fast-start cheat sheet per language: toolchain setup, core syntax, the libraries people actually reach for, and one worked example.
+- **Minecraft: Bedrock Scripting**, the `@minecraft/server` and `@minecraft/server-ui` APIs: events, custom commands, forms/GUIs, custom item & block components, and saving data with dynamic properties.
+- **Minecraft: Java Plugins**, Maven project setup, building and uploading `.jar` files to a real server, decompiling `.jar` files back to source, custom inventory GUIs, and the "everyone builds this eventually" systems: economy, permissions, commands.
+- **Discord Bots (Java)**, setting up JDA with Maven, and the slash-command / button / embed systems almost every bot needs.
+- **Language References**, a fast-start cheat sheet per language: toolchain setup, core syntax, the libraries people actually reach for, and one worked example.
 
-> These pages assume you're comfortable in a terminal and have a code editor (VS Code is the common choice across every section here). Version numbers move fast — treat exact numbers in code blocks as "as of writing" and check the linked docs if something's changed.
+> These pages assume you're comfortable in a terminal and have a code editor (VS Code is the common choice across every section here). Version numbers move fast, treat exact numbers in code blocks as "as of writing" and check the linked docs if something's changed.
 
 ## Contributing
 

@@ -21,9 +21,9 @@ function Greeting({ name }: { name: string }) {
 }
 ```
 
-JSX compiles to `React.createElement(...)` calls — it looks like HTML but is real JavaScript, so `{}` drops back into JS expressions anywhere.
+JSX compiles to `React.createElement(...)` calls, it looks like HTML but is real JavaScript, so `{}` drops back into JS expressions anywhere.
 
-## State — `useState`
+## State, `useState`
 
 ```tsx
 import { useState } from "react";
@@ -40,7 +40,7 @@ function Counter() {
 
 `setCount` triggers a re-render; state updates are not applied instantly/synchronously, so don't rely on `count` being updated immediately after calling `setCount`.
 
-## Effects — `useEffect`
+## Effects, `useEffect`
 
 ```tsx
 import { useEffect, useState } from "react";
@@ -61,7 +61,7 @@ function UserProfile({ id }: { id: string }) {
 }
 ```
 
-The dependency array is the most common source of bugs — omitting a value used inside the effect leads to stale closures; the `eslint-plugin-react-hooks` rule catches most of these automatically.
+The dependency array is the most common source of bugs, omitting a value used inside the effect leads to stale closures; the `eslint-plugin-react-hooks` rule catches most of these automatically.
 
 ## Lists & keys
 
@@ -77,7 +77,7 @@ function TodoList({ items }: { items: { id: string; text: string }[] }) {
 
 `key` must be stable and unique per item (an ID, not the array index) so React can correctly track which DOM node maps to which data across re-renders.
 
-## Sharing state — Context (for a handful of values)
+## Sharing state, Context (for a handful of values)
 
 ```tsx
 const ThemeContext = React.createContext("light");
@@ -110,5 +110,5 @@ For larger apps, a dedicated state library (Zustand, Redux Toolkit, Jotai) usual
 
 ## Common gotchas
 
-- Mutating state directly (`user.name = "x"`) doesn't trigger a re-render — always create a new object/array (`setUser({ ...user, name: "x" })`).
-- Every component re-renders when its state changes, and by default its children re-render too — `React.memo`, `useMemo`, `useCallback` exist for the cases where that becomes measurably slow, not as a default habit.
+- Mutating state directly (`user.name = "x"`) doesn't trigger a re-render, always create a new object/array (`setUser({ ...user, name: "x" })`).
+- Every component re-renders when its state changes, and by default its children re-render too, `React.memo`, `useMemo`, `useCallback` exist for the cases where that becomes measurably slow, not as a default habit.

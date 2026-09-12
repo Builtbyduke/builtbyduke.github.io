@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-cpp</span></div>
     <article class="prose">
-    <p><a href="lang-c.html">C</a> extended with classes, templates, and modern memory-safety tools (smart pointers, RAII) — used heavily in game engines, systems software, and performance-critical applications.</p>
+    <p><a href="lang-c.html">C</a> extended with classes, templates, and modern memory-safety tools (smart pointers, RAII), used heavily in game engines, systems software, and performance-critical applications.</p>
 <h2 id="setup">Setup</h2>
 <pre><code class="language-bash">g++ --version    # or clang++ --version
 </code></pre>
@@ -112,7 +112,7 @@ void useResource() {
     auto res = std::make_unique&lt;Resource&gt;(); // freed automatically, even on exception
 } // &quot;Released&quot; prints here
 </code></pre>
-<p><code>std::unique_ptr</code> and <code>std::shared_ptr</code> are the modern default over raw <code>new</code>/<code>delete</code> — the destructor runs deterministically when the smart pointer goes out of scope, eliminating most manual memory bugs.</p>
+<p><code>std::unique_ptr</code> and <code>std::shared_ptr</code> are the modern default over raw <code>new</code>/<code>delete</code>, the destructor runs deterministically when the smart pointer goes out of scope, eliminating most manual memory bugs.</p>
 <h2 id="templates-generic-programming">Templates (generic programming)</h2>
 <pre><code class="language-cpp">template &lt;typename T&gt;
 T maxOf(T a, T b) {
@@ -165,9 +165,9 @@ for (const auto&amp; [name, age] : ages) {
 </table>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li>A raw pointer returned from a function that owns the data it points to (rather than a smart pointer or reference) is a classic dangling-pointer bug — prefer returning by value or a smart pointer.</li>
-<li>Passing large objects by value (instead of by <code>const&amp;</code>) triggers unnecessary copies — pass by reference for anything beyond a primitive.</li>
-<li>Undefined behavior (out-of-bounds access, use-after-free) can "work" in testing and fail unpredictably elsewhere — this class of bug is exactly why smart pointers and container bounds-checked accessors (<code>.at()</code> instead of <code>[]</code>) exist.</li>
+<li>A raw pointer returned from a function that owns the data it points to (rather than a smart pointer or reference) is a classic dangling-pointer bug, prefer returning by value or a smart pointer.</li>
+<li>Passing large objects by value (instead of by <code>const&amp;</code>) triggers unnecessary copies, pass by reference for anything beyond a primitive.</li>
+<li>Undefined behavior (out-of-bounds access, use-after-free) can "work" in testing and fail unpredictably elsewhere, this class of bug is exactly why smart pointers and container bounds-checked accessors (<code>.at()</code> instead of <code>[]</code>) exist.</li>
 </ul>
     </article>
     <footer class="page-footer">

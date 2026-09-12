@@ -74,7 +74,7 @@ TEMPLATE = """<!DOCTYPE html>
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="{root}index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="{home}index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="{home}index.html">&larr; Back to Main Site</a>
     {nav}
   </nav>
   <main id="main" class="content">

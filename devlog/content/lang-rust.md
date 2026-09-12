@@ -1,6 +1,6 @@
 # Rust
 
-A compiled systems language that guarantees memory safety without a garbage collector, enforced at compile time by the **borrow checker** — a common choice when you want C++-level performance with far fewer memory bugs.
+A compiled systems language that guarantees memory safety without a garbage collector, enforced at compile time by the **borrow checker**, a common choice when you want C++-level performance with far fewer memory bugs.
 
 ## Setup
 
@@ -27,7 +27,7 @@ fn add(a: i32, b: i32) -> i32 {
 
 fn main() {
     let name = "Ada";
-    let mut count = 0; // immutable by default — mut required to reassign
+    let mut count = 0; // immutable by default, mut required to reassign
     count += 1;
 
     println!("Hello, {name}! Count: {count}");
@@ -37,18 +37,18 @@ fn main() {
 }
 ```
 
-## Ownership — the core concept
+## Ownership, the core concept
 
 ```rust
 fn main() {
     let s1 = String::from("hello");
-    let s2 = s1; // s1 is MOVED into s2 — s1 is no longer valid
+    let s2 = s1; // s1 is MOVED into s2, s1 is no longer valid
 
     // println!("{s1}"); // compile error: value borrowed after move
     println!("{s2}"); // fine
 
     let s3 = String::from("world");
-    print_it(&s3); // borrow, not move — s3 still usable after
+    print_it(&s3); // borrow, not move, s3 still usable after
     println!("{s3}");
 }
 
@@ -57,7 +57,7 @@ fn print_it(s: &String) {
 }
 ```
 
-Every value has exactly one owner; when the owner goes out of scope, the value is freed automatically (like C++ RAII, but enforced by the compiler rather than convention) — this is what eliminates use-after-free and double-free bugs at compile time.
+Every value has exactly one owner; when the owner goes out of scope, the value is freed automatically (like C++ RAII, but enforced by the compiler rather than convention), this is what eliminates use-after-free and double-free bugs at compile time.
 
 ## Structs, enums, and pattern matching
 
@@ -83,7 +83,7 @@ fn area(shape: &Shape) -> f64 {
 }
 ```
 
-## Error handling — `Result`, no exceptions
+## Error handling, `Result`, no exceptions
 
 ```rust
 fn divide(a: f64, b: f64) -> Result<f64, String> {
@@ -117,6 +117,6 @@ Add with `cargo add <crate>` (e.g. `cargo add tokio --features full`).
 
 ## Common gotchas
 
-- The borrow checker rejects code that would be memory-unsafe even if it "would have worked" at runtime — the fix is almost always to restructure ownership (clone, use a reference, or restructure lifetimes), not to fight the compiler.
-- `unwrap()` panics immediately on an `Err`/`None` — fine for prototypes and tests, but production code should handle the `Result`/`Option` explicitly or use `?` to propagate it.
-- Integer overflow panics in debug builds but silently wraps in release builds by default — use checked/wrapping arithmetic methods explicitly if you need consistent behavior across both.
+- The borrow checker rejects code that would be memory-unsafe even if it "would have worked" at runtime, the fix is almost always to restructure ownership (clone, use a reference, or restructure lifetimes), not to fight the compiler.
+- `unwrap()` panics immediately on an `Err`/`None`, fine for prototypes and tests, but production code should handle the `Result`/`Option` explicitly or use `?` to propagate it.
+- Integer overflow panics in debug builds but silently wraps in release builds by default, use checked/wrapping arithmetic methods explicitly if you need consistent behavior across both.

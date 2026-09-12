@@ -72,7 +72,7 @@ Reference it from the item JSON:
 }
 ```
 
-**Block states** (`myaddon:charge` above) are the mechanism for "the same block but with variants" — think redstone repeater delay settings. Read/write them from script:
+**Block states** (`myaddon:charge` above) are the mechanism for "the same block but with variants", think redstone repeater delay settings. Read/write them from script:
 
 ```js
 const block = player.dimension.getBlock(loc);
@@ -82,7 +82,7 @@ block.setPermutation(block.permutation.withState("myaddon:charge", (state + 1) %
 
 ## Custom block components
 
-Same registration pattern as items, but for blocks — commonly used for `onPlayerInteract`, `onTick`, or `onPlace`:
+Same registration pattern as items, but for blocks, commonly used for `onPlayerInteract`, `onTick`, or `onPlace`:
 
 ```js
 system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) => {

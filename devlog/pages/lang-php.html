@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-php</span></div>
     <article class="prose">
-    <p>A server-side scripting language built specifically for the web — still powers a huge share of it (WordPress alone accounts for a large fraction of all websites).</p>
+    <p>A server-side scripting language built specifically for the web, still powers a huge share of it (WordPress alone accounts for a large fraction of all websites).</p>
 <h2 id="setup">Setup</h2>
 <pre><code class="language-bash">php -v
 php -S localhost:8000     # built-in dev server, no Apache/Nginx needed locally
@@ -105,14 +105,14 @@ $letter = match (true) {
     default =&gt; &quot;F&quot;,
 };
 </code></pre>
-<p><code>match</code> (PHP 8+) uses strict comparison and has no fallthrough, unlike <code>switch</code> — prefer it for value-mapping logic.</p>
+<p><code>match</code> (PHP 8+) uses strict comparison and has no fallthrough, unlike <code>switch</code>, prefer it for value-mapping logic.</p>
 <h2 id="working-with-a-database-pdo">Working with a database (PDO)</h2>
 <pre><code class="language-php">$pdo = new PDO(&quot;mysql:host=localhost;dbname=app&quot;, &quot;user&quot;, &quot;pass&quot;);
 $stmt = $pdo-&gt;prepare(&quot;SELECT * FROM users WHERE id = ?&quot;);
 $stmt-&gt;execute([$id]);
 $user = $stmt-&gt;fetch(PDO::FETCH_ASSOC);
 </code></pre>
-<p>Always use prepared statements (<code>?</code> placeholders) — string-concatenating user input into SQL is the classic PHP injection vector.</p>
+<p>Always use prepared statements (<code>?</code> placeholders), string-concatenating user input into SQL is the classic PHP injection vector.</p>
 <h2 id="popular-frameworks">Popular frameworks</h2>
 <table>
 <thead>
@@ -148,9 +148,9 @@ $user = $stmt-&gt;fetch(PDO::FETCH_ASSOC);
 <p>Laravel's Eloquent ORM (<code>User::findOrFail($id)</code>) replaces most raw PDO code above in real applications.</p>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li><code>==</code> performs type juggling (<code>"abc" == 0</code> was <code>true</code> before PHP 8, and some looser comparisons still surprise people) — prefer <code>===</code>.</li>
-<li>Array functions are inconsistent about parameter order (<code>in_array($needle, $haystack)</code> vs <code>array_map($callback, $array)</code>) — there's no shortcut but experience; keep the docs open.</li>
-<li>Superglobals (<code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>) are global mutable state — modern frameworks wrap them in request objects for a reason; avoid touching them directly outside small scripts.</li>
+<li><code>==</code> performs type juggling (<code>"abc" == 0</code> was <code>true</code> before PHP 8, and some looser comparisons still surprise people), prefer <code>===</code>.</li>
+<li>Array functions are inconsistent about parameter order (<code>in_array($needle, $haystack)</code> vs <code>array_map($callback, $array)</code>), there's no shortcut but experience; keep the docs open.</li>
+<li>Superglobals (<code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>) are global mutable state, modern frameworks wrap them in request objects for a reason; avoid touching them directly outside small scripts.</li>
 </ul>
     </article>
     <footer class="page-footer">

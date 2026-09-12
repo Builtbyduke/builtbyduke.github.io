@@ -1,6 +1,6 @@
 # Kotlin
 
-A statically typed language that runs on the JVM (fully interoperable with [Java](lang-java.html)) — the default choice for modern Android development and increasingly popular for backend services too.
+A statically typed language that runs on the JVM (fully interoperable with [Java](lang-java.html)), the default choice for modern Android development and increasingly popular for backend services too.
 
 ## Setup
 
@@ -31,7 +31,7 @@ fun main() {
 }
 ```
 
-`val` (immutable reference) vs `var` (mutable) — same immutable-by-default philosophy as Swift and Rust.
+`val` (immutable reference) vs `var` (mutable), same immutable-by-default philosophy as Swift and Rust.
 
 ## Null safety
 
@@ -41,7 +41,7 @@ var maybeName: String? = null // must explicitly opt into nullability
 val length = maybeName?.length ?: 0   // safe call + Elvis operator for a default
 ```
 
-Like Swift's optionals, the type system distinguishes `String` (never null) from `String?` (may be null) — the compiler refuses to let a nullable value be used where a non-null one is required without a check first.
+Like Swift's optionals, the type system distinguishes `String` (never null) from `String?` (may be null), the compiler refuses to let a nullable value be used where a non-null one is required without a check first.
 
 ## Classes and data classes
 
@@ -50,7 +50,7 @@ class Animal(val name: String) {
     fun speak() = "$name makes a sound."
 }
 
-// data class — auto-generates equals/hashCode/toString/copy
+// data class, auto-generates equals/hashCode/toString/copy
 data class Point(val x: Int, val y: Int)
 
 val p1 = Point(1, 2)
@@ -83,7 +83,7 @@ fun main() = runBlocking {
 }
 ```
 
-`suspend` functions are Kotlin's alternative to callback-heavy or thread-heavy async code — they read like synchronous code but don't block the underlying thread.
+`suspend` functions are Kotlin's alternative to callback-heavy or thread-heavy async code, they read like synchronous code but don't block the underlying thread.
 
 ## Popular use
 
@@ -96,6 +96,6 @@ fun main() = runBlocking {
 
 ## Common gotchas
 
-- `==` in Kotlin checks *structural* equality by default (calls `.equals()`), unlike Java where `==` on objects checks reference identity — use `===` in Kotlin specifically for reference comparison.
-- Extension functions (adding methods to existing classes, e.g. `fun String.shout() = uppercase() + "!"`) are resolved statically at compile time based on the declared type, not the runtime type — this can surprise people expecting virtual-style dispatch.
-- Platform types from Java interop (no nullability info from Java's type system) can slip past Kotlin's null checks — annotate Java APIs with `@Nullable`/`@NonNull` where you control them.
+- `==` in Kotlin checks *structural* equality by default (calls `.equals()`), unlike Java where `==` on objects checks reference identity, use `===` in Kotlin specifically for reference comparison.
+- Extension functions (adding methods to existing classes, e.g. `fun String.shout() = uppercase() + "!"`) are resolved statically at compile time based on the declared type, not the runtime type, this can surprise people expecting virtual-style dispatch.
+- Platform types from Java interop (no nullability info from Java's type system) can slip past Kotlin's null checks, annotate Java APIs with `@Nullable`/`@NonNull` where you control them.

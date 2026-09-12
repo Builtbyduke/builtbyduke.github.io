@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/bedrock-persistent-storage</span></div>
     <article class="prose">
-    <p>Scripts don't have filesystem access, so persistence goes through <strong>dynamic properties</strong> — key/value data Mojang stores in the world save for you, attached to the world itself, an entity, or an item stack.</p>
+    <p>Scripts don't have filesystem access, so persistence goes through <strong>dynamic properties</strong>, key/value data Mojang stores in the world save for you, attached to the world itself, an entity, or an item stack.</p>
 <h2 id="register-properties-at-startup">Register properties at startup</h2>
 <p>You must declare properties (name + type) before you can use them:</p>
 <pre><code class="language-js">import { world, system } from &quot;@minecraft/server&quot;;
@@ -72,7 +72,7 @@ system.beforeEvents.startup.subscribe(({ propertyRegistry }) =&gt; {
   );
 });
 </code></pre>
-<p><em>(Newer API revisions relaxed this and let you set properties directly on <code>world</code>/entities without pre-registration — check the changelog for the API version pinned in your manifest.)</em></p>
+<p><em>(Newer API revisions relaxed this and let you set properties directly on <code>world</code>/entities without pre-registration, check the changelog for the API version pinned in your manifest.)</em></p>
 <h2 id="world-level-data-global-save-eg-a-shared-economy-total">World-level data (global save, e.g. a shared economy total)</h2>
 <pre><code class="language-js">world.setDynamicProperty(&quot;myaddon:coins_total&quot;, 500);
 const total = world.getDynamicProperty(&quot;myaddon:coins_total&quot;) ?? 0;
@@ -86,7 +86,7 @@ function addCoins(player, amount) {
 }
 </code></pre>
 <h2 id="storing-structured-data-objects-arrays">Storing structured data (objects, arrays)</h2>
-<p>Dynamic properties only store primitives (number, string, boolean) — for anything richer, serialize to JSON. Mind the string length limit (currently ~32,767 chars per property):</p>
+<p>Dynamic properties only store primitives (number, string, boolean), for anything richer, serialize to JSON. Mind the string length limit (currently ~32,767 chars per property):</p>
 <pre><code class="language-js">function saveInventoryBackup(player, items) {
   player.setDynamicProperty(&quot;myaddon:inv_backup&quot;, JSON.stringify(items));
 }
@@ -100,7 +100,7 @@ function loadInventoryBackup(player) {
 <pre><code class="language-js">player.runCommand(&quot;scoreboard objectives add coins dummy Coins&quot;);
 player.runCommand(`scoreboard players set @s coins ${amount}`);
 </code></pre>
-<p>Read it back with <code>/scoreboard players get</code>, though there's no direct script "get" for scoreboard values — you'd parse a command's output or keep the source of truth in a dynamic property and mirror it to the scoreboard for display only.</p>
+<p>Read it back with <code>/scoreboard players get</code>, though there's no direct script "get" for scoreboard values, you'd parse a command's output or keep the source of truth in a dynamic property and mirror it to the scoreboard for display only.</p>
 <h2 id="a-minimal-per-player-currency-system">A minimal per-player currency system</h2>
 <pre><code class="language-js">import { world } from &quot;@minecraft/server&quot;;
 

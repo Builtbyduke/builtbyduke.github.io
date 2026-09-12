@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-go</span></div>
     <article class="prose">
-    <p>A compiled, statically typed language from Google designed for simplicity and easy concurrency — a common choice for backend services, CLIs, and infrastructure tooling.</p>
+    <p>A compiled, statically typed language from Google designed for simplicity and easy concurrency, a common choice for backend services, CLIs, and infrastructure tooling.</p>
 <h2 id="setup">Setup</h2>
 <pre><code class="language-bash">go version
 mkdir my-app &amp;&amp; cd my-app
@@ -101,8 +101,8 @@ func (a Animal) Speak() string {
 dog := Animal{Name: &quot;Rex&quot;}
 fmt.Println(dog.Speak())
 </code></pre>
-<p>Go has no classes/inheritance — behavior is attached to types via methods, and interfaces are satisfied implicitly (no <code>implements</code> keyword needed).</p>
-<h2 id="error-handling-explicit-not-exceptions">Error handling — explicit, not exceptions</h2>
+<p>Go has no classes/inheritance, behavior is attached to types via methods, and interfaces are satisfied implicitly (no <code>implements</code> keyword needed).</p>
+<h2 id="error-handling-explicit-not-exceptions">Error handling, explicit, not exceptions</h2>
 <pre><code class="language-go">func divide(a, b float64) (float64, error) {
     if b == 0 {
         return 0, fmt.Errorf(&quot;division by zero&quot;)
@@ -116,7 +116,7 @@ if err != nil {
     return
 }
 </code></pre>
-<p>Every fallible function returns an <code>error</code> as its last value, checked explicitly with <code>if err != nil</code> — there's no try/catch in idiomatic Go.</p>
+<p>Every fallible function returns an <code>error</code> as its last value, checked explicitly with <code>if err != nil</code>, there's no try/catch in idiomatic Go.</p>
 <h2 id="goroutines-channels-concurrency">Goroutines &amp; channels (concurrency)</h2>
 <pre><code class="language-go">func worker(id int, jobs &lt;-chan int, results chan&lt;- int) {
     for j := range jobs {
@@ -168,9 +168,9 @@ func main() {
 </table>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li>Unused imports and unused local variables are <strong>compile errors</strong>, not warnings — Go is strict about this by design.</li>
+<li>Unused imports and unused local variables are <strong>compile errors</strong>, not warnings, Go is strict about this by design.</li>
 <li>A <code>nil</code> slice and an empty slice (<code>[]int{}</code>) behave almost identically but aren't <code>==</code> comparable the way you might expect coming from other languages.</li>
-<li>Struct fields and functions starting with a lowercase letter are unexported (package-private); capitalize them to make them public — there's no separate <code>public</code>/<code>private</code> keyword.</li>
+<li>Struct fields and functions starting with a lowercase letter are unexported (package-private); capitalize them to make them public, there's no separate <code>public</code>/<code>private</code> keyword.</li>
 </ul>
     </article>
     <footer class="page-footer">

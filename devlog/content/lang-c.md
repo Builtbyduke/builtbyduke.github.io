@@ -1,6 +1,6 @@
 # C
 
-A low-level, manually-memory-managed language that underlies most operating systems and runtimes — minimal abstraction between your code and the machine.
+A low-level, manually-memory-managed language that underlies most operating systems and runtimes, minimal abstraction between your code and the machine.
 
 ## Setup
 
@@ -15,7 +15,7 @@ gcc main.c -o main -Wall -Wextra
 ./main
 ```
 
-`-Wall -Wextra` enables warnings that catch a large share of real bugs (uninitialized variables, signed/unsigned mismatches) — always compile with them on.
+`-Wall -Wextra` enables warnings that catch a large share of real bugs (uninitialized variables, signed/unsigned mismatches), always compile with them on.
 
 ## Core syntax
 
@@ -56,13 +56,13 @@ int main(void) {
     int *arr = make_array(5);
     if (arr) {
         printf("%d\n", arr[2]);
-        free(arr); // you own it — you free it, exactly once
+        free(arr); // you own it, you free it, exactly once
     }
     return 0;
 }
 ```
 
-There's no garbage collector — every `malloc` needs exactly one matching `free`. Freeing twice, forgetting to free, or using memory after freeing it are the classic C bug categories; tools like **Valgrind** or `-fsanitize=address` catch these during development.
+There's no garbage collector, every `malloc` needs exactly one matching `free`. Freeing twice, forgetting to free, or using memory after freeing it are the classic C bug categories; tools like **Valgrind** or `-fsanitize=address` catch these during development.
 
 ## Structs
 
@@ -90,8 +90,8 @@ The include guard (`#ifndef`/`#define`/`#endif`) prevents a header being process
 
 ## Common gotchas
 
-- Array bounds are **not** checked — reading/writing past an array's end is undefined behavior, not a caught exception, and can corrupt unrelated memory silently.
-- Strings are just `char` arrays terminated by a `\0` byte — forgetting to size a buffer for that extra byte is a classic off-by-one bug.
-- Comparing floats with `==` is unreliable due to representation error — compare against a small epsilon instead (`fabs(a - b) < 1e-9`).
+- Array bounds are **not** checked, reading/writing past an array's end is undefined behavior, not a caught exception, and can corrupt unrelated memory silently.
+- Strings are just `char` arrays terminated by a `\0` byte, forgetting to size a buffer for that extra byte is a classic off-by-one bug.
+- Comparing floats with `==` is unreliable due to representation error, compare against a small epsilon instead (`fabs(a - b) < 1e-9`).
 
 See also: [C++](lang-cpp.html), which extends C with classes, templates, and RAII-based memory management.

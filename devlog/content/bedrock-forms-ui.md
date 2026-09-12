@@ -1,12 +1,12 @@
 # Forms & UI (GUIs)
 
-Bedrock scripting doesn't give you free-form custom screens like a resource-pack UI does — instead, `@minecraft/server-ui` gives you three **form types** that cover almost every menu you'll actually need. (If you've seen "FMBE" thrown around, it's not an official Mojang term — people usually mean this trio: **Action Form**, **Modal Form**, and **Message Form**, sometimes bundled with an event listener, which is what this page walks through.)
+Bedrock scripting doesn't give you free-form custom screens like a resource-pack UI does, instead, `@minecraft/server-ui` gives you three **form types** that cover almost every menu you'll actually need. (If you've seen "FMBE" thrown around, it's not an official Mojang term, people usually mean this trio: **Action Form**, **Modal Form**, and **Message Form**, sometimes bundled with an event listener, which is what this page walks through.)
 
 ```bash
 npm i @minecraft/server-ui
 ```
 
-## ActionFormData — button menu
+## ActionFormData, button menu
 
 The one you'll use most: a title, a body, and a list of buttons (optionally with icons).
 
@@ -32,7 +32,7 @@ function showKitMenu(player) {
 }
 ```
 
-## ModalFormData — inputs (sliders, toggles, dropdowns, text)
+## ModalFormData, inputs (sliders, toggles, dropdowns, text)
 
 Use this for settings screens or anything that needs actual data back, not just a click.
 
@@ -53,9 +53,9 @@ form.show(player).then((response) => {
 });
 ```
 
-The results always come back as a **positional array** matching the order fields were added — that trips people up more than anything else in this API.
+The results always come back as a **positional array** matching the order fields were added, that trips people up more than anything else in this API.
 
-## MessageFormData — confirm / two-button dialog
+## MessageFormData, confirm / two-button dialog
 
 ```js
 import { MessageFormData } from "@minecraft/server-ui";
@@ -73,7 +73,7 @@ new MessageFormData()
 
 ## Handling `canceled` correctly
 
-A form counts as canceled if the player presses Escape, if their inventory closes for another reason (server hiccup, chunk unload), or on some platforms if two forms are shown too close together. **Always** check `response.canceled` before reading `.selection` / `.formValues` — reading them on a canceled response throws.
+A form counts as canceled if the player presses Escape, if their inventory closes for another reason (server hiccup, chunk unload), or on some platforms if two forms are shown too close together. **Always** check `response.canceled` before reading `.selection` / `.formValues`, reading them on a canceled response throws.
 
 ```js
 form.show(player).then((response) => {
@@ -87,7 +87,7 @@ form.show(player).then((response) => {
 
 ## Building a simple menu system (multi-screen)
 
-Chain forms by calling the next `show()` from inside the previous `.then()` — this is how you build multi-step wizards (pick a kit → confirm → receive):
+Chain forms by calling the next `show()` from inside the previous `.then()`, this is how you build multi-step wizards (pick a kit → confirm → receive):
 
 ```js
 function openMainMenu(player) {
@@ -106,6 +106,6 @@ function openMainMenu(player) {
 
 ## Beyond forms: actual on-screen HUD
 
-For persistent HUD elements (not click-through menus), use `player.onScreenDisplay.setActionBar(text)` for a one-line action-bar message, or a resource-pack-driven custom UI (`ui/hud_screen.json`) if you need a real always-visible overlay — that lives in the resource pack, not the script API, and is a much bigger topic on its own.
+For persistent HUD elements (not click-through menus), use `player.onScreenDisplay.setActionBar(text)` for a one-line action-bar message, or a resource-pack-driven custom UI (`ui/hud_screen.json`) if you need a real always-visible overlay, that lives in the resource pack, not the script API, and is a much bigger topic on its own.
 
 Next: [Custom Items & Blocks](bedrock-custom-components.html).

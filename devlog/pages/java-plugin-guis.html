@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,7 +59,7 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/java-plugin-guis</span></div>
     <article class="prose">
-    <p>The classic "custom GUI" in a Bukkit/Paper plugin is a chest inventory you open, fill with <code>ItemStack</code>s as buttons, and intercept clicks on. There's no special "GUI API" in vanilla Bukkit — it's the inventory system, repurposed.</p>
+    <p>The classic "custom GUI" in a Bukkit/Paper plugin is a chest inventory you open, fill with <code>ItemStack</code>s as buttons, and intercept clicks on. There's no special "GUI API" in vanilla Bukkit, it's the inventory system, repurposed.</p>
 <h2 id="creating-and-opening-a-menu">Creating and opening a menu</h2>
 <pre><code class="language-java">import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -148,12 +148,12 @@ public class MenuManager implements Listener {
     }
 }
 </code></pre>
-<p>Each concrete menu (e.g. <code>KitMenu</code>) implements <code>Menu</code> and builds its own <code>ItemStack</code>s — no more title-string matching, and menus can hold their own state (pagination index, selected filters, etc.) as instance fields.</p>
+<p>Each concrete menu (e.g. <code>KitMenu</code>) implements <code>Menu</code> and builds its own <code>ItemStack</code>s, no more title-string matching, and menus can hold their own state (pagination index, selected filters, etc.) as instance fields.</p>
 <h2 id="popular-libraries-that-do-this-for-you">Popular libraries that do this for you</h2>
 <p>Writing this by hand is a great learning exercise, but for real projects most devs pull in a small menu library rather than reinventing pagination/animation:</p>
 <ul>
-<li><strong><a href="https://github.com/TriumphTeam/triumph-gui">Triumph GUI</a></strong> — fluent Kotlin/Java API, very popular for new projects.</li>
-<li><strong><a href="https://github.com/DevNatan/inventory-framework">IF (Inventory Framework)</a></strong> — component-based, supports nested/paginated views.</li>
+<li><strong><a href="https://github.com/TriumphTeam/triumph-gui">Triumph GUI</a></strong>, fluent Kotlin/Java API, very popular for new projects.</li>
+<li><strong><a href="https://github.com/DevNatan/inventory-framework">IF (Inventory Framework)</a></strong>, component-based, supports nested/paginated views.</li>
 </ul>
 <p>Add via Maven (shaded, since these aren't on the server already):</p>
 <pre><code class="language-xml">&lt;dependency&gt;

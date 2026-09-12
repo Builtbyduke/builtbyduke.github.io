@@ -1,6 +1,6 @@
 # Go
 
-A compiled, statically typed language from Google designed for simplicity and easy concurrency — a common choice for backend services, CLIs, and infrastructure tooling.
+A compiled, statically typed language from Google designed for simplicity and easy concurrency, a common choice for backend services, CLIs, and infrastructure tooling.
 
 ## Setup
 
@@ -54,9 +54,9 @@ dog := Animal{Name: "Rex"}
 fmt.Println(dog.Speak())
 ```
 
-Go has no classes/inheritance — behavior is attached to types via methods, and interfaces are satisfied implicitly (no `implements` keyword needed).
+Go has no classes/inheritance, behavior is attached to types via methods, and interfaces are satisfied implicitly (no `implements` keyword needed).
 
-## Error handling — explicit, not exceptions
+## Error handling, explicit, not exceptions
 
 ```go
 func divide(a, b float64) (float64, error) {
@@ -73,7 +73,7 @@ if err != nil {
 }
 ```
 
-Every fallible function returns an `error` as its last value, checked explicitly with `if err != nil` — there's no try/catch in idiomatic Go.
+Every fallible function returns an `error` as its last value, checked explicitly with `if err != nil`, there's no try/catch in idiomatic Go.
 
 ## Goroutines & channels (concurrency)
 
@@ -112,6 +112,6 @@ func main() {
 
 ## Common gotchas
 
-- Unused imports and unused local variables are **compile errors**, not warnings — Go is strict about this by design.
+- Unused imports and unused local variables are **compile errors**, not warnings, Go is strict about this by design.
 - A `nil` slice and an empty slice (`[]int{}`) behave almost identically but aren't `==` comparable the way you might expect coming from other languages.
-- Struct fields and functions starting with a lowercase letter are unexported (package-private); capitalize them to make them public — there's no separate `public`/`private` keyword.
+- Struct fields and functions starting with a lowercase letter are unexported (package-private); capitalize them to make them public, there's no separate `public`/`private` keyword.

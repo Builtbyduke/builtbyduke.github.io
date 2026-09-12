@@ -1,10 +1,10 @@
-# Economy, Permissions & Commands — the systems everyone builds
+# Economy, Permissions & Commands, the systems everyone builds
 
 A handful of systems show up in nearly every serious Bukkit/Paper server. Rather than reinventing them, the ecosystem converges on a few standard plugins with public APIs your plugin hooks into.
 
-## Economy — Vault + an economy plugin
+## Economy, Vault + an economy plugin
 
-**Vault** is not an economy plugin itself — it's an abstraction layer. You code against Vault's `Economy` interface, and server owners install whichever real economy plugin they prefer (EssentialsX, CMI, etc.) underneath it.
+**Vault** is not an economy plugin itself, it's an abstraction layer. You code against Vault's `Economy` interface, and server owners install whichever real economy plugin they prefer (EssentialsX, CMI, etc.) underneath it.
 
 ```xml
 <repository>
@@ -21,7 +21,7 @@ A handful of systems show up in nearly every serious Bukkit/Paper server. Rather
 </dependency>
 ```
 
-`plugin.yml` — declare the soft dependency:
+`plugin.yml`, declare the soft dependency:
 
 ```yaml
 softdepend: [Vault]
@@ -51,9 +51,9 @@ econ.withdrawPlayer(player, 50.0);
 double balance = econ.getBalance(player);
 ```
 
-## Permissions — LuckPerms
+## Permissions, LuckPerms
 
-Most servers run **LuckPerms**. You rarely need its full API just to *check* a permission — Bukkit's own permission check already respects whatever LuckPerms grants:
+Most servers run **LuckPerms**. You rarely need its full API just to *check* a permission, Bukkit's own permission check already respects whatever LuckPerms grants:
 
 ```java
 if (player.hasPermission("myplugin.admin")) {
@@ -75,7 +75,7 @@ permissions:
 
 For deeper integration (reading a player's LuckPerms groups/prefix directly), add the LuckPerms API as a `provided` dependency and fetch the `LuckPerms` service the same way as Vault's `Economy` above.
 
-## Commands — Brigadier / modern command frameworks
+## Commands, Brigadier / modern command frameworks
 
 Plain `CommandExecutor` (shown in [setup](java-plugin-setup.html)) is fine for one-off commands, but tab completion, subcommands, and argument validation get repetitive fast. Two common upgrades:
 
@@ -101,9 +101,9 @@ public void onEnable() {
 }
 ```
 
-**Third-party frameworks** like **[Cloud Command Framework](https://github.com/Incendo/cloud)** work across Bukkit, Paper, Velocity, and Discord (JDA) with one annotation-driven API — worth it once a plugin has more than a few commands with subcommands/permissions/arguments to manage.
+**Third-party frameworks** like **[Cloud Command Framework](https://github.com/Incendo/cloud)** work across Bukkit, Paper, Velocity, and Discord (JDA) with one annotation-driven API, worth it once a plugin has more than a few commands with subcommands/permissions/arguments to manage.
 
-## Config files — YAML
+## Config files, YAML
 
 Bukkit's built-in config wraps Bukkit's YAML implementation; every plugin uses roughly this pattern:
 
@@ -122,7 +122,7 @@ kit-cooldown-seconds: 30
 enabled-kits: [warrior, archer, miner]
 ```
 
-## Data persistence — SQLite/MySQL via HikariCP
+## Data persistence, SQLite/MySQL via HikariCP
 
 For anything beyond simple config values (player balances, stats, homes), most plugins reach for **HikariCP** (connection pooling) over either SQLite (single server) or MySQL (shared across a network via BungeeCord/Velocity):
 
@@ -140,4 +140,4 @@ config.setJdbcUrl("jdbc:sqlite:" + getDataFolder() + "/data.db");
 HikariDataSource dataSource = new HikariDataSource(config);
 ```
 
-These four — Vault economy, permission checks, a real command framework, and pooled SQL storage — cover the large majority of "how do I add X system" questions in plugin development.
+These four, Vault economy, permission checks, a real command framework, and pooled SQL storage, cover the large majority of "how do I add X system" questions in plugin development.

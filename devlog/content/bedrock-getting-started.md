@@ -1,6 +1,6 @@
 # Getting Started with the Bedrock Script API
 
-Minecraft Bedrock add-ons are split into **packs**: a *behavior pack* (logic, entities, scripts) and usually a matching *resource pack* (textures, models, sounds). Scripting lives inside a behavior pack and is powered by the `@minecraft/server` module — Mojang's own JavaScript/TypeScript API, run inside the game.
+Minecraft Bedrock add-ons are split into **packs**: a *behavior pack* (logic, entities, scripts) and usually a matching *resource pack* (textures, models, sounds). Scripting lives inside a behavior pack and is powered by the `@minecraft/server` module, Mojang's own JavaScript/TypeScript API, run inside the game.
 
 ## Folder layout
 
@@ -17,7 +17,7 @@ development_behavior_packs/
 
 Find the folder:
 - **Windows**: `%localappdata%\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\development_behavior_packs`
-- **Preview/Education editions** use a similarly named package folder — search for `com.mojang`.
+- **Preview/Education editions** use a similarly named package folder, search for `com.mojang`.
 
 ## manifest.json
 
@@ -54,7 +54,7 @@ Every pack needs a manifest declaring its modules. A scripting-enabled behavior 
 }
 ```
 
-Generate fresh UUIDs (e.g. with `uuidgen` or an online v4 generator) — never reuse the sample ones above, or Minecraft will treat two different packs as the same pack.
+Generate fresh UUIDs (e.g. with `uuidgen` or an online v4 generator), never reuse the sample ones above, or Minecraft will treat two different packs as the same pack.
 
 ## Your first script
 
@@ -73,7 +73,7 @@ system.runInterval(() => {
 }, 100); // 100 ticks = 5s (20 ticks/sec)
 ```
 
-Enable the pack on a world (**must** turn on *Beta APIs* under Experiments), then run `/reload` in-game while you edit — no restart needed.
+Enable the pack on a world (**must** turn on *Beta APIs* under Experiments), then run `/reload` in-game while you edit, no restart needed.
 
 ## TypeScript instead of raw JS
 

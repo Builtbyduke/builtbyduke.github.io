@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,11 +59,11 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-javascript</span></div>
     <article class="prose">
-    <p>The language of the web browser, and — via Node — of a huge share of backend and tooling code too.</p>
+    <p>The language of the web browser, and, via Node, of a huge share of backend and tooling code too.</p>
 <h2 id="setup">Setup</h2>
 <p>Runs natively in every browser. For local scripting/tooling, install <a href="lang-node.html">Node.js</a> (<code>node -v</code> to confirm), which also gives you <code>npm</code>.</p>
 <h2 id="core-syntax">Core syntax</h2>
-<pre><code class="language-js">// variables — prefer const, use let when reassigned, avoid var
+<pre><code class="language-js">// variables, prefer const, use let when reassigned, avoid var
 const name = &quot;Ada&quot;;
 let count = 0;
 
@@ -132,15 +132,15 @@ import Calculator, { add } from &quot;./math.js&quot;;
 </tr>
 <tr>
 <td>Date handling</td>
-<td>date-fns, Luxon (avoid Moment.js — in maintenance mode)</td>
+<td>date-fns, Luxon (avoid Moment.js, in maintenance mode)</td>
 </tr>
 </tbody>
 </table>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li><code>this</code> inside a regular function depends on how it's <em>called</em>, not where it's defined — arrow functions capture the surrounding <code>this</code> instead, which is why they're preferred for callbacks inside class methods.</li>
+<li><code>this</code> inside a regular function depends on how it's <em>called</em>, not where it's defined, arrow functions capture the surrounding <code>this</code> instead, which is why they're preferred for callbacks inside class methods.</li>
 <li>Array/object equality is by reference: <code>[1,2] === [1,2]</code> is <code>false</code>.</li>
-<li>Floating point: <code>0.1 + 0.2 !== 0.3</code> — use a small epsilon or a decimal library for money.</li>
+<li>Floating point: <code>0.1 + 0.2 !== 0.3</code>, use a small epsilon or a decimal library for money.</li>
 </ul>
 <p>See also: <a href="lang-typescript.html">TypeScript</a> for the typed superset most new projects now use by default.</p>
     </article>

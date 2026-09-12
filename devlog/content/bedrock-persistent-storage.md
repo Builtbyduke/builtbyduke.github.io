@@ -1,6 +1,6 @@
 # Saving Data (Dynamic Properties)
 
-Scripts don't have filesystem access, so persistence goes through **dynamic properties** — key/value data Mojang stores in the world save for you, attached to the world itself, an entity, or an item stack.
+Scripts don't have filesystem access, so persistence goes through **dynamic properties**, key/value data Mojang stores in the world save for you, attached to the world itself, an entity, or an item stack.
 
 ## Register properties at startup
 
@@ -18,7 +18,7 @@ system.beforeEvents.startup.subscribe(({ propertyRegistry }) => {
 });
 ```
 
-*(Newer API revisions relaxed this and let you set properties directly on `world`/entities without pre-registration — check the changelog for the API version pinned in your manifest.)*
+*(Newer API revisions relaxed this and let you set properties directly on `world`/entities without pre-registration, check the changelog for the API version pinned in your manifest.)*
 
 ## World-level data (global save, e.g. a shared economy total)
 
@@ -40,7 +40,7 @@ function addCoins(player, amount) {
 
 ## Storing structured data (objects, arrays)
 
-Dynamic properties only store primitives (number, string, boolean) — for anything richer, serialize to JSON. Mind the string length limit (currently ~32,767 chars per property):
+Dynamic properties only store primitives (number, string, boolean), for anything richer, serialize to JSON. Mind the string length limit (currently ~32,767 chars per property):
 
 ```js
 function saveInventoryBackup(player, items) {
@@ -61,7 +61,7 @@ player.runCommand("scoreboard objectives add coins dummy Coins");
 player.runCommand(`scoreboard players set @s coins ${amount}`);
 ```
 
-Read it back with `/scoreboard players get`, though there's no direct script "get" for scoreboard values — you'd parse a command's output or keep the source of truth in a dynamic property and mirror it to the scoreboard for display only.
+Read it back with `/scoreboard players get`, though there's no direct script "get" for scoreboard values, you'd parse a command's output or keep the source of truth in a dynamic property and mirror it to the scoreboard for display only.
 
 ## A minimal per-player currency system
 

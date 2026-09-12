@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -67,7 +67,7 @@
 <li><code>clean</code> wipes <code>target/</code> so you're not shipping stale classes.</li>
 <li><code>package</code> compiles, runs tests, and produces the jar in <code>target/</code>.</li>
 </ul>
-<p>With the <code>maven-shade-plugin</code> configured (see <a href="java-plugin-setup.html">setup page</a>), you'll get <code>target/my-plugin.jar</code> — this is the file the server loads. Without shading you'd get a jar missing any third-party dependencies you added (besides the provided API), which fail silently at runtime with <code>NoClassDefFoundError</code>.</p>
+<p>With the <code>maven-shade-plugin</code> configured (see <a href="java-plugin-setup.html">setup page</a>), you'll get <code>target/my-plugin.jar</code>, this is the file the server loads. Without shading you'd get a jar missing any third-party dependencies you added (besides the provided API), which fail silently at runtime with <code>NoClassDefFoundError</code>.</p>
 <p>Useful variants:</p>
 <pre><code class="language-bash">mvn clean package -DskipTests     # skip test phase for a quick rebuild
 mvn -q clean package              # quiet output, only show errors
@@ -81,18 +81,18 @@ mvn -q clean package              # quiet output, only show errors
     my-plugin.jar   &lt;- goes here
 </code></pre>
 <h2 id="uploading-to-a-remote-server">Uploading to a remote server</h2>
-<p><strong>Option 1 — SFTP/SCP (most common for a VPS):</strong></p>
+<p><strong>Option 1, SFTP/SCP (most common for a VPS):</strong></p>
 <pre><code class="language-bash">scp target/my-plugin.jar user@your-server-ip:/path/to/server/plugins/
 </code></pre>
 <p>Or with an SFTP GUI client (FileZilla, WinSCP): connect with the same host/user/port your SSH access uses, navigate to <code>plugins/</code>, and drag the jar in.</p>
-<p><strong>Option 2 — Managed host control panel</strong> (common on Pterodactyl-based hosts like most budget Minecraft hosts): use the panel's file manager, open <code>plugins/</code>, and use its upload button. Some panels also support SFTP directly into the same path.</p>
-<p><strong>Option 3 — rsync</strong>, handy if you're iterating quickly and want to skip re-uploading unchanged files:</p>
+<p><strong>Option 2, Managed host control panel</strong> (common on Pterodactyl-based hosts like most budget Minecraft hosts): use the panel's file manager, open <code>plugins/</code>, and use its upload button. Some panels also support SFTP directly into the same path.</p>
+<p><strong>Option 3, rsync</strong>, handy if you're iterating quickly and want to skip re-uploading unchanged files:</p>
 <pre><code class="language-bash">rsync -avz target/my-plugin.jar user@your-server-ip:/path/to/server/plugins/
 </code></pre>
 <h2 id="reloading-without-a-full-restart">Reloading without a full restart</h2>
 <p>Full restarts are safer, but for quick iteration:</p>
 <pre><code>/plugins          # confirm it's loaded
-/reload confirm   # Paper requires this confirmation — many devs still avoid /reload
+/reload confirm   # Paper requires this confirmation, many devs still avoid /reload
                    # in production since it can leave old listeners registered
 </code></pre>
 <p>Most experienced plugin devs prefer a full <code>stop</code> + restart, or a plugin manager like <strong>PlugMan</strong>, over vanilla <code>/reload</code>, because <code>/reload</code> doesn't reliably tear down everything the old plugin instance registered.</p>
@@ -124,7 +124,7 @@ echo &quot;Deployed. Restart or /reload confirm on the test server.&quot;
 </tr>
 <tr>
 <td><code>Unsupported class file major version</code></td>
-<td>Server's Java runtime is older than the version you compiled with — match <code>maven.compiler.target</code> to the server's actual JDK</td>
+<td>Server's Java runtime is older than the version you compiled with, match <code>maven.compiler.target</code> to the server's actual JDK</td>
 </tr>
 <tr>
 <td>Plugin doesn't appear in <code>/plugins</code></td>

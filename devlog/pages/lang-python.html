@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -66,7 +66,7 @@ python3 -m venv .venv         # isolated environment per project
 source .venv/bin/activate     # (.venv\Scripts\activate on Windows)
 pip install requests
 </code></pre>
-<p>Always work inside a virtual environment — installing packages globally leads to version conflicts across projects.</p>
+<p>Always work inside a virtual environment, installing packages globally leads to version conflicts across projects.</p>
 <h2 id="core-syntax">Core syntax</h2>
 <pre><code class="language-python">name = &quot;Ada&quot;
 count = 0
@@ -88,7 +88,7 @@ class Animal:
     def speak(self) -&gt; str:
         return f&quot;{self.name} makes a sound.&quot;
 </code></pre>
-<p>Indentation is syntax — a block is defined by consistent indentation (4 spaces is the near-universal convention), not braces.</p>
+<p>Indentation is syntax, a block is defined by consistent indentation (4 spaces is the near-universal convention), not braces.</p>
 <h2 id="context-managers-with">Context managers (<code>with</code>)</h2>
 <pre><code class="language-python">with open(&quot;data.txt&quot;) as f:
     contents = f.read()
@@ -108,7 +108,7 @@ finally:
 def find_user(user_id: int) -&gt; Optional[dict]:
     return database.get(user_id)
 </code></pre>
-<p>Type hints aren't enforced at runtime — tools like <code>mypy</code> or <code>pyright</code> check them statically, catching mismatches before you run anything.</p>
+<p>Type hints aren't enforced at runtime, tools like <code>mypy</code> or <code>pyright</code> check them statically, catching mismatches before you run anything.</p>
 <h2 id="popular-librariesframeworks">Popular libraries/frameworks</h2>
 <table>
 <thead>
@@ -153,9 +153,9 @@ def get_user(user_id: int):
 </code></pre>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li>Mutable default arguments (<code>def f(items=[])</code>) are created <strong>once</strong> and shared across calls — use <code>None</code> and initialize inside the function instead.</li>
+<li>Mutable default arguments (<code>def f(items=[])</code>) are created <strong>once</strong> and shared across calls, use <code>None</code> and initialize inside the function instead.</li>
 <li>Late binding in closures: a loop variable captured in a lambda/function inside the loop reflects its <em>final</em> value, not the value at each iteration, unless explicitly bound as a default argument.</li>
-<li>Python 2 vs 3: Python 2 is end-of-life — any tutorial written for it (print statements without parens, etc.) is outdated.</li>
+<li>Python 2 vs 3: Python 2 is end-of-life, any tutorial written for it (print statements without parens, etc.) is outdated.</li>
 </ul>
     </article>
     <footer class="page-footer">

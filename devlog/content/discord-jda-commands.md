@@ -1,10 +1,10 @@
 # Slash Commands, Buttons & Embeds
 
-These three — slash commands, buttons/menus, and embeds — make up the majority of what a modern Discord bot's UI actually is.
+These three, slash commands, buttons/menus, and embeds, make up the majority of what a modern Discord bot's UI actually is.
 
 ## Registering a slash command
 
-Register commands once (globally, or instantly per-guild for testing — global commands can take up to an hour to propagate):
+Register commands once (globally, or instantly per-guild for testing, global commands can take up to an hour to propagate):
 
 ```java
 jda.updateCommands().addCommands(
@@ -82,7 +82,7 @@ event.reply("Confirm the action?")
     .queue();
 ```
 
-Handling clicks — the **custom ID** you set is how you route the click back to logic (a common pattern: `action:payload`, split on `:`):
+Handling clicks, the **custom ID** you set is how you route the click back to logic (a common pattern: `action:payload`, split on `:`):
 
 ```java
 @Override
@@ -95,7 +95,7 @@ public void onButtonInteraction(ButtonInteractionEvent event) {
 }
 ```
 
-`.setComponents()` with no arguments removes the buttons after they're used — otherwise users can click "Confirm" repeatedly.
+`.setComponents()` with no arguments removes the buttons after they're used, otherwise users can click "Confirm" repeatedly.
 
 ## Select menus (dropdowns)
 
@@ -138,4 +138,4 @@ Modal modal = Modal.create("report-modal", "Submit a Report")
 event.replyModal(modal).queue();
 ```
 
-Together, these four interaction types (slash commands, buttons, select menus, modals) are essentially the entire "UI toolkit" JDA exposes — almost every real bot feature is some combination of them.
+Together, these four interaction types (slash commands, buttons, select menus, modals) are essentially the entire "UI toolkit" JDA exposes, almost every real bot feature is some combination of them.

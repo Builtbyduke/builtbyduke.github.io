@@ -16,7 +16,7 @@
   <nav class="sidebar" id="sidebar">
     <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
     <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
-    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
     <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
 <li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
 <li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
@@ -59,10 +59,10 @@
   <main id="main" class="content">
     <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-shell</span></div>
     <article class="prose">
-    <p>The scripting language of the terminal — automates the commands you'd otherwise type by hand. <code>bash</code> is the most common shell on Linux and (via WSL/Git Bash) widely used on Windows too; macOS ships <code>zsh</code> by default but is largely bash-compatible for scripting purposes.</p>
+    <p>The scripting language of the terminal, automates the commands you'd otherwise type by hand. <code>bash</code> is the most common shell on Linux and (via WSL/Git Bash) widely used on Windows too; macOS ships <code>zsh</code> by default but is largely bash-compatible for scripting purposes.</p>
 <h2 id="running-a-script">Running a script</h2>
 <pre><code class="language-bash">#!/usr/bin/env bash
-set -euo pipefail   # exit on error, undefined var, or failed pipe — put this in almost every script
+set -euo pipefail   # exit on error, undefined var, or failed pipe, put this in almost every script
 
 echo &quot;Hello, world&quot;
 </code></pre>
@@ -81,7 +81,7 @@ echo &quot;Hello, ${name}!&quot;   # braces avoid ambiguity when concatenating
 current_dir=$(pwd)
 files=$(ls | wc -l)
 </code></pre>
-<p>No spaces around <code>=</code> in assignment — <code>name = "Ada"</code> is a syntax error (Bash parses it as running a command called <code>name</code> with arguments).</p>
+<p>No spaces around <code>=</code> in assignment, <code>name = "Ada"</code> is a syntax error (Bash parses it as running a command called <code>name</code> with arguments).</p>
 <h2 id="conditionals">Conditionals</h2>
 <pre><code class="language-bash">if [ -f &quot;config.yml&quot; ]; then
     echo &quot;Config found&quot;
@@ -133,9 +133,9 @@ echo &quot;Arg count: $#&quot;
 </code></pre>
 <h2 id="common-gotchas">Common gotchas</h2>
 <ul>
-<li>Unquoted variables (<code>$name</code> instead of <code>"$name"</code>) break on spaces/glob characters in the value — quote variables almost everywhere, including in <code>[ ]</code> tests.</li>
-<li><code>rm -rf $dir</code> with an empty or unset <code>$dir</code> can expand to <code>rm -rf /</code> in the worst case — always quote, and consider <code>set -u</code> to fail loudly on unset variables instead.</li>
-<li>Exit codes matter for scripting logic (<code>0</code> = success, non-zero = failure) — check <code>$?</code> or use <code>if command; then</code> directly rather than parsing command output to detect failure.</li>
+<li>Unquoted variables (<code>$name</code> instead of <code>"$name"</code>) break on spaces/glob characters in the value, quote variables almost everywhere, including in <code>[ ]</code> tests.</li>
+<li><code>rm -rf $dir</code> with an empty or unset <code>$dir</code> can expand to <code>rm -rf /</code> in the worst case, always quote, and consider <code>set -u</code> to fail loudly on unset variables instead.</li>
+<li>Exit codes matter for scripting logic (<code>0</code> = success, non-zero = failure), check <code>$?</code> or use <code>if command; then</code> directly rather than parsing command output to detect failure.</li>
 </ul>
     </article>
     <footer class="page-footer">

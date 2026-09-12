@@ -1,6 +1,6 @@
 # HTML
 
-The markup language that defines structure and content for every web page — pairs with [CSS](lang-css.html) for appearance and [JavaScript](lang-javascript.html) for behavior.
+The markup language that defines structure and content for every web page, pairs with [CSS](lang-css.html) for appearance and [JavaScript](lang-javascript.html) for behavior.
 
 ## Minimal document
 
@@ -20,11 +20,11 @@ The markup language that defines structure and content for every web page — pa
 </html>
 ```
 
-`defer` on `<script>` matters: it delays execution until the DOM is parsed without blocking parsing while the file downloads — the right default for almost every script tag.
+`defer` on `<script>` matters: it delays execution until the DOM is parsed without blocking parsing while the file downloads, the right default for almost every script tag.
 
 ## Semantic structure
 
-Prefer elements that describe *meaning*, not just appearance — it's better for accessibility and SEO than an ocean of `<div>`s:
+Prefer elements that describe *meaning*, not just appearance, it's better for accessibility and SEO than an ocean of `<div>`s:
 
 ```html
 <header>...</header>
@@ -61,7 +61,7 @@ Built-in validation attributes (`required`, `type="email"`, `pattern`, `minlengt
 ## Accessibility basics
 
 - Every `<img>` needs `alt` text (empty `alt=""` if it's purely decorative).
-- Use real `<button>`/`<a>` elements for interactive controls instead of a `<div onclick>` — you get keyboard focus and screen-reader semantics for free.
+- Use real `<button>`/`<a>` elements for interactive controls instead of a `<div onclick>`, you get keyboard focus and screen-reader semantics for free.
 - One `<h1>` per page, and don't skip heading levels just for font size (use CSS for that instead).
 
 ## `<template>` and custom elements
@@ -81,6 +81,6 @@ document.querySelector("ul").appendChild(clone);
 
 ## Common gotchas
 
-- Block vs inline elements affects what CSS properties (like `width`/`height`) actually apply — a `<span>` ignores them until you change its `display`.
+- Block vs inline elements affects what CSS properties (like `width`/`height`) actually apply, a `<span>` ignores them until you change its `display`.
 - `<script>` at the very bottom of `<body>` was the old fix for blocking; `defer` in `<head>` is the modern equivalent and keeps script tags out of markup you might template dynamically.
-- Self-closing tags (`<img />`) are optional in HTML5 (unlike strict XHTML) — `<img>` alone is valid.
+- Self-closing tags (`<img />`) are optional in HTML5 (unlike strict XHTML), `<img>` alone is valid.
