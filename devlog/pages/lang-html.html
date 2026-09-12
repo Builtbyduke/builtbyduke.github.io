@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML · dev.log</title>
+<meta name="description" content="HTML — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html" class="active">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-html</span></div>
+    <article class="prose">
+    <p>The markup language that defines structure and content for every web page — pairs with <a href="lang-css.html">CSS</a> for appearance and <a href="lang-javascript.html">JavaScript</a> for behavior.</p>
+<h2 id="minimal-document">Minimal document</h2>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Page Title&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello, world&lt;/h1&gt;
+  &lt;script src=&quot;app.js&quot; defer&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><code>defer</code> on <code>&lt;script&gt;</code> matters: it delays execution until the DOM is parsed without blocking parsing while the file downloads — the right default for almost every script tag.</p>
+<h2 id="semantic-structure">Semantic structure</h2>
+<p>Prefer elements that describe <em>meaning</em>, not just appearance — it's better for accessibility and SEO than an ocean of <code>&lt;div&gt;</code>s:</p>
+<pre><code class="language-html">&lt;header&gt;...&lt;/header&gt;
+&lt;nav&gt;...&lt;/nav&gt;
+&lt;main&gt;
+  &lt;article&gt;
+    &lt;h2&gt;Post title&lt;/h2&gt;
+    &lt;p&gt;Content...&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;aside&gt;Related links&lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;...&lt;/footer&gt;
+</code></pre>
+<h2 id="forms">Forms</h2>
+<pre><code class="language-html">&lt;form action=&quot;/submit&quot; method=&quot;POST&quot;&gt;
+  &lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+  &lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; required&gt;
+
+  &lt;label for=&quot;plan&quot;&gt;Plan&lt;/label&gt;
+  &lt;select id=&quot;plan&quot; name=&quot;plan&quot;&gt;
+    &lt;option value=&quot;free&quot;&gt;Free&lt;/option&gt;
+    &lt;option value=&quot;pro&quot;&gt;Pro&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;button type=&quot;submit&quot;&gt;Sign up&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Built-in validation attributes (<code>required</code>, <code>type="email"</code>, <code>pattern</code>, <code>minlength</code>) catch a lot of cases before any JavaScript runs.</p>
+<h2 id="accessibility-basics">Accessibility basics</h2>
+<ul>
+<li>Every <code>&lt;img&gt;</code> needs <code>alt</code> text (empty <code>alt=""</code> if it's purely decorative).</li>
+<li>Use real <code>&lt;button&gt;</code>/<code>&lt;a&gt;</code> elements for interactive controls instead of a <code>&lt;div onclick&gt;</code> — you get keyboard focus and screen-reader semantics for free.</li>
+<li>One <code>&lt;h1&gt;</code> per page, and don't skip heading levels just for font size (use CSS for that instead).</li>
+</ul>
+<h2 id="template-and-custom-elements"><code>&lt;template&gt;</code> and custom elements</h2>
+<pre><code class="language-html">&lt;template id=&quot;row-template&quot;&gt;
+  &lt;li class=&quot;row&quot;&gt;&lt;span class=&quot;name&quot;&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="language-js">const tpl = document.getElementById(&quot;row-template&quot;);
+const clone = tpl.content.cloneNode(true);
+clone.querySelector(&quot;.name&quot;).textContent = &quot;Ada&quot;;
+document.querySelector(&quot;ul&quot;).appendChild(clone);
+</code></pre>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li>Block vs inline elements affects what CSS properties (like <code>width</code>/<code>height</code>) actually apply — a <code>&lt;span&gt;</code> ignores them until you change its <code>display</code>.</li>
+<li><code>&lt;script&gt;</code> at the very bottom of <code>&lt;body&gt;</code> was the old fix for blocking; <code>defer</code> in <code>&lt;head&gt;</code> is the modern equivalent and keeps script tags out of markup you might template dynamically.</li>
+<li>Self-closing tags (<code>&lt;img /&gt;</code>) are optional in HTML5 (unlike strict XHTML) — <code>&lt;img&gt;</code> alone is valid.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

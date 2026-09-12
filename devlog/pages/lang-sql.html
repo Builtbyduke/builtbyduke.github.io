@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL · dev.log</title>
+<meta name="description" content="SQL — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html" class="active">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-sql</span></div>
+    <article class="prose">
+    <p>The language for querying and manipulating relational databases (PostgreSQL, MySQL, SQLite, SQL Server) — syntax varies slightly between engines, but the core is near-universal.</p>
+<h2 id="creating-tables">Creating tables</h2>
+<pre><code class="language-sql">CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    total NUMERIC(10, 2) NOT NULL
+);
+</code></pre>
+<p><code>SERIAL</code> is Postgres-specific auto-increment syntax; MySQL uses <code>AUTO_INCREMENT</code>, SQLite uses <code>INTEGER PRIMARY KEY AUTOINCREMENT</code> — this kind of small dialect difference is common across engines.</p>
+<h2 id="crud-basics">CRUD basics</h2>
+<pre><code class="language-sql">-- Create
+INSERT INTO users (name, email) VALUES ('Ada', 'ada@example.com');
+
+-- Read
+SELECT id, name FROM users WHERE email = 'ada@example.com';
+
+-- Update
+UPDATE users SET name = 'Ada Lovelace' WHERE id = 1;
+
+-- Delete
+DELETE FROM users WHERE id = 1;
+</code></pre>
+<h2 id="joins">Joins</h2>
+<pre><code class="language-sql">SELECT users.name, orders.total
+FROM users
+INNER JOIN orders ON orders.user_id = users.id
+WHERE orders.total &gt; 100
+ORDER BY orders.total DESC;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Join type</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INNER JOIN</code></td>
+<td>only rows with a match in both tables</td>
+</tr>
+<tr>
+<td><code>LEFT JOIN</code></td>
+<td>all rows from the left table, matched rows (or <code>NULL</code>) from the right</td>
+</tr>
+<tr>
+<td><code>RIGHT JOIN</code></td>
+<td>mirror of <code>LEFT JOIN</code></td>
+</tr>
+<tr>
+<td><code>FULL OUTER JOIN</code></td>
+<td>all rows from both, matched where possible</td>
+</tr>
+</tbody>
+</table>
+<h2 id="aggregation">Aggregation</h2>
+<pre><code class="language-sql">SELECT user_id, COUNT(*) AS order_count, SUM(total) AS total_spent
+FROM orders
+GROUP BY user_id
+HAVING SUM(total) &gt; 500
+ORDER BY total_spent DESC;
+</code></pre>
+<p><code>WHERE</code> filters rows before grouping; <code>HAVING</code> filters groups after aggregation — a common point of confusion since both look like a filter clause.</p>
+<h2 id="subqueries-ctes">Subqueries &amp; CTEs</h2>
+<pre><code class="language-sql">WITH big_spenders AS (
+    SELECT user_id, SUM(total) AS spent
+    FROM orders
+    GROUP BY user_id
+    HAVING SUM(total) &gt; 500
+)
+SELECT users.name, big_spenders.spent
+FROM users
+JOIN big_spenders ON big_spenders.user_id = users.id;
+</code></pre>
+<p>A CTE (<code>WITH ... AS (...)</code>) names a subquery so it can be referenced like a temporary table — usually more readable than deeply nested subqueries.</p>
+<h2 id="indexes">Indexes</h2>
+<pre><code class="language-sql">CREATE INDEX idx_orders_user_id ON orders(user_id);
+</code></pre>
+<p>Indexes speed up lookups/joins on that column at the cost of slightly slower writes and extra storage — add them on columns you filter/join on frequently, not on every column.</p>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li><code>NULL</code> doesn't equal anything, including itself — use <code>IS NULL</code> / <code>IS NOT NULL</code>, never <code>= NULL</code>.</li>
+<li><code>SELECT *</code> in application code breaks silently when someone adds a column — name columns explicitly in production queries.</li>
+<li>String concatenation of user input into a query is the classic SQL-injection vector — always use parameterized queries/prepared statements from your application language instead of building SQL strings by hand.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

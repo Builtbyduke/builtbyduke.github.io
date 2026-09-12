@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decompiling a .jar to .java · dev.log</title>
+<meta name="description" content="Decompiling a .jar to .java — Minecraft: Java Plugins tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html" class="active">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/java-decompile-jar</span></div>
+    <article class="prose">
+    <p>Sometimes you need to see how a compiled plugin (yours from years ago with lost source, or a third-party one you have permission to inspect/patch) actually works. A <code>.jar</code> is just a zip of <code>.class</code> bytecode files — a <strong>decompiler</strong> turns that bytecode back into readable, mostly-recompilable Java source.</p>
+<blockquote>
+<p><strong>Only decompile jars you have the right to inspect</strong> — your own lost-source projects, open-source plugins, or anything whose license explicitly allows it. Decompiling to redistribute or bypass a paid plugin's licensing violates most plugin marketplace terms.</p>
+</blockquote>
+<h2 id="option-1-cfr-simplest-single-jar-no-gui">Option 1: CFR (simplest, single jar, no GUI)</h2>
+<p><a href="https://www.benf.org/other/cfr/">CFR</a> is a single-file decompiler — good for scripting/batch use.</p>
+<pre><code class="language-bash"># download cfr-0.152.jar from the CFR site into your working folder, then:
+mkdir out
+java -jar cfr-0.152.jar my-plugin.jar --outputdir out
+</code></pre>
+<p>That dumps a full <code>.java</code> source tree into <code>out/</code>, mirroring the original package structure.</p>
+<h2 id="option-2-fernflower-what-most-ides-use-internally">Option 2: Fernflower (what most IDEs use internally)</h2>
+<p>IntelliJ IDEA ships Fernflower and will decompile automatically the moment you open a <code>.class</code> file from inside a jar — no setup needed:</p>
+<ol>
+<li><strong>File → Open</strong> the <code>.jar</code> itself (IntelliJ browses it like a folder).</li>
+<li>Navigate to any <code>.class</code> file and double-click it.</li>
+<li>IntelliJ decompiles on the fly and shows readable Java (with a banner noting it's decompiled).</li>
+<li>Right-click the package → <strong>Extract to <code>.java</code> files</strong> isn't automatic, but you can copy the decompiled text into new <code>.java</code> files under <code>src/</code> if you want a real, editable tree.</li>
+</ol>
+<p>For a full batch export without opening a whole project, the standalone Fernflower jar works the same way as CFR:</p>
+<pre><code class="language-bash">java -jar fernflower.jar my-plugin.jar out/
+</code></pre>
+<h2 id="option-3-jd-gui-visual-browsing">Option 3: JD-GUI (visual browsing)</h2>
+<p><a href="https://java-decompiler.github.io/">JD-GUI</a> is a lightweight desktop app — drag a <code>.jar</code> onto it, click through the package tree in a Swing UI, and use <strong>File → Save All Sources</strong> to export a <code>.jar</code> of decompiled <code>.java</code> files (unzip that to get real files on disk).</p>
+<h2 id="option-4-bytecode-viewer-all-of-the-above-one-tool">Option 4: bytecode-viewer (all of the above, one tool)</h2>
+<p><a href="https://github.com/Konloch/bytecode-viewer">Bytecode Viewer</a> bundles CFR, Fernflower, Procyon, and a bytecode/ASM view side-by-side — useful when one decompiler produces broken output (common with heavily obfuscated jars) and you want to cross-check against another.</p>
+<h2 id="turning-the-output-into-a-working-maven-project">Turning the output into a working Maven project</h2>
+<p>Once you have a <code>src/</code> tree of <code>.java</code> files:</p>
+<ol>
+<li>Create a fresh Maven project (see <a href="java-plugin-setup.html">plugin setup</a>) with a matching <code>paper-api</code> dependency version.</li>
+<li>Copy the decompiled tree into <code>src/main/java/...</code>, preserving package folders.</li>
+<li>Expect compile errors — decompilers approximate lambdas, generics, and switch expressions, and any code the plugin loaded from other dependency jars won't resolve unless you also add those as Maven dependencies.</li>
+<li>Fix errors top-down; decompiled code is a <strong>starting point</strong>, not guaranteed to compile as-is.</li>
+</ol>
+<h2 id="obfuscated-jars">Obfuscated jars</h2>
+<p>If class/method names come out as <code>a</code>, <code>b</code>, <code>c</code> — the jar was obfuscated (commonly with ProGuard). Decompilers still produce valid-ish Java, just with meaningless names; a deobfuscation mapping file (if the author ever published one) is the only way to get real names back. Without one, expect to manually rename things as you understand what they do.</p>
+<p>Next: <a href="java-plugin-guis.html">Inventory GUI Menus</a>.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

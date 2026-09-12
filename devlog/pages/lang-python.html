@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python · dev.log</title>
+<meta name="description" content="Python — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html" class="active">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-python</span></div>
+    <article class="prose">
+    <p>A readable, batteries-included language used everywhere from scripting to data science to web backends.</p>
+<h2 id="setup">Setup</h2>
+<pre><code class="language-bash">python3 --version
+python3 -m venv .venv         # isolated environment per project
+source .venv/bin/activate     # (.venv\Scripts\activate on Windows)
+pip install requests
+</code></pre>
+<p>Always work inside a virtual environment — installing packages globally leads to version conflicts across projects.</p>
+<h2 id="core-syntax">Core syntax</h2>
+<pre><code class="language-python">name = &quot;Ada&quot;
+count = 0
+
+def add(a: int, b: int) -&gt; int:
+    return a + b
+
+nums = [1, 2, 3]
+doubled = [n * 2 for n in nums]        # list comprehension
+squares = {n: n ** 2 for n in nums}    # dict comprehension
+
+user = {&quot;name&quot;: &quot;Ada&quot;, &quot;age&quot;: 30}
+print(f&quot;{user['name']} is {user['age']}&quot;)
+
+class Animal:
+    def __init__(self, name: str):
+        self.name = name
+
+    def speak(self) -&gt; str:
+        return f&quot;{self.name} makes a sound.&quot;
+</code></pre>
+<p>Indentation is syntax — a block is defined by consistent indentation (4 spaces is the near-universal convention), not braces.</p>
+<h2 id="context-managers-with">Context managers (<code>with</code>)</h2>
+<pre><code class="language-python">with open(&quot;data.txt&quot;) as f:
+    contents = f.read()
+# file is automatically closed here, even if an exception was raised
+</code></pre>
+<h2 id="error-handling">Error handling</h2>
+<pre><code class="language-python">try:
+    value = int(user_input)
+except ValueError as e:
+    print(f&quot;Invalid number: {e}&quot;)
+finally:
+    cleanup()
+</code></pre>
+<h2 id="type-hints-optional-widely-used-in-real-projects">Type hints (optional, widely used in real projects)</h2>
+<pre><code class="language-python">from typing import Optional
+
+def find_user(user_id: int) -&gt; Optional[dict]:
+    return database.get(user_id)
+</code></pre>
+<p>Type hints aren't enforced at runtime — tools like <code>mypy</code> or <code>pyright</code> check them statically, catching mismatches before you run anything.</p>
+<h2 id="popular-librariesframeworks">Popular libraries/frameworks</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web framework</td>
+<td>Django (batteries-included), FastAPI (async, typed, API-first), Flask (minimal)</td>
+</tr>
+<tr>
+<td>Data/ML</td>
+<td>pandas, NumPy, PyTorch, scikit-learn</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>pytest</td>
+</tr>
+<tr>
+<td>HTTP client</td>
+<td>requests, httpx (async)</td>
+</tr>
+<tr>
+<td>Dependency management</td>
+<td>Poetry, or <code>pip</code> + <code>requirements.txt</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="a-minimal-fastapi-endpoint">A minimal FastAPI endpoint</h2>
+<pre><code class="language-python">from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get(&quot;/users/{user_id}&quot;)
+def get_user(user_id: int):
+    return {&quot;id&quot;: user_id, &quot;name&quot;: &quot;Ada&quot;}
+</code></pre>
+<pre><code class="language-bash">uvicorn main:app --reload
+</code></pre>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li>Mutable default arguments (<code>def f(items=[])</code>) are created <strong>once</strong> and shared across calls — use <code>None</code> and initialize inside the function instead.</li>
+<li>Late binding in closures: a loop variable captured in a lambda/function inside the loop reflects its <em>final</em> value, not the value at each iteration, unless explicitly bound as a default argument.</li>
+<li>Python 2 vs 3: Python 2 is end-of-life — any tutorial written for it (print statements without parens, etc.) is outdated.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C# · dev.log</title>
+<meta name="description" content="C# — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html" class="active">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-csharp</span></div>
+    <article class="prose">
+    <p>A statically typed, object-oriented language from Microsoft, running on .NET — used for web backends, desktop apps, and game development (Unity).</p>
+<h2 id="setup">Setup</h2>
+<pre><code class="language-bash">dotnet --version
+dotnet new console -o my-app
+cd my-app
+dotnet run
+</code></pre>
+<h2 id="core-syntax">Core syntax</h2>
+<pre><code class="language-csharp">var name = &quot;Ada&quot;;
+int count = 0;
+
+int Add(int a, int b) =&gt; a + b;
+
+var nums = new List&lt;int&gt; { 1, 2, 3 };
+var doubled = nums.Select(n =&gt; n * 2).ToList();
+
+var user = new { Name = &quot;Ada&quot;, Age = 30 }; // anonymous type
+Console.WriteLine($&quot;{user.Name} is {user.Age}&quot;);
+</code></pre>
+<h2 id="classes-and-records">Classes and records</h2>
+<pre><code class="language-csharp">public class Animal
+{
+    public string Name { get; }
+    public Animal(string name) =&gt; Name = name;
+    public string Speak() =&gt; $&quot;{Name} makes a sound.&quot;;
+}
+
+// records — immutable data with value equality built in
+public record Point(int X, int Y);
+
+var p1 = new Point(1, 2);
+var p2 = new Point(1, 2);
+Console.WriteLine(p1 == p2); // true — value equality, unlike a class
+</code></pre>
+<h2 id="nullable-reference-types">Nullable reference types</h2>
+<pre><code class="language-csharp">#nullable enable
+
+string? maybeNull = GetName(); // explicitly nullable
+string definitelyNotNull = maybeNull ?? &quot;default&quot;;
+</code></pre>
+<p>With <code>#nullable enable</code> (standard in modern projects), the compiler warns if you dereference a possibly-null reference without checking — catches a large class of null-reference bugs at compile time.</p>
+<h2 id="linq-query-style-collection-processing">LINQ (query-style collection processing)</h2>
+<pre><code class="language-csharp">var adults = people
+    .Where(p =&gt; p.Age &gt;= 18)
+    .OrderBy(p =&gt; p.Name)
+    .Select(p =&gt; p.Name)
+    .ToList();
+
+// or query syntax
+var adults2 = from p in people
+              where p.Age &gt;= 18
+              orderby p.Name
+              select p.Name;
+</code></pre>
+<h2 id="asyncawait">Async/await</h2>
+<pre><code class="language-csharp">public async Task&lt;User&gt; GetUserAsync(int id)
+{
+    var response = await httpClient.GetAsync($&quot;/api/users/{id}&quot;);
+    response.EnsureSuccessStatusCode();
+    return await response.Content.ReadFromJsonAsync&lt;User&gt;();
+}
+</code></pre>
+<h2 id="popular-frameworks">Popular frameworks</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web/API</td>
+<td>ASP.NET Core</td>
+</tr>
+<tr>
+<td>Game development</td>
+<td>Unity</td>
+</tr>
+<tr>
+<td>Desktop</td>
+<td>WPF, MAUI, WinForms (legacy)</td>
+</tr>
+<tr>
+<td>ORM</td>
+<td>Entity Framework Core</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>xUnit, NUnit</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a-minimal-aspnet-core-endpoint">A minimal ASP.NET Core endpoint</h2>
+<pre><code class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet(&quot;/users/{id}&quot;, (int id) =&gt; new { Id = id, Name = &quot;Ada&quot; });
+
+app.Run();
+</code></pre>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li><code>struct</code> (value type, copied) vs <code>class</code> (reference type) — passing a large struct around by value can be a surprising performance cost if you expected reference semantics.</li>
+<li><code>string</code> comparison with <code>==</code> works correctly (operator overloaded for value comparison), unlike Java — but reference comparisons for other types still need <code>.Equals()</code> or <code>record</code> types for value semantics.</li>
+<li>Forgetting <code>await</code> on a <code>Task</code> doesn't error — it just fires the async operation without waiting, a common source of race conditions ("fire and forget" bugs).</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

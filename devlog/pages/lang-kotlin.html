@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kotlin · dev.log</title>
+<meta name="description" content="Kotlin — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html" class="active">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-kotlin</span></div>
+    <article class="prose">
+    <p>A statically typed language that runs on the JVM (fully interoperable with <a href="lang-java.html">Java</a>) — the default choice for modern Android development and increasingly popular for backend services too.</p>
+<h2 id="setup">Setup</h2>
+<pre><code class="language-bash">kotlinc -version
+</code></pre>
+<p>Most projects use Gradle rather than calling <code>kotlinc</code> directly:</p>
+<pre><code class="language-bash">gradle init   # choose Kotlin application
+gradle run
+</code></pre>
+<h2 id="core-syntax">Core syntax</h2>
+<pre><code class="language-kotlin">fun add(a: Int, b: Int): Int = a + b
+
+fun main() {
+    val name = &quot;Ada&quot;   // immutable
+    var count = 0      // mutable
+
+    println(&quot;Hello, $name! Count: $count&quot;)
+
+    val nums = listOf(1, 2, 3)
+    val doubled = nums.map { it * 2 }
+}
+</code></pre>
+<p><code>val</code> (immutable reference) vs <code>var</code> (mutable) — same immutable-by-default philosophy as Swift and Rust.</p>
+<h2 id="null-safety">Null safety</h2>
+<pre><code class="language-kotlin">var maybeName: String? = null // must explicitly opt into nullability
+
+val length = maybeName?.length ?: 0   // safe call + Elvis operator for a default
+</code></pre>
+<p>Like Swift's optionals, the type system distinguishes <code>String</code> (never null) from <code>String?</code> (may be null) — the compiler refuses to let a nullable value be used where a non-null one is required without a check first.</p>
+<h2 id="classes-and-data-classes">Classes and data classes</h2>
+<pre><code class="language-kotlin">class Animal(val name: String) {
+    fun speak() = &quot;$name makes a sound.&quot;
+}
+
+// data class — auto-generates equals/hashCode/toString/copy
+data class Point(val x: Int, val y: Int)
+
+val p1 = Point(1, 2)
+val p2 = p1.copy(y = 5)
+</code></pre>
+<h2 id="when-expressions-kotlins-switch-but-an-expression">When expressions (Kotlin's switch, but an expression)</h2>
+<pre><code class="language-kotlin">fun describe(x: Any): String = when (x) {
+    is Int -&gt; &quot;an integer: $x&quot;
+    is String -&gt; &quot;a string of length ${x.length}&quot;
+    else -&gt; &quot;something else&quot;
+}
+</code></pre>
+<h2 id="coroutines-structured-concurrency">Coroutines (structured concurrency)</h2>
+<pre><code class="language-kotlin">import kotlinx.coroutines.*
+
+suspend fun fetchUser(id: Int): String {
+    delay(100) // non-blocking &quot;sleep&quot;
+    return &quot;User $id&quot;
+}
+
+fun main() = runBlocking {
+    val user = fetchUser(1)
+    println(user)
+}
+</code></pre>
+<p><code>suspend</code> functions are Kotlin's alternative to callback-heavy or thread-heavy async code — they read like synchronous code but don't block the underlying thread.</p>
+<h2 id="popular-use">Popular use</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Android development</td>
+<td>Jetpack Compose (UI), the modern default over XML layouts</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td>Ktor, Spring Boot (fully supports Kotlin)</td>
+</tr>
+<tr>
+<td>Build tool</td>
+<td>Gradle (Kotlin DSL, <code>build.gradle.kts</code>)</td>
+</tr>
+<tr>
+<td>Minecraft plugins</td>
+<td>Also usable via the same Maven/Gradle + Paper API setup as <a href="java-plugin-setup.html">Java plugins</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li><code>==</code> in Kotlin checks <em>structural</em> equality by default (calls <code>.equals()</code>), unlike Java where <code>==</code> on objects checks reference identity — use <code>===</code> in Kotlin specifically for reference comparison.</li>
+<li>Extension functions (adding methods to existing classes, e.g. <code>fun String.shout() = uppercase() + "!"</code>) are resolved statically at compile time based on the declared type, not the runtime type — this can surprise people expecting virtual-style dispatch.</li>
+<li>Platform types from Java interop (no nullability info from Java's type system) can slip past Kotlin's null checks — annotate Java APIs with <code>@Nullable</code>/<code>@NonNull</code> where you control them.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

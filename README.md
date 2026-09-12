@@ -19,15 +19,35 @@ Production-ready static multi-page website for deployment on GitHub Pages.
 |-- style.css
 |-- script.js
 |-- .gitignore
-`-- assets
-	 |-- icons
-	 |   |-- discord.svg
-	 |   |-- email.svg
-	 |   |-- github.svg
-	 |   `-- globe.svg
-	 `-- images
-		  |-- background.jpg
-		  `-- profile.jpg
+|-- assets
+|	 |-- icons
+|	 |   |-- discord.svg
+|	 |   |-- email.svg
+|	 |   |-- github.svg
+|	 |   `-- globe.svg
+|	 `-- images
+|		  |-- background.jpg
+|		  `-- profile.jpg
+`-- devlog                    (dev.log — Minecraft/coding build-notes sub-site)
+	 |-- index.html
+	 |-- build.py           (regenerates pages/ from content/*.md)
+	 |-- content            (markdown source)
+	 |-- pages              (generated HTML pages)
+	 `-- assets              (its own style.css/nav.js, separate from the root site)
+
+## Sub-site: dev.log
+
+`devlog/` is a self-contained static sub-site (linked from the main nav as "Dev Log") with its
+own stylesheet and layout. It's generated from Markdown in `devlog/content/` via `devlog/build.py`.
+To add or edit a page: edit/add a `.md` file in `devlog/content/`, wire it into `MANIFEST` in
+`devlog/build.py`, then run:
+
+```bash
+pip install markdown
+python3 devlog/build.py
+```
+
+This rebuilds `devlog/pages/*.html` and `devlog/index.html` in place.
 
 ## Run Locally
 

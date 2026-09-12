@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Node.js · dev.log</title>
+<meta name="description" content="Node.js — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html" class="active">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-node</span></div>
+    <article class="prose">
+    <p>A JavaScript runtime (built on Chrome's V8 engine) for running JS outside the browser — servers, CLIs, build tools.</p>
+<h2 id="setup">Setup</h2>
+<p>Install via <a href="https://github.com/nvm-sh/nvm">nvm</a> (Node Version Manager) rather than a system package, so you can switch versions per project:</p>
+<pre><code class="language-bash">nvm install --lts
+nvm use --lts
+node -v
+npm -v
+</code></pre>
+<h2 id="running-a-script">Running a script</h2>
+<pre><code class="language-bash">node index.js
+</code></pre>
+<h2 id="packagejson-npm-basics">package.json &amp; npm basics</h2>
+<pre><code class="language-bash">npm init -y
+npm install express
+npm install -D nodemon   # dev-only dependency
+</code></pre>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;my-app&quot;,
+  &quot;type&quot;: &quot;module&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node index.js&quot;,
+    &quot;dev&quot;: &quot;nodemon index.js&quot;
+  },
+  &quot;dependencies&quot;: { &quot;express&quot;: &quot;^4.19.0&quot; }
+}
+</code></pre>
+<p><code>"type": "module"</code> switches the project to ES module syntax (<code>import</code>/<code>export</code>); omit it to stay on CommonJS (<code>require</code>/<code>module.exports</code>) — don't mix the two styles in one file.</p>
+<h2 id="a-minimal-http-server-no-framework">A minimal HTTP server (no framework)</h2>
+<pre><code class="language-js">import { createServer } from &quot;node:http&quot;;
+
+const server = createServer((req, res) =&gt; {
+  res.writeHead(200, { &quot;Content-Type&quot;: &quot;application/json&quot; });
+  res.end(JSON.stringify({ message: &quot;hello&quot; }));
+});
+
+server.listen(3000, () =&gt; console.log(&quot;Listening on :3000&quot;));
+</code></pre>
+<h2 id="with-express-the-common-default">With Express (the common default)</h2>
+<pre><code class="language-js">import express from &quot;express&quot;;
+const app = express();
+app.use(express.json());
+
+app.get(&quot;/users/:id&quot;, (req, res) =&gt; {
+  res.json({ id: req.params.id, name: &quot;Ada&quot; });
+});
+
+app.post(&quot;/users&quot;, (req, res) =&gt; {
+  const { name } = req.body;
+  res.status(201).json({ id: Date.now(), name });
+});
+
+app.listen(3000, () =&gt; console.log(&quot;Listening on :3000&quot;));
+</code></pre>
+<h2 id="file-system-environment">File system &amp; environment</h2>
+<pre><code class="language-js">import { readFile } from &quot;node:fs/promises&quot;;
+const data = JSON.parse(await readFile(&quot;./config.json&quot;, &quot;utf-8&quot;));
+
+const port = process.env.PORT ?? 3000;
+</code></pre>
+<p>Load <code>.env</code> files with the <code>dotenv</code> package (<code>npm i dotenv</code>, then <code>import "dotenv/config"</code> at the top of your entry file) rather than hardcoding secrets.</p>
+<h2 id="popular-libraries">Popular libraries</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Web framework</td>
+<td>Express, Fastify, Hono, NestJS</td>
+</tr>
+<tr>
+<td>ORM/DB</td>
+<td>Prisma, Drizzle, Knex</td>
+</tr>
+<tr>
+<td>Process manager (production)</td>
+<td>PM2, or a systemd service</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>Vitest, Jest</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li>Uncaught errors in async callbacks (not <code>await</code>ed, no <code>.catch()</code>) crash the process silently in some setups — always handle rejected promises.</li>
+<li>CPU-heavy synchronous work blocks the entire event loop (Node is single-threaded for JS execution) — offload it to <code>worker_threads</code> or a separate service.</li>
+<li><code>npm install</code> without a lockfile committed leads to different dependency versions across machines — always commit <code>package-lock.json</code>.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

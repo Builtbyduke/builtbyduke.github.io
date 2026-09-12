@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Items & Blocks · dev.log</title>
+<meta name="description" content="Custom Items & Blocks — Minecraft: Bedrock Scripting tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; BuiltByDuke.github.io</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html" class="active">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/bedrock-custom-components</span></div>
+    <article class="prose">
+    <p>Custom items and blocks are defined mostly in <strong>JSON</strong> (data-driven), with the Script API used to add behavior JSON alone can't express.</p>
+<h2 id="custom-item-data-driven">Custom item (data-driven)</h2>
+<p><code>items/thunder_wand.json</code> in your behavior pack:</p>
+<pre><code class="language-json">{
+  &quot;format_version&quot;: &quot;1.21.0&quot;,
+  &quot;minecraft:item&quot;: {
+    &quot;description&quot;: { &quot;identifier&quot;: &quot;myaddon:thunder_wand&quot;, &quot;menu_category&quot;: { &quot;category&quot;: &quot;equipment&quot; } },
+    &quot;components&quot;: {
+      &quot;minecraft:max_stack_size&quot;: 1,
+      &quot;minecraft:icon&quot;: &quot;thunder_wand&quot;,
+      &quot;minecraft:hand_equipped&quot;: true,
+      &quot;minecraft:durability&quot;: { &quot;max_durability&quot;: 50 }
+    }
+  }
+}
+</code></pre>
+<p>Then hook behavior via <code>world.afterEvents.itemUse</code> as shown in the <a href="bedrock-events-commands.html">events page</a>.</p>
+<h2 id="custom-item-components-script-registered-12060">Custom item components (script-registered, 1.20.60+)</h2>
+<p>For logic that needs to run <em>per tick</em> or <em>per stack</em> rather than per-use, register a <strong>custom component</strong>:</p>
+<pre><code class="language-js">import { system } from &quot;@minecraft/server&quot;;
+
+system.beforeEvents.startup.subscribe(({ itemComponentRegistry }) =&gt; {
+  itemComponentRegistry.registerCustomComponent(&quot;myaddon:cooldown_glow&quot;, {
+    onUse(event) {
+      const { source, itemStack } = event;
+      source.addEffect(&quot;glowing&quot;, 60);
+    }
+  });
+});
+</code></pre>
+<p>Reference it from the item JSON:</p>
+<pre><code class="language-json">&quot;components&quot;: {
+  &quot;minecraft:custom_components&quot;: [&quot;myaddon:cooldown_glow&quot;]
+}
+</code></pre>
+<h2 id="custom-blocks">Custom blocks</h2>
+<p><code>blocks/reinforced_stone.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;format_version&quot;: &quot;1.21.0&quot;,
+  &quot;minecraft:block&quot;: {
+    &quot;description&quot;: {
+      &quot;identifier&quot;: &quot;myaddon:reinforced_stone&quot;,
+      &quot;states&quot;: { &quot;myaddon:charge&quot;: [0, 1, 2, 3] }
+    },
+    &quot;components&quot;: {
+      &quot;minecraft:destructible_by_mining&quot;: { &quot;seconds_to_destroy&quot;: 8 },
+      &quot;minecraft:destructible_by_explosion&quot;: { &quot;explosion_resistance&quot;: 1000 },
+      &quot;minecraft:geometry&quot;: &quot;geometry.reinforced_stone&quot;,
+      &quot;minecraft:material_instances&quot;: {
+        &quot;*&quot;: { &quot;texture&quot;: &quot;reinforced_stone&quot;, &quot;render_method&quot;: &quot;opaque&quot; }
+      }
+    }
+  }
+}
+</code></pre>
+<p><strong>Block states</strong> (<code>myaddon:charge</code> above) are the mechanism for "the same block but with variants" — think redstone repeater delay settings. Read/write them from script:</p>
+<pre><code class="language-js">const block = player.dimension.getBlock(loc);
+const state = block.permutation.getState(&quot;myaddon:charge&quot;);
+block.setPermutation(block.permutation.withState(&quot;myaddon:charge&quot;, (state + 1) % 4));
+</code></pre>
+<h2 id="custom-block-components">Custom block components</h2>
+<p>Same registration pattern as items, but for blocks — commonly used for <code>onPlayerInteract</code>, <code>onTick</code>, or <code>onPlace</code>:</p>
+<pre><code class="language-js">system.beforeEvents.startup.subscribe(({ blockComponentRegistry }) =&gt; {
+  blockComponentRegistry.registerCustomComponent(&quot;myaddon:overcharge&quot;, {
+    onTick(event) {
+      const { block } = event;
+      const charge = block.permutation.getState(&quot;myaddon:charge&quot;);
+      if (charge &gt;= 3) block.dimension.createExplosion(block.location, 3);
+    },
+    onPlayerInteract(event) {
+      event.player.sendMessage(&quot;You touched the reinforced block.&quot;);
+    }
+  });
+});
+</code></pre>
+<p>Blocks need a <code>"minecraft:tick"</code> component in JSON with an interval range for <code>onTick</code> to actually fire:</p>
+<pre><code class="language-json">&quot;minecraft:tick&quot;: { &quot;interval_range&quot;: [20, 20], &quot;looping&quot;: true }
+</code></pre>
+<h2 id="rule-of-thumb">Rule of thumb</h2>
+<ul>
+<li><strong>Pure visuals/stats</strong> (durability, stack size, textures, hardness) → JSON components, no script needed.</li>
+<li><strong>"Something should happen when X occurs"</strong> → script event (<code>itemUse</code>, <code>blockPlace</code>) or a registered custom component if it needs per-tick or per-instance logic.</li>
+<li><strong>"This block/item needs several states that change over time"</strong> → block states + <code>setPermutation</code>.</li>
+</ul>
+<p>Next: <a href="bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a>.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>
