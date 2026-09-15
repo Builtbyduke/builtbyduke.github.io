@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shell / Bash · dev.log</title>
+<meta name="description" content="Shell / Bash — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html" class="active">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-shell</span></div>
+    <article class="prose">
+    <p>The scripting language of the terminal, automates the commands you'd otherwise type by hand. <code>bash</code> is the most common shell on Linux and (via WSL/Git Bash) widely used on Windows too; macOS ships <code>zsh</code> by default but is largely bash-compatible for scripting purposes.</p>
+<h2 id="running-a-script">Running a script</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail   # exit on error, undefined var, or failed pipe, put this in almost every script
+
+echo &quot;Hello, world&quot;
+</code></pre>
+<pre><code class="language-bash">chmod +x script.sh
+./script.sh
+</code></pre>
+<p><code>set -euo pipefail</code> is close to a universal best practice: without it, a script silently continues past a failed command, which is rarely what you want.</p>
+<h2 id="variables">Variables</h2>
+<pre><code class="language-bash">name=&quot;Ada&quot;
+count=0
+
+echo &quot;Hello, $name! Count: $count&quot;
+echo &quot;Hello, ${name}!&quot;   # braces avoid ambiguity when concatenating
+
+# command substitution
+current_dir=$(pwd)
+files=$(ls | wc -l)
+</code></pre>
+<p>No spaces around <code>=</code> in assignment, <code>name = "Ada"</code> is a syntax error (Bash parses it as running a command called <code>name</code> with arguments).</p>
+<h2 id="conditionals">Conditionals</h2>
+<pre><code class="language-bash">if [ -f &quot;config.yml&quot; ]; then
+    echo &quot;Config found&quot;
+elif [ -d &quot;config&quot; ]; then
+    echo &quot;Config directory found&quot;
+else
+    echo &quot;No config&quot;
+fi
+
+# [[ ]] is the more modern, more forgiving test syntax
+if [[ &quot;$name&quot; == &quot;Ada&quot; &amp;&amp; -n &quot;$count&quot; ]]; then
+    echo &quot;Match&quot;
+fi
+</code></pre>
+<h2 id="loops">Loops</h2>
+<pre><code class="language-bash">for file in *.txt; do
+    echo &quot;Processing $file&quot;
+done
+
+for i in {1..5}; do
+    echo &quot;Iteration $i&quot;
+done
+
+while read -r line; do
+    echo &quot;Line: $line&quot;
+done &lt; input.txt
+</code></pre>
+<h2 id="functions">Functions</h2>
+<pre><code class="language-bash">greet() {
+    local name=&quot;$1&quot;   # local scopes the variable to the function
+    echo &quot;Hello, $name!&quot;
+}
+
+greet &quot;Ada&quot;
+</code></pre>
+<h2 id="pipes-and-redirection">Pipes and redirection</h2>
+<pre><code class="language-bash">cat access.log | grep &quot;ERROR&quot; | wc -l     # pipe output between commands
+echo &quot;log line&quot; &gt;&gt; output.log             # append
+echo &quot;log line&quot; &gt; output.log              # overwrite
+command 2&gt; errors.log                     # redirect stderr only
+command &gt; all.log 2&gt;&amp;1                    # redirect both stdout and stderr
+</code></pre>
+<h2 id="argument-handling">Argument handling</h2>
+<pre><code class="language-bash">#!/usr/bin/env bash
+echo &quot;Script name: $0&quot;
+echo &quot;First arg: $1&quot;
+echo &quot;All args: $@&quot;
+echo &quot;Arg count: $#&quot;
+</code></pre>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li>Unquoted variables (<code>$name</code> instead of <code>"$name"</code>) break on spaces/glob characters in the value, quote variables almost everywhere, including in <code>[ ]</code> tests.</li>
+<li><code>rm -rf $dir</code> with an empty or unset <code>$dir</code> can expand to <code>rm -rf /</code> in the worst case, always quote, and consider <code>set -u</code> to fail loudly on unset variables instead.</li>
+<li>Exit codes matter for scripting logic (<code>0</code> = success, non-zero = failure), check <code>$?</code> or use <code>if command; then</code> directly rather than parsing command output to detect failure.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

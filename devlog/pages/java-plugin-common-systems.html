@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Economy, Permissions & Commands, the systems everyone builds · dev.log</title>
+<meta name="description" content="Economy, Permissions & Commands, the systems everyone builds — Minecraft: Java Plugins tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html" class="active">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/java-plugin-common-systems</span></div>
+    <article class="prose">
+    <p>A handful of systems show up in nearly every serious Bukkit/Paper server. Rather than reinventing them, the ecosystem converges on a few standard plugins with public APIs your plugin hooks into.</p>
+<h2 id="economy-vault-an-economy-plugin">Economy, Vault + an economy plugin</h2>
+<p><strong>Vault</strong> is not an economy plugin itself, it's an abstraction layer. You code against Vault's <code>Economy</code> interface, and server owners install whichever real economy plugin they prefer (EssentialsX, CMI, etc.) underneath it.</p>
+<pre><code class="language-xml">&lt;repository&gt;
+  &lt;id&gt;jitpack.io&lt;/id&gt;
+  &lt;url&gt;https://jitpack.io&lt;/url&gt;
+&lt;/repository&gt;
+</code></pre>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;com.github.MilkBowl&lt;/groupId&gt;
+  &lt;artifactId&gt;VaultAPI&lt;/artifactId&gt;
+  &lt;version&gt;1.7.3&lt;/version&gt;
+  &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><code>plugin.yml</code>, declare the soft dependency:</p>
+<pre><code class="language-yaml">softdepend: [Vault]
+</code></pre>
+<p>Hooking in on enable:</p>
+<pre><code class="language-java">import net.milkbowl.vault.economy.Economy;
+import org.bukkit.plugin.RegisteredServiceProvider;
+
+private Economy econ;
+
+private boolean setupEconomy() {
+    RegisteredServiceProvider&lt;Economy&gt; rsp = getServer().getServicesManager().getRegistration(Economy.class);
+    if (rsp == null) return false;
+    econ = rsp.getProvider();
+    return true;
+}
+</code></pre>
+<p>Usage:</p>
+<pre><code class="language-java">econ.depositPlayer(player, 100.0);
+econ.withdrawPlayer(player, 50.0);
+double balance = econ.getBalance(player);
+</code></pre>
+<h2 id="permissions-luckperms">Permissions, LuckPerms</h2>
+<p>Most servers run <strong>LuckPerms</strong>. You rarely need its full API just to <em>check</em> a permission, Bukkit's own permission check already respects whatever LuckPerms grants:</p>
+<pre><code class="language-java">if (player.hasPermission(&quot;myplugin.admin&quot;)) {
+    // allowed
+}
+</code></pre>
+<p>Declare defaults in <code>plugin.yml</code> so server owners see them:</p>
+<pre><code class="language-yaml">permissions:
+  myplugin.admin:
+    description: Full plugin access
+    default: op
+  myplugin.use:
+    description: Basic command access
+    default: true
+</code></pre>
+<p>For deeper integration (reading a player's LuckPerms groups/prefix directly), add the LuckPerms API as a <code>provided</code> dependency and fetch the <code>LuckPerms</code> service the same way as Vault's <code>Economy</code> above.</p>
+<h2 id="commands-brigadier-modern-command-frameworks">Commands, Brigadier / modern command frameworks</h2>
+<p>Plain <code>CommandExecutor</code> (shown in <a href="java-plugin-setup.html">setup</a>) is fine for one-off commands, but tab completion, subcommands, and argument validation get repetitive fast. Two common upgrades:</p>
+<p><strong>Paper's Brigadier integration</strong> (built in, no extra dependency) gives you typed arguments and real tab-completion:</p>
+<pre><code class="language-java">import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+
+@Override
+public void onEnable() {
+    this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -&gt; {
+        event.registrar().register(
+            Commands.literal(&quot;heal&quot;)
+                .requires(src -&gt; src.getSender().hasPermission(&quot;myplugin.heal&quot;))
+                .executes(ctx -&gt; {
+                    ctx.getSource().getSender().sendMessage(&quot;Healed!&quot;);
+                    return 1;
+                })
+                .build()
+        );
+    });
+}
+</code></pre>
+<p><strong>Third-party frameworks</strong> like <strong><a href="https://github.com/Incendo/cloud">Cloud Command Framework</a></strong> work across Bukkit, Paper, Velocity, and Discord (JDA) with one annotation-driven API, worth it once a plugin has more than a few commands with subcommands/permissions/arguments to manage.</p>
+<h2 id="config-files-yaml">Config files, YAML</h2>
+<p>Bukkit's built-in config wraps Bukkit's YAML implementation; every plugin uses roughly this pattern:</p>
+<pre><code class="language-java">@Override
+public void onEnable() {
+    saveDefaultConfig(); // copies config.yml from resources/ if missing
+    int cooldown = getConfig().getInt(&quot;kit-cooldown-seconds&quot;, 30);
+}
+</code></pre>
+<p><code>src/main/resources/config.yml</code>:</p>
+<pre><code class="language-yaml">kit-cooldown-seconds: 30
+enabled-kits: [warrior, archer, miner]
+</code></pre>
+<h2 id="data-persistence-sqlitemysql-via-hikaricp">Data persistence, SQLite/MySQL via HikariCP</h2>
+<p>For anything beyond simple config values (player balances, stats, homes), most plugins reach for <strong>HikariCP</strong> (connection pooling) over either SQLite (single server) or MySQL (shared across a network via BungeeCord/Velocity):</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;com.zaxxer&lt;/groupId&gt;
+  &lt;artifactId&gt;HikariCP&lt;/artifactId&gt;
+  &lt;version&gt;5.1.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<pre><code class="language-java">HikariConfig config = new HikariConfig();
+config.setJdbcUrl(&quot;jdbc:sqlite:&quot; + getDataFolder() + &quot;/data.db&quot;);
+HikariDataSource dataSource = new HikariDataSource(config);
+</code></pre>
+<p>These four, Vault economy, permission checks, a real command framework, and pooled SQL storage, cover the large majority of "how do I add X system" questions in plugin development.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

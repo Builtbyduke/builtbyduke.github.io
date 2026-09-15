@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHP · dev.log</title>
+<meta name="description" content="PHP — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html" class="active">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-php</span></div>
+    <article class="prose">
+    <p>A server-side scripting language built specifically for the web, still powers a huge share of it (WordPress alone accounts for a large fraction of all websites).</p>
+<h2 id="setup">Setup</h2>
+<pre><code class="language-bash">php -v
+php -S localhost:8000     # built-in dev server, no Apache/Nginx needed locally
+</code></pre>
+<p>Install Composer (the package manager) for anything beyond a single script:</p>
+<pre><code class="language-bash">curl -sS https://getcomposer.org/installer | php
+php composer.phar init
+</code></pre>
+<h2 id="core-syntax">Core syntax</h2>
+<pre><code class="language-php">&lt;?php
+
+$name = &quot;Ada&quot;;
+$count = 0;
+
+function add(int $a, int $b): int {
+    return $a + $b;
+}
+
+// arrays (both indexed and associative use the same type)
+$nums = [1, 2, 3];
+$user = [&quot;name&quot; =&gt; &quot;Ada&quot;, &quot;age&quot; =&gt; 30];
+
+echo &quot;Hello, {$user['name']}!\n&quot;;
+
+// classes
+class Animal {
+    public function __construct(private string $name) {}
+    public function speak(): string {
+        return &quot;{$this-&gt;name} makes a sound.&quot;;
+    }
+}
+
+$dog = new Animal(&quot;Rex&quot;);
+echo $dog-&gt;speak();
+</code></pre>
+<h2 id="control-flow-match">Control flow &amp; match</h2>
+<pre><code class="language-php">$grade = 85;
+
+$letter = match (true) {
+    $grade &gt;= 90 =&gt; &quot;A&quot;,
+    $grade &gt;= 80 =&gt; &quot;B&quot;,
+    $grade &gt;= 70 =&gt; &quot;C&quot;,
+    default =&gt; &quot;F&quot;,
+};
+</code></pre>
+<p><code>match</code> (PHP 8+) uses strict comparison and has no fallthrough, unlike <code>switch</code>, prefer it for value-mapping logic.</p>
+<h2 id="working-with-a-database-pdo">Working with a database (PDO)</h2>
+<pre><code class="language-php">$pdo = new PDO(&quot;mysql:host=localhost;dbname=app&quot;, &quot;user&quot;, &quot;pass&quot;);
+$stmt = $pdo-&gt;prepare(&quot;SELECT * FROM users WHERE id = ?&quot;);
+$stmt-&gt;execute([$id]);
+$user = $stmt-&gt;fetch(PDO::FETCH_ASSOC);
+</code></pre>
+<p>Always use prepared statements (<code>?</code> placeholders), string-concatenating user input into SQL is the classic PHP injection vector.</p>
+<h2 id="popular-frameworks">Popular frameworks</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full framework</td>
+<td>Laravel (by far the most common modern choice), Symfony</td>
+</tr>
+<tr>
+<td>CMS</td>
+<td>WordPress</td>
+</tr>
+<tr>
+<td>API-only</td>
+<td>Slim, Laravel in API mode</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>PHPUnit, Pest</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a-tiny-laravel-route-for-context">A tiny Laravel route (for context)</h2>
+<pre><code class="language-php">Route::get('/users/{id}', function ($id) {
+    return User::findOrFail($id);
+});
+</code></pre>
+<p>Laravel's Eloquent ORM (<code>User::findOrFail($id)</code>) replaces most raw PDO code above in real applications.</p>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li><code>==</code> performs type juggling (<code>"abc" == 0</code> was <code>true</code> before PHP 8, and some looser comparisons still surprise people), prefer <code>===</code>.</li>
+<li>Array functions are inconsistent about parameter order (<code>in_array($needle, $haystack)</code> vs <code>array_map($callback, $array)</code>), there's no shortcut but experience; keep the docs open.</li>
+<li>Superglobals (<code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>) are global mutable state, modern frameworks wrap them in request objects for a reason; avoid touching them directly outside small scripts.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

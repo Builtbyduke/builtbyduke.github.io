@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript · dev.log</title>
+<meta name="description" content="JavaScript — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html" class="active">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-javascript</span></div>
+    <article class="prose">
+    <p>The language of the web browser, and, via Node, of a huge share of backend and tooling code too.</p>
+<h2 id="setup">Setup</h2>
+<p>Runs natively in every browser. For local scripting/tooling, install <a href="lang-node.html">Node.js</a> (<code>node -v</code> to confirm), which also gives you <code>npm</code>.</p>
+<h2 id="core-syntax">Core syntax</h2>
+<pre><code class="language-js">// variables, prefer const, use let when reassigned, avoid var
+const name = &quot;Ada&quot;;
+let count = 0;
+
+// functions
+function add(a, b) { return a + b; }
+const multiply = (a, b) =&gt; a * b;
+
+// template literals
+console.log(`${name} counted to ${count}`);
+
+// arrays &amp; objects
+const nums = [1, 2, 3];
+const doubled = nums.map(n =&gt; n * 2);
+const user = { name: &quot;Ada&quot;, age: 30 };
+const { name: n2, age } = user; // destructuring
+
+// async/await
+async function fetchUser(id) {
+  const res = await fetch(`/api/users/${id}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+// classes
+class Animal {
+  constructor(name) { this.name = name; }
+  speak() { return `${this.name} makes a sound.`; }
+}
+</code></pre>
+<h2 id="equality-always">Equality: always <code>===</code></h2>
+<p><code>==</code> coerces types in surprising ways (<code>"" == 0</code> is <code>true</code>). Use <code>===</code>/<code>!==</code> unless you have a specific, commented reason not to.</p>
+<h2 id="modules">Modules</h2>
+<pre><code class="language-js">// math.js
+export function add(a, b) { return a + b; }
+export default class Calculator {}
+
+// main.js
+import Calculator, { add } from &quot;./math.js&quot;;
+</code></pre>
+<h2 id="the-event-loop-briefly">The event loop, briefly</h2>
+<p>JS is single-threaded with a task queue: synchronous code runs first, then microtasks (resolved Promises), then macrotasks (<code>setTimeout</code>, I/O callbacks). This is why a resolved Promise's <code>.then()</code> runs before a <code>setTimeout(fn, 0)</code>.</p>
+<h2 id="popular-librariesframeworks">Popular libraries/frameworks</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UI framework</td>
+<td><a href="lang-react.html">React</a>, Vue, Svelte</td>
+</tr>
+<tr>
+<td>Bundler</td>
+<td>Vite, esbuild, webpack</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>Vitest, Jest, Playwright</td>
+</tr>
+<tr>
+<td>HTTP server</td>
+<td>Express, Fastify, Hono</td>
+</tr>
+<tr>
+<td>Date handling</td>
+<td>date-fns, Luxon (avoid Moment.js, in maintenance mode)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li><code>this</code> inside a regular function depends on how it's <em>called</em>, not where it's defined, arrow functions capture the surrounding <code>this</code> instead, which is why they're preferred for callbacks inside class methods.</li>
+<li>Array/object equality is by reference: <code>[1,2] === [1,2]</code> is <code>false</code>.</li>
+<li>Floating point: <code>0.1 + 0.2 !== 0.3</code>, use a small epsilon or a decimal library for money.</li>
+</ul>
+<p>See also: <a href="lang-typescript.html">TypeScript</a> for the typed superset most new projects now use by default.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

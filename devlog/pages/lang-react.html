@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React · dev.log</title>
+<meta name="description" content="React — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html" class="active">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-react</span></div>
+    <article class="prose">
+    <p>A JavaScript/TypeScript UI library built around components and a declarative render model: describe what the UI should look like for a given state, and React handles updating the DOM to match.</p>
+<h2 id="setup">Setup</h2>
+<pre><code class="language-bash">npm create vite@latest my-app -- --template react-ts
+cd my-app
+npm install
+npm run dev
+</code></pre>
+<p>Vite has largely replaced <code>create-react-app</code> as the default starter for its much faster dev server and build times.</p>
+<h2 id="a-component">A component</h2>
+<pre><code class="language-tsx">function Greeting({ name }: { name: string }) {
+  return &lt;h1&gt;Hello, {name}!&lt;/h1&gt;;
+}
+</code></pre>
+<p>JSX compiles to <code>React.createElement(...)</code> calls, it looks like HTML but is real JavaScript, so <code>{}</code> drops back into JS expressions anywhere.</p>
+<h2 id="state-usestate">State, <code>useState</code></h2>
+<pre><code class="language-tsx">import { useState } from &quot;react&quot;;
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+      Clicked {count} times
+    &lt;/button&gt;
+  );
+}
+</code></pre>
+<p><code>setCount</code> triggers a re-render; state updates are not applied instantly/synchronously, so don't rely on <code>count</code> being updated immediately after calling <code>setCount</code>.</p>
+<h2 id="effects-useeffect">Effects, <code>useEffect</code></h2>
+<pre><code class="language-tsx">import { useEffect, useState } from &quot;react&quot;;
+
+function UserProfile({ id }: { id: string }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() =&gt; {
+    let cancelled = false;
+    fetch(`/api/users/${id}`)
+      .then(res =&gt; res.json())
+      .then(data =&gt; { if (!cancelled) setUser(data); });
+    return () =&gt; { cancelled = true; }; // cleanup on unmount / id change
+  }, [id]); // re-run only when id changes
+
+  if (!user) return &lt;p&gt;Loading...&lt;/p&gt;;
+  return &lt;p&gt;{user.name}&lt;/p&gt;;
+}
+</code></pre>
+<p>The dependency array is the most common source of bugs, omitting a value used inside the effect leads to stale closures; the <code>eslint-plugin-react-hooks</code> rule catches most of these automatically.</p>
+<h2 id="lists-keys">Lists &amp; keys</h2>
+<pre><code class="language-tsx">function TodoList({ items }: { items: { id: string; text: string }[] }) {
+  return (
+    &lt;ul&gt;
+      {items.map(item =&gt; &lt;li key={item.id}&gt;{item.text}&lt;/li&gt;)}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
+<p><code>key</code> must be stable and unique per item (an ID, not the array index) so React can correctly track which DOM node maps to which data across re-renders.</p>
+<h2 id="sharing-state-context-for-a-handful-of-values">Sharing state, Context (for a handful of values)</h2>
+<pre><code class="language-tsx">const ThemeContext = React.createContext(&quot;light&quot;);
+
+function App() {
+  return (
+    &lt;ThemeContext.Provider value=&quot;dark&quot;&gt;
+      &lt;Toolbar /&gt;
+    &lt;/ThemeContext.Provider&gt;
+  );
+}
+
+function Toolbar() {
+  const theme = useContext(ThemeContext);
+  return &lt;div className={theme}&gt;...&lt;/div&gt;;
+}
+</code></pre>
+<p>For larger apps, a dedicated state library (Zustand, Redux Toolkit, Jotai) usually replaces ad-hoc Context once you have more than a few cross-cutting pieces of state.</p>
+<h2 id="popular-ecosystem">Popular ecosystem</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Routing</td>
+<td>React Router, or Next.js's file-based router</td>
+</tr>
+<tr>
+<td>Full framework</td>
+<td>Next.js, Remix</td>
+</tr>
+<tr>
+<td>Styling</td>
+<td>Tailwind CSS, CSS Modules</td>
+</tr>
+<tr>
+<td>Server state/data fetching</td>
+<td>TanStack Query (React Query)</td>
+</tr>
+<tr>
+<td>Forms</td>
+<td>React Hook Form</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li>Mutating state directly (<code>user.name = "x"</code>) doesn't trigger a re-render, always create a new object/array (<code>setUser({ ...user, name: "x" })</code>).</li>
+<li>Every component re-renders when its state changes, and by default its children re-render too, <code>React.memo</code>, <code>useMemo</code>, <code>useCallback</code> exist for the cases where that becomes measurably slow, not as a default habit.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

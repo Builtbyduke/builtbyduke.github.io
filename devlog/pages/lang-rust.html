@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rust · dev.log</title>
+<meta name="description" content="Rust — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html" class="active">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-rust</span></div>
+    <article class="prose">
+    <p>A compiled systems language that guarantees memory safety without a garbage collector, enforced at compile time by the <strong>borrow checker</strong>, a common choice when you want C++-level performance with far fewer memory bugs.</p>
+<h2 id="setup">Setup</h2>
+<pre><code class="language-bash">curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo --version
+</code></pre>
+<h2 id="project-setup-with-cargo">Project setup with Cargo</h2>
+<pre><code class="language-bash">cargo new my-app
+cd my-app
+cargo run
+cargo build --release
+</code></pre>
+<h2 id="core-syntax">Core syntax</h2>
+<pre><code class="language-rust">fn add(a: i32, b: i32) -&gt; i32 {
+    a + b // no semicolon = this is the return value
+}
+
+fn main() {
+    let name = &quot;Ada&quot;;
+    let mut count = 0; // immutable by default, mut required to reassign
+    count += 1;
+
+    println!(&quot;Hello, {name}! Count: {count}&quot;);
+
+    let nums = vec![1, 2, 3];
+    let doubled: Vec&lt;i32&gt; = nums.iter().map(|n| n * 2).collect();
+}
+</code></pre>
+<h2 id="ownership-the-core-concept">Ownership, the core concept</h2>
+<pre><code class="language-rust">fn main() {
+    let s1 = String::from(&quot;hello&quot;);
+    let s2 = s1; // s1 is MOVED into s2, s1 is no longer valid
+
+    // println!(&quot;{s1}&quot;); // compile error: value borrowed after move
+    println!(&quot;{s2}&quot;); // fine
+
+    let s3 = String::from(&quot;world&quot;);
+    print_it(&amp;s3); // borrow, not move, s3 still usable after
+    println!(&quot;{s3}&quot;);
+}
+
+fn print_it(s: &amp;String) {
+    println!(&quot;{s}&quot;);
+}
+</code></pre>
+<p>Every value has exactly one owner; when the owner goes out of scope, the value is freed automatically (like C++ RAII, but enforced by the compiler rather than convention), this is what eliminates use-after-free and double-free bugs at compile time.</p>
+<h2 id="structs-enums-and-pattern-matching">Structs, enums, and pattern matching</h2>
+<pre><code class="language-rust">struct Animal { name: String }
+
+impl Animal {
+    fn speak(&amp;self) -&gt; String {
+        format!(&quot;{} makes a sound.&quot;, self.name)
+    }
+}
+
+enum Shape {
+    Circle(f64),
+    Rectangle(f64, f64),
+}
+
+fn area(shape: &amp;Shape) -&gt; f64 {
+    match shape {
+        Shape::Circle(r) =&gt; std::f64::consts::PI * r * r,
+        Shape::Rectangle(w, h) =&gt; w * h,
+    }
+}
+</code></pre>
+<h2 id="error-handling-result-no-exceptions">Error handling, <code>Result</code>, no exceptions</h2>
+<pre><code class="language-rust">fn divide(a: f64, b: f64) -&gt; Result&lt;f64, String&gt; {
+    if b == 0.0 {
+        return Err(&quot;division by zero&quot;.to_string());
+    }
+    Ok(a / b)
+}
+
+fn main() {
+    match divide(10.0, 0.0) {
+        Ok(result) =&gt; println!(&quot;{result}&quot;),
+        Err(e) =&gt; println!(&quot;Error: {e}&quot;),
+    }
+
+    // or propagate with ? inside a function that also returns Result
+}
+</code></pre>
+<h2 id="popular-crates-libraries">Popular crates (libraries)</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Async runtime</td>
+<td>Tokio</td>
+</tr>
+<tr>
+<td>Web framework</td>
+<td>Axum, Actix Web</td>
+</tr>
+<tr>
+<td>Serialization</td>
+<td>serde</td>
+</tr>
+<tr>
+<td>CLI parsing</td>
+<td>clap</td>
+</tr>
+<tr>
+<td>Error handling helpers</td>
+<td>anyhow, thiserror</td>
+</tr>
+</tbody>
+</table>
+<p>Add with <code>cargo add &lt;crate&gt;</code> (e.g. <code>cargo add tokio --features full</code>).</p>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li>The borrow checker rejects code that would be memory-unsafe even if it "would have worked" at runtime, the fix is almost always to restructure ownership (clone, use a reference, or restructure lifetimes), not to fight the compiler.</li>
+<li><code>unwrap()</code> panics immediately on an <code>Err</code>/<code>None</code>, fine for prototypes and tests, but production code should handle the <code>Result</code>/<code>Option</code> explicitly or use <code>?</code> to propagate it.</li>
+<li>Integer overflow panics in debug builds but silently wraps in release builds by default, use checked/wrapping arithmetic methods explicitly if you need consistent behavior across both.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BuiltByDuke | Developer</title>
+    <meta
+      name="description"
+      content="BuiltByDuke - Discord ops, server builds, and web dev."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="site-bg" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html">BuiltByDuke</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+        <a class="active" href="index.html">Home</a>
+        <a href="staff.html">Staff Resume</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="devlog/index.html">Dev Log</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero reveal">
+        <div class="hero-copy">
+          <p class="kicker">PROFILE</p>
+          <h1>
+            Caleb "BuiltByDuke" -
+            <span>I build discord bots and run minecraft servers.</span>
+          </h1>
+          <p>
+            I design, configure, and manage communities and projects that need structure, speed, and trust.
+            Need someone to handle management, setup, or dev work? That's me.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="portfolio.html">View Work</a>
+            <a class="btn btn-ghost" href="doge.html">Doge Games</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="assets/images/background.jpg" alt="Cyber style background" />
+        </div>
+      </section>
+
+      <section class="bio-grid reveal">
+        <article class="profile-card">
+          <img class="avatar" src="assets/images/profile.jpg" alt="Profile avatar" />
+          <h2>@BuiltByDuke</h2>
+          <p class="muted">Discord ID: 890739013160402964</p>
+          <p>
+            GMT-5. Staff leadership, Discord server systems, and web development, executed clean.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Discord Ops</span>
+            <span class="chip">Web Dev</span>
+            <span class="chip">Automation</span>
+          </div>
+          <div class="profile-actions">
+            <a class="icon-btn" href="https://github.com/CalebClub" target="_blank" rel="noreferrer">
+              <img src="assets/icons/github.svg" alt="GitHub" />
+              GitHub
+            </a>
+            <button class="icon-btn" data-copy="890739013160402964" type="button">
+              <img src="assets/icons/discord.svg" alt="Discord" />
+              Copy Discord ID
+            </button>
+          </div>
+        </article>
+
+        <article class="guns-card">
+          <p class="kicker">LINK CARD</p>
+          <h3>Find Me Across Projects</h3>
+          <a class="link-row" href="https://guns.lol/xzbsky" target="_blank" rel="noreferrer">
+            <img src="assets/icons/globe.svg" alt="Website" />
+            guns.lol/xzbsky
+          </a>
+          <a class="link-row" href="https://calebclub.github.io" target="_blank" rel="noreferrer">
+            <img src="assets/icons/globe.svg" alt="Website" />
+            calebclub.github.io
+          </a>
+          <a class="link-row" href="portfolio.html">
+            <img src="assets/icons/github.svg" alt="Portfolio" />
+            View Full Portfolio
+          </a>
+          <a class="link-row" href="devlog/index.html">
+            <img src="assets/icons/globe.svg" alt="Dev Log" />
+            dev.log, build notes and tutorials
+          </a>
+
+          <div class="ai-lock-card" aria-live="polite">
+            <div class="lock-icon" aria-hidden="true">LOCK</div>
+            <a class="ai-link" href="https://nexus-coder-4.preview.emergentagent.com/" target="_blank" rel="noreferrer">password needed (CAI)</a>
+            <button id="aiLockButton" class="btn btn-small" type="button">Open AI Menu</button>
+            <p id="aiLockStatus" class="muted">Locked. Password required.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> BuiltByDuke. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/CalebClub" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://guns.lol/xzbsky" target="_blank" rel="noreferrer">guns.lol</a>
+        <a href="mailto:notxzbz@gmail.com">Email</a>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

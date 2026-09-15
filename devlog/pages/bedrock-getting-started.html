@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started with the Bedrock Script API · dev.log</title>
+<meta name="description" content="Getting Started with the Bedrock Script API — Minecraft: Bedrock Scripting tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html" class="active">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/bedrock-getting-started</span></div>
+    <article class="prose">
+    <p>Minecraft Bedrock add-ons are split into <strong>packs</strong>: a <em>behavior pack</em> (logic, entities, scripts) and usually a matching <em>resource pack</em> (textures, models, sounds). Scripting lives inside a behavior pack and is powered by the <code>@minecraft/server</code> module, Mojang's own JavaScript/TypeScript API, run inside the game.</p>
+<h2 id="folder-layout">Folder layout</h2>
+<p>Behavior packs live under your game's <code>development_behavior_packs</code> folder so they hot-reload with <code>/reload</code>.</p>
+<pre><code>development_behavior_packs/
+  my_addon_bp/
+    manifest.json
+    scripts/
+      main.js
+    pack_icon.png
+</code></pre>
+<p>Find the folder:
+- <strong>Windows</strong>: <code>%localappdata%\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\development_behavior_packs</code>
+- <strong>Preview/Education editions</strong> use a similarly named package folder, search for <code>com.mojang</code>.</p>
+<h2 id="manifestjson">manifest.json</h2>
+<p>Every pack needs a manifest declaring its modules. A scripting-enabled behavior pack needs a <code>data</code> module <strong>and</strong> a <code>script</code> module, plus a dependency on the <code>@minecraft/server</code> API:</p>
+<pre><code class="language-json">{
+  &quot;format_version&quot;: 2,
+  &quot;header&quot;: {
+    &quot;name&quot;: &quot;My Addon&quot;,
+    &quot;description&quot;: &quot;Custom scripted systems&quot;,
+    &quot;uuid&quot;: &quot;3f1b1e2a-2222-4c3e-9a11-000000000001&quot;,
+    &quot;version&quot;: [1, 0, 0],
+    &quot;min_engine_version&quot;: [1, 21, 0]
+  },
+  &quot;modules&quot;: [
+    {
+      &quot;type&quot;: &quot;data&quot;,
+      &quot;uuid&quot;: &quot;3f1b1e2a-2222-4c3e-9a11-000000000002&quot;,
+      &quot;version&quot;: [1, 0, 0]
+    },
+    {
+      &quot;type&quot;: &quot;script&quot;,
+      &quot;language&quot;: &quot;javascript&quot;,
+      &quot;uuid&quot;: &quot;3f1b1e2a-2222-4c3e-9a11-000000000003&quot;,
+      &quot;version&quot;: [1, 0, 0],
+      &quot;entry&quot;: &quot;scripts/main.js&quot;
+    }
+  ],
+  &quot;dependencies&quot;: [
+    { &quot;module_name&quot;: &quot;@minecraft/server&quot;, &quot;version&quot;: &quot;1.15.0&quot; },
+    { &quot;module_name&quot;: &quot;@minecraft/server-ui&quot;, &quot;version&quot;: &quot;1.2.0&quot; }
+  ]
+}
+</code></pre>
+<p>Generate fresh UUIDs (e.g. with <code>uuidgen</code> or an online v4 generator), never reuse the sample ones above, or Minecraft will treat two different packs as the same pack.</p>
+<h2 id="your-first-script">Your first script</h2>
+<pre><code class="language-js">import { world, system } from &quot;@minecraft/server&quot;;
+
+world.afterEvents.playerSpawn.subscribe((event) =&gt; {
+  const { player, initialSpawn } = event;
+  if (initialSpawn) {
+    player.sendMessage(&quot;§a[Addon]§r Welcome, &quot; + player.name + &quot;!&quot;);
+  }
+});
+
+system.runInterval(() =&gt; {
+  world.sendMessage(&quot;Tick check-in every 5 seconds&quot;);
+}, 100); // 100 ticks = 5s (20 ticks/sec)
+</code></pre>
+<p>Enable the pack on a world (<strong>must</strong> turn on <em>Beta APIs</em> under Experiments), then run <code>/reload</code> in-game while you edit, no restart needed.</p>
+<h2 id="typescript-instead-of-raw-js">TypeScript instead of raw JS</h2>
+<p>Most real projects use TypeScript + <code>esbuild</code>/<code>webpack</code> to bundle down to a single <code>.js</code> your pack loads, so you get autocomplete against Mojang's type defs.</p>
+<pre><code class="language-bash">npm init -y
+npm i -D typescript esbuild @minecraft/server @minecraft/server-ui
+</code></pre>
+<p><code>tsconfig.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;compilerOptions&quot;: {
+    &quot;target&quot;: &quot;ES2020&quot;,
+    &quot;module&quot;: &quot;ES2020&quot;,
+    &quot;moduleResolution&quot;: &quot;node&quot;,
+    &quot;strict&quot;: true,
+    &quot;outDir&quot;: &quot;dist&quot;
+  }
+}
+</code></pre>
+<p>Bundle command (drop the output straight into your pack's <code>scripts/</code> folder):</p>
+<pre><code class="language-bash">npx esbuild src/main.ts --bundle --outfile=development_behavior_packs/my_addon_bp/scripts/main.js --external:@minecraft/server --external:@minecraft/server-ui --format=esm
+</code></pre>
+<h2 id="key-modules-youll-import-constantly">Key modules you'll import constantly</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>What it's for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@minecraft/server</code></td>
+<td>Core: <code>world</code>, <code>system</code>, entities, blocks, events</td>
+</tr>
+<tr>
+<td><code>@minecraft/server-ui</code></td>
+<td>Forms/menus (<code>ActionFormData</code>, <code>ModalFormData</code>, <code>MessageFormData</code>)</td>
+</tr>
+<tr>
+<td><code>@minecraft/server-gametest</code></td>
+<td>Automated testing of your logic</td>
+</tr>
+<tr>
+<td><code>@minecraft/server-net</code></td>
+<td>Outbound HTTP from scripts (limited, opt-in)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="debugging">Debugging</h2>
+<ul>
+<li><code>console.warn(...)</code> / <code>console.error(...)</code> show up in the <strong>Content Log</strong> (enable it under Settings → Creator).</li>
+<li>Use the <strong>Script Debugger</strong> in a code editor (VS Code + the "Minecraft Bedrock Edition" extension) to set real breakpoints against a running world.</li>
+<li><code>world.sendMessage()</code> is the fastest "print statement" for quick checks.</li>
+</ul>
+<p>Next: <a href="bedrock-events-commands.html">Custom Commands &amp; Events</a> or straight to <a href="bedrock-forms-ui.html">Forms &amp; UI</a> if you want menus first.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

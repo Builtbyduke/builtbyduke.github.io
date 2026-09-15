@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building with Maven & Uploading to a Server · dev.log</title>
+<meta name="description" content="Building with Maven & Uploading to a Server — Minecraft: Java Plugins tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html" class="active">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/java-plugin-build-deploy</span></div>
+    <article class="prose">
+    <h2 id="building-the-jar">Building the jar</h2>
+<p>From the project root (where <code>pom.xml</code> lives):</p>
+<pre><code class="language-bash">mvn clean package
+</code></pre>
+<ul>
+<li><code>clean</code> wipes <code>target/</code> so you're not shipping stale classes.</li>
+<li><code>package</code> compiles, runs tests, and produces the jar in <code>target/</code>.</li>
+</ul>
+<p>With the <code>maven-shade-plugin</code> configured (see <a href="java-plugin-setup.html">setup page</a>), you'll get <code>target/my-plugin.jar</code>, this is the file the server loads. Without shading you'd get a jar missing any third-party dependencies you added (besides the provided API), which fail silently at runtime with <code>NoClassDefFoundError</code>.</p>
+<p>Useful variants:</p>
+<pre><code class="language-bash">mvn clean package -DskipTests     # skip test phase for a quick rebuild
+mvn -q clean package              # quiet output, only show errors
+</code></pre>
+<h2 id="where-the-jar-goes">Where the jar goes</h2>
+<p>Every Bukkit/Spigot/Paper server has a <code>plugins/</code> folder next to its own jar and <code>server.properties</code>:</p>
+<pre><code>server/
+  paper-1.21.jar
+  server.properties
+  plugins/
+    my-plugin.jar   &lt;- goes here
+</code></pre>
+<h2 id="uploading-to-a-remote-server">Uploading to a remote server</h2>
+<p><strong>Option 1, SFTP/SCP (most common for a VPS):</strong></p>
+<pre><code class="language-bash">scp target/my-plugin.jar user@your-server-ip:/path/to/server/plugins/
+</code></pre>
+<p>Or with an SFTP GUI client (FileZilla, WinSCP): connect with the same host/user/port your SSH access uses, navigate to <code>plugins/</code>, and drag the jar in.</p>
+<p><strong>Option 2, Managed host control panel</strong> (common on Pterodactyl-based hosts like most budget Minecraft hosts): use the panel's file manager, open <code>plugins/</code>, and use its upload button. Some panels also support SFTP directly into the same path.</p>
+<p><strong>Option 3, rsync</strong>, handy if you're iterating quickly and want to skip re-uploading unchanged files:</p>
+<pre><code class="language-bash">rsync -avz target/my-plugin.jar user@your-server-ip:/path/to/server/plugins/
+</code></pre>
+<h2 id="reloading-without-a-full-restart">Reloading without a full restart</h2>
+<p>Full restarts are safer, but for quick iteration:</p>
+<pre><code>/plugins          # confirm it's loaded
+/reload confirm   # Paper requires this confirmation, many devs still avoid /reload
+                   # in production since it can leave old listeners registered
+</code></pre>
+<p>Most experienced plugin devs prefer a full <code>stop</code> + restart, or a plugin manager like <strong>PlugMan</strong>, over vanilla <code>/reload</code>, because <code>/reload</code> doesn't reliably tear down everything the old plugin instance registered.</p>
+<h2 id="a-quick-scripted-deploy-loop-local-test-server">A quick scripted deploy loop (local test server)</h2>
+<p>If you run a local test server for development, a small script saves a lot of manual copying:</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -e
+mvn -q clean package
+cp target/my-plugin.jar ~/mc-test-server/plugins/
+echo &quot;Deployed. Restart or /reload confirm on the test server.&quot;
+</code></pre>
+<p>Save as <code>deploy.sh</code>, <code>chmod +x deploy.sh</code>, then <code>./deploy.sh</code> after every change.</p>
+<h2 id="common-build-errors">Common build errors</h2>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>package org.bukkit does not exist</code></td>
+<td>Missing/misconfigured <code>paper-api</code> dependency or repository in <code>pom.xml</code></td>
+</tr>
+<tr>
+<td>Plugin loads but <code>NoClassDefFoundError</code> at runtime</td>
+<td>Forgot the shade plugin, or a dependency was marked <code>provided</code> when it shouldn't be</td>
+</tr>
+<tr>
+<td><code>Unsupported class file major version</code></td>
+<td>Server's Java runtime is older than the version you compiled with, match <code>maven.compiler.target</code> to the server's actual JDK</td>
+</tr>
+<tr>
+<td>Plugin doesn't appear in <code>/plugins</code></td>
+<td><code>main:</code> in <code>plugin.yml</code> doesn't match your actual package/class path exactly</td>
+</tr>
+</tbody>
+</table>
+<p>Next: <a href="java-decompile-jar.html">Decompiling a .jar to .java</a>.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

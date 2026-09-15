@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maven Project Setup (Spigot / Paper Plugins) · dev.log</title>
+<meta name="description" content="Maven Project Setup (Spigot / Paper Plugins) — Minecraft: Java Plugins tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html" class="active">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/java-plugin-setup</span></div>
+    <article class="prose">
+    <p>Java Minecraft server plugins target the Bukkit API, implemented by <strong>Spigot</strong> and its modern fork <strong>Paper</strong> (almost every new project should target Paper, it's a drop-in superset with better performance and a richer API).</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>JDK 21 (Paper 1.20.5+ requires it; check your target Minecraft version's required Java version before picking one).</li>
+<li>Maven (<code>mvn -v</code> to confirm it's installed) or Gradle, this guide uses Maven since it's still the more common default in tutorials.</li>
+</ul>
+<h2 id="project-layout">Project layout</h2>
+<pre><code>my-plugin/
+  pom.xml
+  src/
+    main/
+      java/com/example/myplugin/MyPlugin.java
+      resources/
+        plugin.yml
+</code></pre>
+<h2 id="pomxml">pom.xml</h2>
+<pre><code class="language-xml">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;com.example&lt;/groupId&gt;
+  &lt;artifactId&gt;my-plugin&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+
+  &lt;properties&gt;
+    &lt;maven.compiler.source&gt;21&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;21&lt;/maven.compiler.target&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+  &lt;/properties&gt;
+
+  &lt;repositories&gt;
+    &lt;repository&gt;
+      &lt;id&gt;papermc&lt;/id&gt;
+      &lt;url&gt;https://repo.papermc.io/repository/maven-public/&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/repositories&gt;
+
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;io.papermc.paper&lt;/groupId&gt;
+      &lt;artifactId&gt;paper-api&lt;/artifactId&gt;
+      &lt;version&gt;1.21-R0.1-SNAPSHOT&lt;/version&gt;
+      &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+
+  &lt;build&gt;
+    &lt;finalName&gt;${project.artifactId}&lt;/finalName&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+        &lt;version&gt;3.5.3&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;&lt;goal&gt;shade&lt;/goal&gt;&lt;/goals&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+&lt;/project&gt;
+</code></pre>
+<p><code>scope=provided</code> matters: the server already has the API classes at runtime, so you don't want to bundle them into your jar.</p>
+<h2 id="pluginyml">plugin.yml</h2>
+<pre><code class="language-yaml">name: MyPlugin
+version: '1.0.0'
+main: com.example.myplugin.MyPlugin
+api-version: '1.21'
+author: you
+commands:
+  hello:
+    description: Says hello
+</code></pre>
+<h2 id="main-class">Main class</h2>
+<pre><code class="language-java">package com.example.myplugin;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class MyPlugin extends JavaPlugin {
+    @Override
+    public void onEnable() {
+        getLogger().info(&quot;MyPlugin enabled!&quot;);
+    }
+
+    @Override
+    public void onDisable() {
+        getLogger().info(&quot;MyPlugin disabled.&quot;);
+    }
+}
+</code></pre>
+<h2 id="a-first-command-handler">A first command handler</h2>
+<pre><code class="language-java">package com.example.myplugin;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class HelloCommand {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(&quot;Players only.&quot;);
+            return true;
+        }
+        player.sendMessage(&quot;§aHello, &quot; + player.getName() + &quot;!&quot;);
+        return true;
+    }
+}
+</code></pre>
+<p>Wire it up in <code>onEnable()</code>:</p>
+<pre><code class="language-java">getCommand(&quot;hello&quot;).setExecutor(new HelloCommand()::onCommand);
+</code></pre>
+<h2 id="registering-an-event-listener">Registering an event listener</h2>
+<pre><code class="language-java">package com.example.myplugin;
+
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+
+public class JoinListener implements Listener {
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        event.setJoinMessage(&quot;§7» &quot; + event.getPlayer().getName() + &quot; joined&quot;);
+    }
+}
+</code></pre>
+<pre><code class="language-java">getServer().getPluginManager().registerEvents(new JoinListener(), this);
+</code></pre>
+<p>Next: <a href="java-plugin-build-deploy.html">Building &amp; Uploading to a Server</a>.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

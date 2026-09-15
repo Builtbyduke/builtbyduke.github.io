@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slash Commands, Buttons & Embeds · dev.log</title>
+<meta name="description" content="Slash Commands, Buttons & Embeds — Discord Bots (Java) tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html" class="active">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/discord-jda-commands</span></div>
+    <article class="prose">
+    <p>These three, slash commands, buttons/menus, and embeds, make up the majority of what a modern Discord bot's UI actually is.</p>
+<h2 id="registering-a-slash-command">Registering a slash command</h2>
+<p>Register commands once (globally, or instantly per-guild for testing, global commands can take up to an hour to propagate):</p>
+<pre><code class="language-java">jda.updateCommands().addCommands(
+    Commands.slash(&quot;ping&quot;, &quot;Replies with pong&quot;),
+    Commands.slash(&quot;kick&quot;, &quot;Kick a member&quot;)
+        .addOption(OptionType.USER, &quot;target&quot;, &quot;Who to kick&quot;, true)
+        .addOption(OptionType.STRING, &quot;reason&quot;, &quot;Why&quot;, false)
+        .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.KICK_MEMBERS))
+).queue();
+</code></pre>
+<p>For instant per-guild testing instead:</p>
+<pre><code class="language-java">guild.updateCommands().addCommands(Commands.slash(&quot;ping&quot;, &quot;Replies with pong&quot;)).queue();
+</code></pre>
+<h2 id="handling-the-interaction">Handling the interaction</h2>
+<pre><code class="language-java">import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+public class CommandListener extends ListenerAdapter {
+    @Override
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
+        switch (event.getName()) {
+            case &quot;ping&quot; -&gt; event.reply(&quot;Pong!&quot;).queue();
+            case &quot;kick&quot; -&gt; handleKick(event);
+        }
+    }
+
+    private void handleKick(SlashCommandInteractionEvent event) {
+        var target = event.getOption(&quot;target&quot;).getAsMember();
+        var reason = event.getOption(&quot;reason&quot;, &quot;No reason&quot;, opt -&gt; opt.getAsString());
+
+        event.deferReply(true).queue(); // &quot;thinking...&quot; state, useful if the action takes time
+        target.kick().reason(reason).queue(
+            success -&gt; event.getHook().sendMessage(&quot;Kicked &quot; + target.getUser().getName()).queue(),
+            failure -&gt; event.getHook().sendMessage(&quot;Failed: &quot; + failure.getMessage()).queue()
+        );
+    }
+}
+</code></pre>
+<p>Interactions <strong>must</strong> get a response within 3 seconds or Discord shows "This interaction failed." <code>deferReply()</code> buys extra time for anything that hits a database or another API.</p>
+<h2 id="embeds">Embeds</h2>
+<pre><code class="language-java">import net.dv8tion.jda.api.EmbedBuilder;
+import java.awt.Color;
+
+EmbedBuilder embed = new EmbedBuilder()
+    .setTitle(&quot;Server Stats&quot;)
+    .setColor(Color.decode(&quot;#5865F2&quot;))
+    .addField(&quot;Members&quot;, String.valueOf(guild.getMemberCount()), true)
+    .addField(&quot;Boosts&quot;, String.valueOf(guild.getBoostCount()), true)
+    .setFooter(&quot;Updated just now&quot;)
+    .setTimestamp(java.time.Instant.now());
+
+event.replyEmbeds(embed.build()).queue();
+</code></pre>
+<h2 id="buttons">Buttons</h2>
+<pre><code class="language-java">import net.dv8tion.jda.api.interactions.components.buttons.Button;
+
+event.reply(&quot;Confirm the action?&quot;)
+    .addActionRow(
+        Button.success(&quot;confirm:yes&quot;, &quot;Confirm&quot;),
+        Button.danger(&quot;confirm:no&quot;, &quot;Cancel&quot;)
+    )
+    .queue();
+</code></pre>
+<p>Handling clicks, the <strong>custom ID</strong> you set is how you route the click back to logic (a common pattern: <code>action:payload</code>, split on <code>:</code>):</p>
+<pre><code class="language-java">@Override
+public void onButtonInteraction(ButtonInteractionEvent event) {
+    String[] parts = event.getComponentId().split(&quot;:&quot;);
+    if (parts[0].equals(&quot;confirm&quot;)) {
+        boolean confirmed = parts[1].equals(&quot;yes&quot;);
+        event.editMessage(confirmed ? &quot;Confirmed.&quot; : &quot;Cancelled.&quot;).setComponents().queue();
+    }
+}
+</code></pre>
+<p><code>.setComponents()</code> with no arguments removes the buttons after they're used, otherwise users can click "Confirm" repeatedly.</p>
+<h2 id="select-menus-dropdowns">Select menus (dropdowns)</h2>
+<pre><code class="language-java">import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
+
+event.reply(&quot;Pick a role:&quot;)
+    .addActionRow(
+        StringSelectMenu.create(&quot;role-select&quot;)
+            .addOption(&quot;Member&quot;, &quot;role_member&quot;)
+            .addOption(&quot;VIP&quot;, &quot;role_vip&quot;)
+            .build()
+    ).queue();
+</code></pre>
+<pre><code class="language-java">@Override
+public void onStringSelectInteraction(StringSelectInteractionEvent event) {
+    String selected = event.getValues().get(0);
+    // apply role based on selected value
+}
+</code></pre>
+<h2 id="modals-pop-up-forms">Modals (pop-up forms)</h2>
+<pre><code class="language-java">import net.dv8tion.jda.api.interactions.components.text.TextInput;
+import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
+import net.dv8tion.jda.api.interactions.modals.Modal;
+
+TextInput reason = TextInput.create(&quot;reason&quot;, &quot;Reason&quot;, TextInputStyle.PARAGRAPH)
+    .setPlaceholder(&quot;Why are you reporting this?&quot;)
+    .setRequired(true)
+    .build();
+
+Modal modal = Modal.create(&quot;report-modal&quot;, &quot;Submit a Report&quot;)
+    .addActionRow(reason)
+    .build();
+
+event.replyModal(modal).queue();
+</code></pre>
+<p>Together, these four interaction types (slash commands, buttons, select menus, modals) are essentially the entire "UI toolkit" JDA exposes, almost every real bot feature is some combination of them.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

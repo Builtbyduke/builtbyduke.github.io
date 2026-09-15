@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ · dev.log</title>
+<meta name="description" content="C++ — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html" class="active">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-cpp</span></div>
+    <article class="prose">
+    <p><a href="lang-c.html">C</a> extended with classes, templates, and modern memory-safety tools (smart pointers, RAII), used heavily in game engines, systems software, and performance-critical applications.</p>
+<h2 id="setup">Setup</h2>
+<pre><code class="language-bash">g++ --version    # or clang++ --version
+</code></pre>
+<pre><code class="language-bash">g++ main.cpp -o main -std=c++20 -Wall -Wextra
+./main
+</code></pre>
+<h2 id="core-syntax">Core syntax</h2>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+int add(int a, int b) { return a + b; }
+
+int main() {
+    std::string name = &quot;Ada&quot;;
+    int count = 0;
+
+    std::cout &lt;&lt; &quot;Hello, &quot; &lt;&lt; name &lt;&lt; &quot;! Count: &quot; &lt;&lt; count &lt;&lt; &quot;\n&quot;;
+
+    std::vector&lt;int&gt; nums = {1, 2, 3};
+    for (int n : nums) {
+        std::cout &lt;&lt; n * 2 &lt;&lt; &quot;\n&quot;;
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="classes">Classes</h2>
+<pre><code class="language-cpp">class Animal {
+public:
+    Animal(std::string name) : name_(std::move(name)) {}
+    std::string speak() const { return name_ + &quot; makes a sound.&quot;; }
+
+private:
+    std::string name_;
+};
+
+Animal dog(&quot;Rex&quot;);
+std::cout &lt;&lt; dog.speak();
+</code></pre>
+<h2 id="raii-smart-pointers-the-modern-alternative-to-manual-newdelete">RAII &amp; smart pointers (the modern alternative to manual <code>new</code>/<code>delete</code>)</h2>
+<pre><code class="language-cpp">#include &lt;memory&gt;
+
+class Resource {
+public:
+    Resource() { std::cout &lt;&lt; &quot;Acquired\n&quot;; }
+    ~Resource() { std::cout &lt;&lt; &quot;Released\n&quot;; } // runs automatically on scope exit
+};
+
+void useResource() {
+    auto res = std::make_unique&lt;Resource&gt;(); // freed automatically, even on exception
+} // &quot;Released&quot; prints here
+</code></pre>
+<p><code>std::unique_ptr</code> and <code>std::shared_ptr</code> are the modern default over raw <code>new</code>/<code>delete</code>, the destructor runs deterministically when the smart pointer goes out of scope, eliminating most manual memory bugs.</p>
+<h2 id="templates-generic-programming">Templates (generic programming)</h2>
+<pre><code class="language-cpp">template &lt;typename T&gt;
+T maxOf(T a, T b) {
+    return a &gt; b ? a : b;
+}
+
+int main() {
+    std::cout &lt;&lt; maxOf(3, 7) &lt;&lt; &quot;\n&quot;;
+    std::cout &lt;&lt; maxOf(2.5, 1.1) &lt;&lt; &quot;\n&quot;;
+}
+</code></pre>
+<h2 id="stl-containers-youll-reach-for-constantly">STL containers you'll reach for constantly</h2>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;map&gt;
+#include &lt;string&gt;
+
+std::vector&lt;int&gt; nums;
+std::map&lt;std::string, int&gt; ages = {{&quot;Ada&quot;, 30}, {&quot;Bob&quot;, 25}};
+
+for (const auto&amp; [name, age] : ages) {
+    std::cout &lt;&lt; name &lt;&lt; &quot;: &quot; &lt;&lt; age &lt;&lt; &quot;\n&quot;;
+}
+</code></pre>
+<h2 id="popular-use-build-tools">Popular use / build tools</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build system</td>
+<td>CMake</td>
+</tr>
+<tr>
+<td>Package manager</td>
+<td>vcpkg, Conan</td>
+</tr>
+<tr>
+<td>Game engines</td>
+<td>Unreal Engine (uses C++ directly)</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>Google Test (gtest)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li>A raw pointer returned from a function that owns the data it points to (rather than a smart pointer or reference) is a classic dangling-pointer bug, prefer returning by value or a smart pointer.</li>
+<li>Passing large objects by value (instead of by <code>const&amp;</code>) triggers unnecessary copies, pass by reference for anything beyond a primitive.</li>
+<li>Undefined behavior (out-of-bounds access, use-after-free) can "work" in testing and fail unpredictably elsewhere, this class of bug is exactly why smart pointers and container bounds-checked accessors (<code>.at()</code> instead of <code>[]</code>) exist.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

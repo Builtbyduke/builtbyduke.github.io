@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Commands & Events · dev.log</title>
+<meta name="description" content="Custom Commands & Events — Minecraft: Bedrock Scripting tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html" class="active">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/bedrock-events-commands</span></div>
+    <article class="prose">
+    <p>Two systems drive almost every Bedrock add-on: <strong>events</strong> (react to something that happened) and <strong>custom commands</strong> (let a player or another script trigger your logic on demand).</p>
+<h2 id="common-world-events">Common world events</h2>
+<pre><code class="language-js">import { world } from &quot;@minecraft/server&quot;;
+
+world.afterEvents.entityHurt.subscribe((e) =&gt; {
+  console.warn(`${e.hurtEntity.typeId} took ${e.damage} damage`);
+});
+
+world.afterEvents.blockPlace.subscribe((e) =&gt; {
+  if (e.block.typeId === &quot;minecraft:diamond_block&quot;) {
+    e.player.sendMessage(&quot;§bNice.&quot;);
+  }
+});
+
+world.beforeEvents.chatSend.subscribe((e) =&gt; {
+  if (e.message.startsWith(&quot;!&quot;)) {
+    e.cancel = true; // swallow the chat message
+    // handle it as a pseudo-command yourself
+  }
+});
+</code></pre>
+<p><code>beforeEvents</code> run synchronously and can cancel/mutate; <code>afterEvents</code> are read-only notifications after the fact. Most gameplay logic belongs in <code>afterEvents</code>, <code>beforeEvents</code> are reserved for the handful of events that support cancellation.</p>
+<h2 id="slash-commands-via-scriptevent">Slash commands via <code>/scriptevent</code></h2>
+<p>The cleanest way to expose a command players (or command blocks / functions) can call is <code>system.afterEvents.scriptEventReceive</code>, paired with a namespace so it doesn't collide with other add-ons:</p>
+<pre><code class="language-js">import { system } from &quot;@minecraft/server&quot;;
+
+system.afterEvents.scriptEventReceive.subscribe((event) =&gt; {
+  const { id, message, sourceEntity } = event;
+  if (id !== &quot;myaddon:kit&quot;) return;
+
+  const kit = message; // e.g. &quot;/scriptevent myaddon:kit starter&quot;
+  giveKit(sourceEntity, kit);
+});
+</code></pre>
+<p>Register the namespace in <code>manifest.json</code> so <code>/scriptevent</code> autocompletes it:</p>
+<pre><code class="language-json">&quot;metadata&quot;: {
+  &quot;authors&quot;: [&quot;you&quot;],
+  &quot;namespace&quot;: &quot;myaddon&quot;
+}
+</code></pre>
+<h2 id="custom-commands-121-minecraftserver-command-registry">Custom commands (1.21+ <code>@minecraft/server</code> command registry)</h2>
+<p>Newer API versions let scripts register real slash commands (no <code>/scriptevent</code> prefix needed) via the experimental custom-commands API:</p>
+<pre><code class="language-js">import { system, CustomCommandStatus, CustomCommandParamType } from &quot;@minecraft/server&quot;;
+
+system.beforeEvents.startup.subscribe(({ customCommandRegistry }) =&gt; {
+  customCommandRegistry.registerCommand(
+    {
+      name: &quot;myaddon:heal&quot;,
+      description: &quot;Heal yourself&quot;,
+      permissionLevel: 0,
+      optionalParameters: [{ name: &quot;amount&quot;, type: CustomCommandParamType.Integer }]
+    },
+    (origin, amount) =&gt; {
+      const player = origin.sourceEntity;
+      player?.runCommand(`effect @s instant_health 1 ${amount ?? 1}`);
+      return { status: CustomCommandStatus.Success };
+    }
+  );
+});
+</code></pre>
+<p>This must run inside the <code>startup</code> event, command registration is only allowed before the world finishes loading.</p>
+<h2 id="running-vanilla-commands-from-script">Running vanilla commands from script</h2>
+<pre><code class="language-js">player.runCommand(&quot;give @s diamond 1&quot;);
+// or, queued and error-safe across ticks:
+system.run(() =&gt; player.runCommandAsync(&quot;give @s diamond 1&quot;));
+</code></pre>
+<p>Prefer <code>runCommandAsync</code> for anything that might legally fail (e.g. <code>/tp</code> into an unloaded chunk) since it returns a promise instead of throwing synchronously.</p>
+<h2 id="a-practical-pattern-custom-item-with-a-triggered-ability">A practical pattern: custom item with a triggered ability</h2>
+<pre><code class="language-js">import { world } from &quot;@minecraft/server&quot;;
+
+world.afterEvents.itemUse.subscribe((e) =&gt; {
+  if (e.itemStack.typeId !== &quot;myaddon:thunder_wand&quot;) return;
+  const player = e.source;
+  const loc = player.getViewDirection();
+  player.dimension.createExplosion(
+    { x: player.location.x + loc.x * 5, y: player.location.y, z: player.location.z + loc.z * 5 },
+    2
+  );
+});
+</code></pre>
+<p>Next: <a href="bedrock-forms-ui.html">Forms &amp; UI</a>.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

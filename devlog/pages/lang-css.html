@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS · dev.log</title>
+<meta name="description" content="CSS — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html" class="active">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-css</span></div>
+    <article class="prose">
+    <p>Styles and lays out <a href="lang-html.html">HTML</a>. Modern CSS (Grid, Flexbox, custom properties) handles most layouts without a preprocessor or framework.</p>
+<h2 id="selectors-specificity">Selectors &amp; specificity</h2>
+<pre><code class="language-css">/* type, class, id, specificity increases left to right */
+p { color: #222; }
+.card { padding: 16px; }
+#header { position: sticky; }
+
+/* combinators */
+.card &gt; h2 { margin-top: 0; }      /* direct child */
+.card p + p { margin-top: 8px; }   /* adjacent sibling */
+nav a:hover { text-decoration: underline; }
+</code></pre>
+<p>Specificity order (low → high): type selectors → classes/attributes/pseudo-classes → IDs → inline styles → <code>!important</code>. Prefer classes over IDs for styling, and avoid <code>!important</code> except as an escape hatch against third-party CSS.</p>
+<h2 id="box-model">Box model</h2>
+<pre><code class="language-css">.box {
+  box-sizing: border-box; /* padding/border included in width, set this globally */
+  width: 300px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  margin: 8px;
+}
+</code></pre>
+<pre><code class="language-css">*, *::before, *::after { box-sizing: border-box; }
+</code></pre>
+<h2 id="flexbox-one-dimensional-layout">Flexbox (one-dimensional layout)</h2>
+<pre><code class="language-css">.row {
+  display: flex;
+  justify-content: space-between; /* main axis */
+  align-items: center;            /* cross axis */
+  gap: 12px;
+}
+.row &gt; .grow { flex: 1; }
+</code></pre>
+<h2 id="grid-two-dimensional-layout">Grid (two-dimensional layout)</h2>
+<pre><code class="language-css">.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+.grid .featured { grid-column: span 2; }
+</code></pre>
+<h2 id="custom-properties-css-variables">Custom properties (CSS variables)</h2>
+<pre><code class="language-css">:root {
+  --brand: #5865f2;
+  --radius: 8px;
+}
+.button {
+  background: var(--brand);
+  border-radius: var(--radius);
+}
+</code></pre>
+<p>Unlike Sass variables, these are live in the DOM, you can override them per-component or with JS (<code>el.style.setProperty("--brand", "#ff0000")</code>), and they respect the cascade/inheritance.</p>
+<h2 id="responsive-design">Responsive design</h2>
+<pre><code class="language-css">.container { padding: 16px; }
+
+@media (min-width: 768px) {
+  .container { padding: 32px; }
+}
+</code></pre>
+<p>Mobile-first (<code>min-width</code> queries, base styles for small screens) is the more common modern approach over <code>max-width</code> desktop-first queries.</p>
+<h2 id="popular-tools">Popular tools</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Utility framework</td>
+<td>Tailwind CSS</td>
+</tr>
+<tr>
+<td>Preprocessor</td>
+<td>Sass/SCSS (less necessary now that CSS has nesting &amp; variables natively)</td>
+</tr>
+<tr>
+<td>Component styling in JS frameworks</td>
+<td>CSS Modules, styled-components</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li><code>z-index</code> only works on positioned elements (<code>position</code> other than <code>static</code>).</li>
+<li>Margins between two block elements can <strong>collapse</strong> (the larger one wins instead of both adding), a common source of "why is there extra space" bugs.</li>
+<li><code>height: 100%</code> on a child does nothing unless the parent has an explicit height set somewhere up the chain.</li>
+</ul>
+<p>See also: <a href="lang-react.html">React</a> for how component-scoped styling typically layers on top of these fundamentals.</p>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

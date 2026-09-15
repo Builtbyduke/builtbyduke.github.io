@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swift · dev.log</title>
+<meta name="description" content="Swift — Language References tutorial">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2213%22 font-size=%2214%22>&#9646;</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.min.css">
+</head>
+<body>
+<div class="skiplink"><a href="#main">Skip to content</a></div>
+<div class="shell">
+  <button id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰ menu</button>
+  <nav class="sidebar" id="sidebar">
+    <a class="brand" href="../index.html"><span class="brand-mark">▣</span> dev.log<span class="cursor">_</span></a>
+    <div class="brand-sub"># Minecraft &amp; multi-language build notes</div>
+    <a class="back-home" href="../../index.html">&larr; Back to Main Site</a>
+    <div class="nav-group"><div class="nav-group-title">▣ Minecraft: Bedrock Scripting</div><ul>
+<li><a href="../pages/bedrock-getting-started.html">Getting Started with Script API</a></li>
+<li><a href="../pages/bedrock-events-commands.html">Custom Commands & Events</a></li>
+<li><a href="../pages/bedrock-forms-ui.html">Forms & UI (GUIs)</a></li>
+<li><a href="../pages/bedrock-custom-components.html">Custom Items & Blocks</a></li>
+<li><a href="../pages/bedrock-persistent-storage.html">Saving Data (Dynamic Properties)</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">☕ Minecraft: Java Plugins</div><ul>
+<li><a href="../pages/java-plugin-setup.html">Maven Project Setup</a></li>
+<li><a href="../pages/java-plugin-build-deploy.html">Building & Uploading to a Server</a></li>
+<li><a href="../pages/java-decompile-jar.html">Decompiling a .jar to .java</a></li>
+<li><a href="../pages/java-plugin-guis.html">Inventory GUI Menus</a></li>
+<li><a href="../pages/java-plugin-common-systems.html">Economy, Permissions & Commands</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">◆ Discord Bots (Java)</div><ul>
+<li><a href="../pages/discord-jda-setup.html">JDA Project Setup</a></li>
+<li><a href="../pages/discord-jda-commands.html">Slash Commands, Buttons & Embeds</a></li>
+</ul></div>
+<div class="nav-group"><div class="nav-group-title">⌘ Language References</div><ul>
+<li><a href="../pages/lang-javascript.html">JavaScript</a></li>
+<li><a href="../pages/lang-typescript.html">TypeScript</a></li>
+<li><a href="../pages/lang-html.html">HTML</a></li>
+<li><a href="../pages/lang-css.html">CSS</a></li>
+<li><a href="../pages/lang-node.html">Node.js</a></li>
+<li><a href="../pages/lang-react.html">React</a></li>
+<li><a href="../pages/lang-php.html">PHP</a></li>
+<li><a href="../pages/lang-python.html">Python</a></li>
+<li><a href="../pages/lang-java.html">Java</a></li>
+<li><a href="../pages/lang-csharp.html">C#</a></li>
+<li><a href="../pages/lang-c.html">C</a></li>
+<li><a href="../pages/lang-cpp.html">C++</a></li>
+<li><a href="../pages/lang-go.html">Go</a></li>
+<li><a href="../pages/lang-rust.html">Rust</a></li>
+<li><a href="../pages/lang-swift.html" class="active">Swift</a></li>
+<li><a href="../pages/lang-kotlin.html">Kotlin</a></li>
+<li><a href="../pages/lang-sql.html">SQL</a></li>
+<li><a href="../pages/lang-shell.html">Shell / Bash</a></li>
+</ul></div>
+  </nav>
+  <main id="main" class="content">
+    <div class="titlebar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="path">~/dev.log/lang-swift</span></div>
+    <article class="prose">
+    <p>Apple's language for iOS/macOS (and beyond), modern, type-safe, with optionals baked into the type system to prevent null-reference bugs.</p>
+<h2 id="setup">Setup</h2>
+<p>Xcode (macOS) includes the full toolchain. For non-Apple platforms or command-line use:</p>
+<pre><code class="language-bash">swift --version
+swift run          # inside a Swift package
+</code></pre>
+<h2 id="core-syntax">Core syntax</h2>
+<pre><code class="language-swift">let name = &quot;Ada&quot;       // constant
+var count = 0          // variable
+
+func add(_ a: Int, _ b: Int) -&gt; Int {
+    return a + b
+}
+
+print(&quot;Hello, \(name)! Count: \(count)&quot;)
+
+let nums = [1, 2, 3]
+let doubled = nums.map { $0 * 2 }
+</code></pre>
+<p><code>let</code> vs <code>var</code> mirrors Rust/Kotlin's philosophy: immutable by default, mutable only when explicitly declared.</p>
+<h2 id="optionals-swifts-answer-to-null">Optionals, Swift's answer to null</h2>
+<pre><code class="language-swift">var maybeName: String? = nil // explicitly optional
+
+if let name = maybeName {
+    print(&quot;Hello, \(name)&quot;)
+} else {
+    print(&quot;No name set&quot;)
+}
+
+// or with a default
+let displayName = maybeName ?? &quot;Guest&quot;
+
+// force-unwrap (only when you're certain it's non-nil, crashes otherwise)
+// let forced = maybeName!
+</code></pre>
+<p>The compiler forces you to handle the <code>nil</code> case before accessing an optional's value, this is Swift's core mechanism for eliminating null-pointer crashes at compile time.</p>
+<h2 id="structs-vs-classes">Structs vs classes</h2>
+<pre><code class="language-swift">struct Point {   // value type, copied on assignment
+    var x: Int
+    var y: Int
+}
+
+class Animal {   // reference type, shared on assignment
+    let name: String
+    init(name: String) { self.name = name }
+    func speak() -&gt; String { &quot;\(name) makes a sound.&quot; }
+}
+</code></pre>
+<p>Swift favors <code>struct</code> for most data types (Apple's own frameworks default to structs), reach for <code>class</code> specifically when you need shared mutable reference semantics or inheritance.</p>
+<h2 id="protocols-swifts-interfaces">Protocols (Swift's interfaces)</h2>
+<pre><code class="language-swift">protocol Shape {
+    func area() -&gt; Double
+}
+
+struct Circle: Shape {
+    let radius: Double
+    func area() -&gt; Double { .pi * radius * radius }
+}
+</code></pre>
+<h2 id="error-handling">Error handling</h2>
+<pre><code class="language-swift">enum ValidationError: Error {
+    case tooShort
+}
+
+func validate(_ password: String) throws {
+    if password.count &lt; 8 {
+        throw ValidationError.tooShort
+    }
+}
+
+do {
+    try validate(&quot;abc&quot;)
+} catch {
+    print(&quot;Invalid: \(error)&quot;)
+}
+</code></pre>
+<h2 id="popular-use">Popular use</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Common choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UI framework</td>
+<td>SwiftUI (declarative, modern default), UIKit (older, still widely used)</td>
+</tr>
+<tr>
+<td>Dependency management</td>
+<td>Swift Package Manager</td>
+</tr>
+<tr>
+<td>Backend (less common but growing)</td>
+<td>Vapor</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>XCTest, Swift Testing</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-gotchas">Common gotchas</h2>
+<ul>
+<li>Force-unwrapping (<code>!</code>) an optional that's actually <code>nil</code> crashes at runtime, reserve it for cases you can prove are safe, and prefer <code>if let</code>/<code>guard let</code>/<code>??</code> everywhere else.</li>
+<li><code>struct</code> copy semantics mean mutating a struct property inside a function parameter doesn't affect the caller's copy unless the parameter is explicitly <code>inout</code>.</li>
+<li>Retain cycles (two classes holding strong references to each other) leak memory under ARC (Automatic Reference Counting), closures capturing <code>self</code> commonly need <code>[weak self]</code> to avoid this.</li>
+</ul>
+    </article>
+    <footer class="page-footer">
+      <p>Found a mistake or want to extend this? Fork the repo and send a PR — this whole site is just markdown files under <code>content/</code>.</p>
+    </footer>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

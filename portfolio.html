@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio | BuiltByDuke</title>
+    <meta name="description" content="Portfolio of coding, Discord configuration, and management work by BuiltByDuke." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="site-bg" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html">BuiltByDuke</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="staff.html">Staff Resume</a>
+        <a class="active" href="portfolio.html">Portfolio</a>
+        <a href="devlog/index.html">Dev Log</a>
+      </nav>
+    </header>
+
+    <main class="page-wrap">
+      <section class="page-intro reveal">
+        <p class="kicker">PORTFOLIO GRID</p>
+        <h1>Selected Work and Server Projects</h1>
+        <p>
+            Web development, Discord server configuration, and community management work. This is a
+            curated list, not everything. Got questions about a project? Reach out.
+        </p>
+      </section>
+
+      <section id="portfolio-grid" class="portfolio-grid reveal" aria-label="Project cards">
+        <article class="work-card">
+          <h2>Personal Link Hub</h2>
+          <p>One site with all my links and socials.</p>
+          <div class="chip-row">
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">UI Design</span>
+          </div>
+          <div class="work-links">
+            <a href="https://guns.lol/xzbsky" target="_blank" rel="noreferrer">Live Link</a>
+            <a href="#" aria-disabled="true">Source</a>
+          </div>
+        </article>
+
+        <article class="work-card">
+          <h2>GitHub Sites</h2>
+          <p>This site, built on GitHub Pages, plus my GitHub profile.</p>
+          <div class="chip-row">
+            <span class="chip">GitHub Pages</span>
+            <span class="chip">Static Hosting</span>
+            <span class="chip">Content Design</span>
+          </div>
+          <div class="work-links">
+            <a href="https://calebclub.github.io" target="_blank" rel="noreferrer">Live Link</a>
+            <a href="https://github.com/CalebClub" target="_blank" rel="noreferrer">Source</a>
+          </div>
+        </article>
+
+        <article class="work-card">
+          <h2>Custom Services</h2>
+          <p>Custom requests. Quick turnaround, no bloat.</p>
+          <div class="chip-row">
+            <span class="chip">Client Work</span>
+            <span class="chip">Templates</span>
+            <span class="chip">Execution</span>
+          </div>
+          <div class="work-links">
+            <a href="https://tinyurl.com/BBDSe60X" target="_blank" rel="noreferrer">Live Link</a>
+            <a href="#" aria-disabled="true">Source</a>
+          </div>
+        </article>
+
+        <article class="work-card">
+          <h2>My AI Thing</h2>
+          <p>An experimental AI project running on the Nexus coder preview environment.</p>
+          <div class="chip-row">
+            <span class="chip">AI</span>
+            <span class="chip">Prototype</span>
+            <span class="chip">Automation</span>
+          </div>
+          <div class="work-links">
+            <a href="https://nexus-coder-4.preview.emergentagent.com/" target="_blank" rel="noreferrer">Live Link</a>
+            <a href="#" aria-disabled="true">Source</a>
+          </div>
+        </article>
+
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> BuiltByDuke. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/CalebClub" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="staff.html">Staff Resume</a>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
